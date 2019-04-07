@@ -1,0 +1,103 @@
+///EVENT EVENT
+
+titre de quest
+
+lieu name
+lieu description
+lieu image
+lieu imagename
+
+objnecessaire //AJOUTER RELATION
+recompenseobj (peut donner un objet de quete) //AJOUTER RELATION
+
+initiative//description et dialogue de l'accroche
+
+dedifficult//pour réussite /90 (réussite de persuasion/attaque/esquive/negociation)
+
+
+si attaque = lancé de dé(atk)->echec = attaque surprise / -> reussite = attaque préventive
+OU
+si négociation ou persuasion ou taunt ou nawak = lancé de dé(char)->echec = attaque surprise / -> reussite = dialogue de negociation
+
+dialoguedereussitenego//
+dialoguedereussitepersu//
+dialoguedereussitetaunt//
+dialoguedereussitenawak//
+dialoguededefaitenego//
+dialoguededefaitepersu//
+dialoguededefaitetaunt//
+dialoguededefaitenawak//
+
+dialneg//Dialogue de negociation ou de persuation / lance le deuxieme tour
+OU
+dialatk//Dialogue d'attaque
+
+
+mstr1?//Monstre 1 (name,hp,atk,image,skillbdb1,skillbdd2,skillbdd3)
+mstr2?//Monstre 2 (name,hp,atk,image,skillbdb1,skillbdd2,skillbdd3)
+mstr3?//Monstre 3 (name,hp,atk,image,skillbdb1,skillbdd2,skillbdd3)
+mstr4?//Monstre 4 (name,hp,atk,image,skillbdb1,skillbdd2,skillbdd3)
+
+
+
+
+//DEUXIEME TROISIEME QUATRIEME .... TOUR ECT
+
+
+
+///MONSTRE
+name
+hp
+atk
+esq
+def
+description
+image
+skillbdd1
+skillbdd2
+skillbdd3
+
+
+
+///OBJET
+objdequest//bool
+
+
+
+
+
+///SKILL 
+
+compter les pts atk+
+name//
+image//
+description//
+skdgt//dgt de la skill
+skmana//consomation de magie
+skatk//bonusormalus d atk
+skesq//bonusormalus d esquive
+skdef//bonusormalus de defense
+skhp//gain perte de vie
+
+dialsc//dialogue de succes critique
+dgtsc//dgt de la skill
+manasc//consomation de magie
+atksc//bonusormalus d atk
+esqsc//bonusormalus d esquive
+defsc//bonusormalus de defense
+hpsc//+?or-?
+
+
+dialec//dialogue d'echec critique
+dgtec//dgt de la skill
+manaec//consomation de magie
+atkec//bonusormalus d atk
+esqec//bonusormalus d esquive
+defec//bonusormalus de defense
+hpec//+?or-?
+
+
+
+
+///EN COMBAT
+en combat choisir tour après tour du plus rapide au plus lent

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<article>
+        <h2>{{ player.name }}</h2>
+        <div class="metadata">Créer le {{ player.createdAt | date('d/m/Y') }}</div>
+        <div class="content">
+            <img src="{{ player.image }}" alt="">
+            <p>niveau du joueur : {{ player.level }}</p>
+        </div>
+    </article>
+
+{% endblock %}

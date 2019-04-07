@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formPlayer 'bootstrap_4_layout.html.twig' %}
+
+    
+        {% block stylesheets %}
+        
+
+{% endblock %}  
+
+{% block body %}
+
+<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url(http://images5.fanpop.com/image/photos/24800000/Fantasy-Heroes-fantasy-24871751-1920-1200.jpg); background-size: cover;background-position: center;
+">
+        <div class="col-md-6 px-0" style="padding: 50px;">
+          <h1 class="display-4 font-italic">Création de personnage</h1>
+          <p class="lead my-3"></p>
+          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
+        </div>
+      </div>
+
+      
+{% for message in app.flashes('succes') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+                {% if player is null %}
+
+                {% if id == 0 %}
+                
+                <div class="row">
+                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
+                        </div>
+                        <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
+            {{ form_start(formPlayer) }}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ form_row(formPlayer.name, {'attr': {'placeholder': "Nom du joueur"}}) }}</h5>
+                                <p class="card-text">{{ form_row(formPlayer.image, {'attr': {'placeholder': "Image"}}) }}</p>
+                                <p class="card-text">{{ form_row(formPlayer.skillbdd, {'attr': {'placeholder': "Image"}}) }}</p>
+
+                            </div>
+
+                            
+            
+                            <div class="card-body">
+                            <!-- button form -->
+                            </div>
+                        {{ form_end(formPlayer) }}
+                        </div>
+                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
+                        </div>
+            
+            
+
+                </div>
+
+                {% endif %}
+
+                {% else %}
+
+                {% if player.createur == user.id or player.createur == 0 %}
+                <div class="row">
+                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
+                        </div>
+                        <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
+            {{ form_start(formPlayer) }}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ form_row(formPlayer.name, {'attr': {'placeholder': "Nom du joueur"}}) }}</h5>
+                                <p class="card-text">{{ form_row(formPlayer.image, {'attr': {'placeholder': "Image"}}) }}</p>
+                                <p class="card-text">{{ form_row(formPlayer.skillbdd, {'attr': {'placeholder': "Image"}}) }}</p>
+
+
+                            </div>
+
+                            
+            
+                            <div class="card-body">
+                            <!-- button form -->
+                            </div>
+                        {{ form_end(formPlayer) }}
+                        </div>
+                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
+                        </div>
+            
+            
+
+                </div>
+                {% endif %}
+                {% endif %}
+        
+
+
+    
+
+    
+    
+   
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+{% endblock %}

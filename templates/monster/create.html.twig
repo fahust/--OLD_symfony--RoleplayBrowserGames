@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formMonster 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+
+<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url(http://cdn.desktopwallpapers4.me/wallpapers/fantasy/2880x1800/2/17974-warrior-battling-the-giant-monsters-2880x1800-fantasy-wallpaper.jpg); background-size: cover;background-position: center;
+">
+        <div class="col-md-6 px-0" style="padding: 50px;">
+          <h1 class="display-4 font-italic">Création de monstre</h1>
+          <p class="lead my-3"></p>
+          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
+        </div>
+      </div>
+
+      
+{% for message in app.flashes('succes') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+
+                <div class="row">
+                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
+                        </div>
+                        <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
+            {{ form_start(formMonster) }}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ form_row(formMonster.name, {'attr': {'placeholder': "Nom du monstre"}}) }}</h5>
+                                <p class="card-text">{{ form_row(formMonster.hp, {'attr': {'placeholder': "Point de vie du monstre"}}) }}</p>
+                                <p class="card-text"> {{ form_row(formMonster.atk, {'attr': {'placeholder': "Dégat d'attaque du monstre"}}) }}</p>
+                                <p class="card-text">{{ form_row(formMonster.dgt, {'attr': {'placeholder': "Dégat magique"}}) }}</p>
+                                <p class="card-text">{{ form_row(formMonster.esq, {'attr': {'placeholder': "Esquive du monstre"}}) }}</p>
+                                <p class="card-text">{{ form_row(formMonster.def, {'attr': {'placeholder': "Défense du monstre"}}) }}</p>
+                                <p class="card-text">{{ form_row(formMonster.description, {'attr': {'placeholder': "description"}}) }}</p>
+                                <p class="card-text">{{ form_row(formMonster.image, {'attr': {'placeholder': "Image"}}) }}</p>
+
+                            </div>
+
+                            
+            
+                            <div class="card-body">
+                            <!-- button form -->
+                            </div>
+                        {{ form_end(formMonster) }}
+                        </div>
+                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
+                        </div>
+            
+            
+
+                </div>
+
+
+
+
+    
+
+{% endblock %}

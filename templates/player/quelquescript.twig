@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<article>
+        <h2>{{ player.name }}</h2>
+        <div class="metadata">Préparez vous au combat {{ player.name }}</div>
+        <!-- -->
+        <div class="content">
+            
+            <h2>Monstre : {{ monster.name }}</h2>
+            <img src="{{ monster.image }}" alt="">
+            <p>point de vie du monstre : {{ monster.hp }}</p>
+
+            {% set de = random(100) %}
+            <h2>le joueur lance les dé et attaque</h2>
+            <h3>Résultat du lancé de dé : {{ de }} / 100</h3>
+
+            {% if de > 85 %}<p>Réussite critique !</p>
+            {# set truc = player.mana - player.skillbdd.mana #}
+            
+            {% if player.skillbdd.skatk > 0 %}{% set mstrhp = (monster.hp - player.skillbdd.skatk)*2 %}
+            <p>Le monstre perd {{ player.skillbdd.skatk*2 }} point de vie !</p>{% endif %}
+            <!--dgt-->
+            {% if player.skillbdd.skdgt > 0 %}{% set mstrdgt = (monster.dgt - player.skillbdd.skdgt)*2 %}
+            {% if monster.dgt <= 0 %}{% set mstrdgt = 1 %}{% endif %}
+            <p>L'attaque du monstre diminue de {{ player.skillbdd.skdgt*2 }} point !</p>{% endif %}
+
+            <p>Il lui reste : {{ monster.hp }}</p>
+            {% elseif de < 15 %}<p>Echec critique !</p>
+            {% set mstrhp = monster.hp - player.skillbdd.skatk %}
+            <p>Vous vous infligez {{ player.skillbdd.skatk }} point de dégats !</p>
+            <p>Il vous reste : {{ player.hp }}</p>
+
+            {% elseif de >= 50 %}<p>Réussite ! </p>
+            {% set mstrhp = monster.hp - player.skillbdd.skatk %}
+            <p>Le monstre perd {{ player.skillbdd.skatk }} point de vie !</p>
+            <p>Il lui reste : {{ monster.hp }}</p>
+
+            {% elseif de < 50 %}<p>echec ! </p>
+            <p>Vous n'infligez aucun dégats !</p>
+
+            {% endif %}
+
+            <p>test {{ player.skillbdd }} point de vie !</p>
+
+            <!-- fin de combat-->
+            {% if player.hp <= 0 %}
+            {% set playhp = 20 %}
+            {% endif %}
+            
+
+            
+        </div>
+        <!-- -->
+        
+
+
+    </article>
+
+
+
+{% endblock %}

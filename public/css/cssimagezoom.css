@@ -1,0 +1,148 @@
+
+.slider-ctr.disabled {
+  pointer-events: none;
+}
+#div1{visibility: visible;
+  opacity: 0;
+  filter: alpha(opacity=0); /* For IE8 and earlier */
+}
+#div2{visibility: visible;
+  opacity: 0;
+  filter: alpha(opacity=0); /* For IE8 and earlier */
+}
+#div3{visibility: visible;
+  opacity: 0;
+  filter: alpha(opacity=0); /* For IE8 and earlier */
+}
+
+.slider-ctr .title {
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: rgb(255, 255, 255);
+}
+.slider-ctr .par {
+    color: rgb(255, 255, 255);
+  }
+  
+  .textblanc  {
+    color: rgb(255, 255, 255);
+}
+
+.slider-scroll .slide {
+  width: 340px;
+  height: 100%;
+  float: left;
+  box-sizing: border-box;
+  padding: 0 30px;
+  display: table;
+  scroll-snap-coordinate: 0 0;
+}
+.slider-scroll figure {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+}
+.slider-scroll .image-ctr {
+  width: 100%;
+  position: relative;
+  transition: 0.2s all cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  will-change: transform;
+}
+.slider-scroll .image-ctr.disabled {
+  pointer-events: none;
+  transition: none;
+}
+.slider-scroll .image-ctr:hover {
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  -ms-transform: scale(1.2);
+  -o-transform: scale(1.2);
+  transform: scale(1.2);
+}
+.slider-scroll .image-ctr figcaption {
+  position: relative;
+  right: 0;
+  bottom: -40px;
+  left: 0;
+  font-size: 16px;
+  line-height: 40px;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: .15s opacity ease;
+}
+.slider-scroll .image-ctr:hover figcaption {
+  opacity: 1;
+  transition: .15s opacity ease .1s;
+}
+.slider-scroll .image {
+  box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+  width: 100%;
+  height: 417px;
+  position: relative;
+  background: no-repeat center center / cover;
+}
+.slider-scroll .image .light {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  opacity: 0;
+  transition: .15s opacity ease;
+  border-radius: 3px;
+}
+.slider-scroll .image .light.light-on {
+  opacity: 1;
+}
+.slider-scroll .image:before {
+  content: "";
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.5);
+  transition: .15s all ease-out;
+  opacity: 0;
+  border-radius: 5px;
+}
+.slider-scroll .image:hover:before {
+  opacity: 1;
+}
+.slider-scroll .image.monster {
+  background-image: url("http://www.wallpaperup.com/uploads/wallpapers/2015/04/29/673885/ee5b17ba88e52f4f3a8262303ece292a.jpg");
+}
+.slider-scroll .image.player {
+  background-image: url("http://eskipaper.com/images/fantasy-wallpaper-14.jpg");
+}
+.slider-scroll .image.quest {
+  background-image: url("https://cn.opendesktop.org/img/7/0/b/7/78fac5cbf5075f91becf299fb2fc5efb4c43.jpg");
+}
+.slider-scroll .image.skill {
+  background-image: url("https://cdn.hipwallpaper.com/i/85/11/WoCaNv.jpg");
+}
+.slider-scroll .image.negocier {
+  background-image: url("https://img5.goodfon.com/wallpaper/nbig/1/f7/dave-greco-ajuna-the-tinker-thief-art-fentezi-situatsiia-run.jpg");
+}
+.slider-scroll .image.attaquer {
+  background-image: url("https://images.alphacoders.com/152/152813.jpg");
+}
+.slider-scroll .image.menacer {
+  background-image: url("http://cdn.desktopwallpapers4.me/wallpapers/fantasy/1920x1080/2/18780-champion-1920x1080-fantasy-wallpaper.jpg");
+}
+.slider-scroll .image.chance {
+  background-image: url("http://s1.1zoom.me/big0/935/426337-Kycb.jpg");
+}
+.slider-scroll .image.victoire {
+  background-image: url("https://cache.desktopnexus.com/thumbseg/2070/2070266-bigthumbnail.jpg");
+}
+.slider-scroll .image.tresor {
+  background-image: url("https://cache.desktopnexus.com/thumbseg/1862/1862258-bigthumbnail.jpg");
+}
+
+

@@ -1,0 +1,32 @@
+<?php
+
+namespace App\Form;
+
+use App\Entity\MonsterUser;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+class MonsterUserType extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('name')
+            ->add('hp')
+            ->add('atk')
+            ->add('dgt')
+            ->add('esq')
+            ->add('def')
+            ->add('description')
+            ->add('image')
+        ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => MonsterUser::class,
+        ]);
+    }
+}

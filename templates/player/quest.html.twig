@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+     
+{% block body %}
+    
+
+   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;
+">
+        <div class="col-md-6 px-0" style="padding: 50px;">
+          <h1 class="display-4 font-italic">{{questvariable.title}}</h1>
+          <p class="lead my-3">{{questvariable.description}}</p>
+          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
+        </div>
+      </div>
+
+{% for message in app.flashes('succes') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+
+        {% if user.monsterUsers.count == 0 and action > 0 %}
+<br><br><br>
+        <div class="row">
+        <div class="row justify-content-center photo-gris ">
+    <div class="d-flex  justify-content-center col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 rounded-circle" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;">
+      <p style="color:white;padding:100px;" >{{questvariable.dialoguedereussitefin}}</p>
+      
+      
+        
+
+    </div>
+    
+    </div>
+    </div>
+    <br>
+
+
+
+
+
+
+    <div class="row">
+    {% for objetreu in questvariable.objetreussite %} 
+   <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+                <div class="slider-ctr">
+                    <div class="slider-scroll">
+                        <div class="slide">
+                        <figure>
+                            <div class="image-ctr">
+                            <div class="image tresor" data-index="">
+                                <figcaption>
+            <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+            font-size: 22px;">Vous obtenez l'objet : {{objetreu.name}}</p></figcaption>
+                            </div>
+                            </div>
+                        </figure>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+    {% endfor %}
+    </div>
+
+
+
+
+
+
+      <div class="row">
+        
+				<div class="d-flex justify-content-center col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10" style="margin: 70px;">
+                <div class="slider-ctr">
+                    <div class="slider-scroll">
+                        <div class="slide">
+                        <figure><a class="nav-link" href="{{ path('victoire', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}"> 
+                            <div class="image-ctr">
+                            <div class="image victoire" data-index="">
+                                <div class="light"></div>
+                                <figcaption><h1 style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+            "><span>Fin du combat</span></h1><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+            font-size: 22px;">Récuperer votre récompenses et mêttre fin au combat</p></figcaption>
+                            </div>
+                            </div></a>
+                        </figure>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    </div>
+
+        {% else %}
+
+   
+        <div class="row justify-content-start photo-gris ">
+    <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 rounded-circle" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;">
+      <p style="color:white;padding:80px;" >{{questvariable.description}}</p>
+    </div>
+    </div>
+    <br>
+    <div class="row justify-content-center photo-gris ">
+    <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 rounded-circle" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;">
+      <p style="color:white;padding:80px;" >{{questvariable.initiative}}</p>
+    </div>
+    </div>
+    <br>
+    <div class="row justify-content-end photo-gris ">
+    <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4 rounded-circle" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;">
+      <p style="color:white;padding:80px;" ></p>
+    </div>
+    </div>
+
+        
+        
+			
+
+      <br><br><br>
+	
+
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark " style="background-image:url(http://cdn.desktopwallpapers4.me/wallpapers/fantasy/2880x1800/2/17974-warrior-battling-the-giant-monsters-2880x1800-fantasy-wallpaper.jpg); background-size: cover;background-position: center;
+">
+        <div class="col-md-6 px-0">
+          <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
+          <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what's most interesting in this post's contents.</p>
+          
+        </div>
+      </div>
+
+      
+      <br>
+
+                  
+        <div class="row">
+        
+				<div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+                <div class="slider-ctr">
+                    <div class="slider-scroll">
+                        <div class="slide">
+                        <figure><a class="nav-link" href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}"> 
+                            <div class="image-ctr">
+                            <div class="image attaquer" data-index="">
+                                <div class="light"></div>
+                                <figcaption><h1><span>Attaquer</span></h1><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+            font-size: 22px;">Attaquer immédiatement vos énemies sans possibilité de retour en arrière</p></figcaption>
+                            </div>
+                            </div></a>
+                        </figure>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+                <div class="slider-ctr">
+                    <div class="slider-scroll">
+                        <div class="slide">
+                        <figure><a class="nav-link" href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}"> 
+                            <div class="image-ctr">
+                            <div class="image negocier" data-index="">
+                                <div class="light"></div>
+                                <figcaption><h1><span>Negocier</span></h1><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+            font-size: 22px;">Tenter la négociation pour vous sortir de cet situation</p></figcaption>
+                            </div>
+                            </div></a>
+                        </figure>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+                <div class="slider-ctr">
+                    <div class="slider-scroll">
+                        <div class="slide">
+                        <figure><a class="nav-link" href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}"> 
+                            <div class="image-ctr">
+                            <div class="image menacer" data-index="">
+                                <div class="light"></div>
+                                <figcaption><h1><span>Menacer</span></h1><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+            font-size: 22px;">Utiliser vos talents de persuation pour faire fuir la cible</p></figcaption>
+                            </div>
+                            </div></a>
+                        </figure>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+                <div class="slider-ctr">
+                    <div class="slider-scroll">
+                        <div class="slide">
+                        <figure><a class="nav-link" href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}"> 
+                            <div class="image-ctr">
+                            <div class="image chance" data-index="">
+                                <div class="light"></div>
+                                <figcaption><h1><span>Chance</span></h1><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;
+            font-size: 22px;">laissez vous guider par la chance et tenter quelque choses de vraiment stupide..</p></figcaption>
+                            </div>
+                            </div></a>
+                        </figure>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    
+
+
+                    </div>
+
+
+
+                    {% endif %}
+
+    
+{% endblock %}
+{% block javascripts %}<script src="{{ asset('js/scrollauto.js') }}"></script>{% endblock %}
