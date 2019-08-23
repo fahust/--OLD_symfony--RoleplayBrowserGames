@@ -19,6 +19,35 @@ class QuestVariableRepository extends ServiceEntityRepository
         parent::__construct($registry, QuestVariable::class);
     }
 
+    public function findAllWithMonsterAndObject()
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('q.id', 'ASC')
+            ->setMaxResults(100)
+            ->innerJoin('q.monsters', 'qm')
+            ->addSelect('qm')
+            ->innerJoin('q.objetreussite', 'qor')
+            ->addSelect('qor')
+            ->innerJoin('q.questrequismany', 'qorm')
+            ->addSelect('qorm')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    public function findAllWithMonster()
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('q.id', 'ASC')
+            ->setMaxResults(100)
+            ->innerJoin('q.monsters', 'qm')
+            ->addSelect('qm')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return QuestVariable[] Returns an array of QuestVariable objects
     //  */

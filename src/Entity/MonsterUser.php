@@ -68,6 +68,11 @@ class MonsterUser
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $cible;
+
     public function __construct()
     {
         $this->skillbdd = new ArrayCollection();
@@ -208,6 +213,18 @@ class MonsterUser
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCible(): ?int
+    {
+        return $this->cible;
+    }
+
+    public function setCible(?int $cible): self
+    {
+        $this->cible = $cible;
 
         return $this;
     }

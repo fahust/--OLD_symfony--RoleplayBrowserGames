@@ -18,17 +18,16 @@ class SecurityController extends AbstractController
      */
     public function registration(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder) {
         $user = new User();
-
         $form = $this->createForm(RegistrationType::class, $user);
-
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
+            $user->setTour(0);
+            $user->setAction(0);
             $manager->persist($user);
             $manager->flush();
-
             return $this->redirectToRoute('security_login');
         }
 

@@ -66,6 +66,23 @@ class QuestVariableType extends AbstractType
             ->add('dialoguededefaitefin', TextType::class , [
                 'label' => 'Dialogue de défaite de fin de quête'
             ])
+            ->add('questrequismany', EntityType::class ,[
+                'label' => 'Objet de quête requis pour lancer la quête',
+                'class' => (Objet::class),
+                'choice_label' => 'name',
+                'placeholder' => 'nothing2',
+                'required'      => false,
+                //'choice_value' => 'nothing'
+                ])
+            ->add('objetreussite', EntityType::class ,[
+                    'label' => 'Objet gagné en cas de victoire',
+                    'class' => (Objet::class),
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'placeholder' => 'nothing2',
+                    'required'      => false,
+                    //'choice_value' => 'nothing'
+                    ]);
             
             
             ->add('monsters', EntityType::class ,[

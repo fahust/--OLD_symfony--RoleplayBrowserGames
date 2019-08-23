@@ -73,7 +73,8 @@
                         <div class="tab-pane fade" id="list-settings{{ quests.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ quests.id }}">Monstres potentiellement présent :<ul>{% for monsters in quests.monsters %}<li>{{ monsters.name }}</li>{% endfor %}</ul></div>
                         
                         </div>
-                    </div></li>{% if quests.createur == user.id %}
+                    </div></li>
+    {% if quests.createur == user.id or user.hasGroup("superadmin") %}
                 <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center"><a href="{{ path('quest_edit', {id: quests.id}) }}" class="btn btn-primary">editer</a> {{ include('quest/_delete_form.html.twig') }} </li>{% endif %}
                 {% if quests.questrequismany in user.objet or quests.questrequismany is empty %}
                 <li class="list-group-item" style="padding: 55px;"><a href="{{ path('player_choixjoueur', {id: 0, action: '0', quest: quests.id, cible: '0', tour: '0'}) }}" class="btn btn-success">Lancer la quête</a> </li>{% else %}<li class="list-group-item" style="padding: 55px;"><p class="btn btn-danger">Besoin de l'objet {{ quests.questrequismany.name }} pour lancer cet quête </p> </li>

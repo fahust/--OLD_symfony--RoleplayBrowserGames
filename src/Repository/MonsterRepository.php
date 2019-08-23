@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Monster;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use App\Entity\MonsterSearch;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Monster|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,27 @@ class MonsterRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Monster::class);
+    }
+
+    public function findAllWithSkill(MonsterSearch $search) : Query
+    {
+         $query = $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(100)
+            ->innerJoin('m.skillbdd', 'ms')
+            ->addSelect('ms')
+            //->getQuery()
+            //->getResult()
+        ;
+        if ($search->getMaxHp() ) {
+            $query = $query->andWhere('m.hp < :maxhp')
+                        ->setParameter('maxhp', $search->getMaxHp());
+        }
+        if ($search->getMinHp() ) {
+            $query = $query->andWhere('m.hp >= :minhp')
+                        ->setParameter('minhp', $search->getMinHp());
+        }
+        return $query->getQuery();
     }
 
     /*return $this

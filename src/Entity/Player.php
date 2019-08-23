@@ -112,9 +112,6 @@ class Player
     }
 
     
-    
-
-    
 
     public function getId(): ?int
     {

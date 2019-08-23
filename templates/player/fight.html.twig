@@ -8,7 +8,6 @@
         <div class="col-md-6 px-0" style="padding: 50px;">
           <h1 class="display-4 font-italic">{{questvariable.title}}</h1>
           <p class="lead my-3">{{questvariable.description}}</p>
-          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
         </div>
       </div>
 
@@ -23,7 +22,7 @@
 
             {% if user.monsterUsers.count == 0 and action > 0 %}
 
-            ui ??????
+
 
             {% else %}
             
@@ -91,11 +90,11 @@
                     <li class="list-group-item">  {{ form_start(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}
 
             
-    {{ form_row(formPlayer.cible) }}
+                        {{ form_row(formPlayer.cible) }}
 
-    {{ form_row(formPlayer.skillnow) }}
+                        {{ form_row(formPlayer.skillnow) }}
 
-{{ form_end(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}  </li>
+                    {{ form_end(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}  </li>
                     <li class="list-group-item">Nombre de monstres : {{ user.monsterUsers.count }}</li>
                     <li class="list-group-item">Vestibulum at eros</li>
                 </ul>
@@ -105,18 +104,6 @@
                 </div>
                 </div>
                 </div>
-
-            
-
-            
-
-            
-            
-            <p></p>
-
-             
-
-            
 
             
             {% elseif action == 2 %}

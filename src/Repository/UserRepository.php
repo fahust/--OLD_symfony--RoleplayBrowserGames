@@ -19,6 +19,34 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function findByIdWithObj($value)
+    {
+        
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->setMaxResults(1)
+            //->innerJoin('u.objet', 'uo')
+            //->addSelect('uo')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByIdWithObjAndGroups($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->innerJoin('u.Groups', 'ug')
+            ->addSelect('ug')
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

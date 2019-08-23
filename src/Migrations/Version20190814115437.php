@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190324144052 extends AbstractMigration
+final class Version20190814115437 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20190324144052 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE quest_variable ADD dialoguedereussitefin LONGTEXT NOT NULL, ADD dialoguededefaitefin LONGTEXT NOT NULL');
+        $this->addSql('ALTER TABLE monster ADD updated_at DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP ');
     }
 
     public function down(Schema $schema) : void
@@ -30,6 +30,6 @@ final class Version20190324144052 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE quest_variable DROP dialoguedereussitefin, DROP dialoguededefaitefin');
+        $this->addSql('ALTER TABLE monster DROP updated_at');
     }
 }

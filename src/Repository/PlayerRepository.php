@@ -19,6 +19,19 @@ class PlayerRepository extends ServiceEntityRepository
         parent::__construct($registry, Player::class);
     }
 
+
+    public function findAllWithSkill()
+    {
+        return $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(100)
+            ->innerJoin('m.skillbdd', 'ms')
+            ->addSelect('ms')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     
 
     // /**

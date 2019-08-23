@@ -77,6 +77,11 @@ class User implements UserInterface
      */
     private $objet;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Groups", inversedBy="users")
+     */
+    private $Groups;
+
     
 
     
@@ -87,6 +92,7 @@ class User implements UserInterface
         $this->playerfight = new ArrayCollection();
         $this->playercreated = new ArrayCollection();
         $this->objet = new ArrayCollection();
+        $this->Groups = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -278,6 +284,43 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Groups[]
+     */
+    public function getGroups(): Collection
+    {
+        return $this->Groups;
+    }
+
+    public function addGroup(Groups $group): self
+    {
+        if (!$this->Groups->contains($group)) {
+            $this->Groups[] = $group;
+        }
+
+        return $this;
+    }
+
+    public function removeGroup(Groups $group): self
+    {
+        if ($this->Groups->contains($group)) {
+            $this->Groups->removeElement($group);
+        }
+
+        return $this;
+    }
+
+    public function hasGroup($groupName)
+    {
+        foreach($this->Groups as $group){
+            if($group->name == $groupName){
+                return true;
+            }
+        }
+
+        return false;
     }
 
    
