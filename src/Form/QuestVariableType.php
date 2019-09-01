@@ -82,7 +82,7 @@ class QuestVariableType extends AbstractType
                     'placeholder' => 'nothing2',
                     'required'      => false,
                     //'choice_value' => 'nothing'
-                    ]);
+                    ])
             
             
             ->add('monsters', EntityType::class ,[

@@ -53,7 +53,7 @@ class PlayerController extends AbstractController
             'quest1' => $quest1,
             'quest2' => $quest2,
             'quest3' => $quest3,
-            'title' => "Bienvenue ici les amis"
+            'title' => "Rolltime - Le roleplay dont vous êtes le créateur"
         ]);
     }
 
