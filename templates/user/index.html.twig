@@ -1,41 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Rolltime - Le roleplay dont vous êtes le créateur{% endblock %}
+{% block title %}RollCardPlay - Page des utilisateurs{% endblock %}
 
 {% block body %}
-
-<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url(http://2.bp.blogspot.com/-D_irZ9f_5mU/UvD9NPUP4GI/AAAAAAAAFfg/pVUhhRuyDUM/s1600/wallpaper-fantasy-sepik.jpg); background-size: cover;background-position: center;
-">
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/17974-warrior-battling-the-giant-monsters-2880x1800-fantasy-wallpaper-min.jpg') }}); background-size: cover;background-position: center;">
         <div class="col-md-6 px-0" style="padding: 50px;">
-          <h1 class="display-4 font-italic">Connexion</h1>
-          <p class="lead my-3"></p>
-          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
-          
+            <h1 class="display-4 font-italic">Page des utilisateurs</h1>
+            <p class="lead my-3">Sur cet page vous pourrez visualiser, contacter, juger d'autres utilisateurs.</p>
+            <a class="btn btn-primary" href="{{ path('monster_create', {id: 0}) }}">Créer un monstre</a>
         </div>
-      </div>
+    </div>
     <div class="container" style="">
-    
-
-
-{% for message in app.flashes('succes') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
+        <p class="lead my-3">Les utilisateurs présents sont d'autres joueurs comme vous avec lesquels vous pourrez communiquez </p>
+        {% for message in app.flashes('succes') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
         {% endfor %}
-
-        
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/faust/demo/src/Controller/SecurityController.php'|file_link(0) }}">src/Controller/SecurityController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/faust/demo/templates/security/index.html.twig'|file_link(0) }}">templates/security/index.html.twig</a></code></li>
-    </ul>
-</div>
+        {{ form_start(form) }}
+            <div class="form-row">
+                <div class="col">
+                    {{ form_row(form.maxHp) }}
+                </div>
+                <div class="col">
+                    {{ form_row(form.minHp) }}
+                </div>
+                <div class="col">
+                    <button class="btn btn-primary">rechercher</button>
+                </div>
+            </div>
+        {{ form_end(form) }}
+            <div class="row"  id="div3" style="display:none;">
+                <div class="navigation col-12" style="display: inline-block;">
+                    {{ knp_pagination_render(users) }}
+                </div>
+            {% for user in users %}
+                <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" style="padding: 30px;">
+                    <div class="card " style="width: 18rem;padding: 10px;">
+                        <img class="card-img-top rounded img-fluid img-thumbnail" align="middle" style="width: 17rem;height: auto;margin: auto auto;" src="{{ vich_uploader_asset(user, 'imageFile') }}" alt="image-de-l-utilisateur">
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item list-group-item-action">
+                                    <h5 class="card-title"> {{ user.username }} </h5>
+                                </li>
+                                <li class="list-group-item list-group-item-action  flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <p class="card-text">{{ user.description }}</p>
+                                        <small>3 days ago</small>
+                                    </div>
+                                </li>
+                                <li class="list-group-item list-group-item-action">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="list-group" id="list-tab" role="tablist">
+                                                <a class="list-group-item list-group-item-action" id="list-profile-list{{ user.id }}" data-toggle="list" href="#list-profile{{ user.id }}" role="tab" aria-controls="profile{{ user.id }}" title="life-user">vie</a>
+                                                <a class="list-group-item list-group-item-action" id="list-messages-list{{ user.id }}" data-toggle="list" href="#list-messages{{ user.id }}" role="tab" aria-controls="messages{{ user.id }}" title="defence-user">defense</a>
+                                                <a class="list-group-item list-group-item-action" id="list-settings-list{{ user.id }}" data-toggle="list" href="#list-settings{{ user.id }}" role="tab" aria-controls="settings{{ user.id }}" title="attack-user">Attaque</a>
+                                                <a class="list-group-item list-group-item-action" id="list-autre-list{{ user.id }}" data-toggle="list" href="#list-autre{{ user.id }}" role="tab" aria-controls="autre{{ user.id }}" title="skill-user">Compétences</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item list-group-item-action"><div class="col-12">
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade" id="list-profile{{ user.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ user.id }}">Nombre de point de vie du monstre {{ user.hp }}
+                                        </div>
+                                        <div class="tab-pane fade" id="list-messages{{ user.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ user.id }}">Defense du monstre {{ user.def }}
+                                        </div>
+                                        <div class="tab-pane fade" id="list-settings{{ user.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ user.id }}">Degat d'attaque du monstre {{ user.atk }}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="navigation col-12" style="display: inline-block;">
+                {{ knp_pagination_render(users) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}

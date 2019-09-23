@@ -49,6 +49,36 @@ class MonsterUser
     private $def;
 
     /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100000)
+     */
+    private $maxhp;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxatk;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxesq;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxdef;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxdgt;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $description;
@@ -151,6 +181,66 @@ class MonsterUser
     public function setDef(int $def): self
     {
         $this->def = $def;
+
+        return $this;
+    }
+
+    public function getMaxhp(): ?int
+    {
+        return $this->maxhp;
+    }
+
+    public function setMaxhp(int $maxhp): self
+    {
+        $this->maxhp = $maxhp;
+
+        return $this;
+    }
+
+    public function getMaxatk(): ?int
+    {
+        return $this->maxatk;
+    }
+
+    public function setMaxatk(int $maxatk): self
+    {
+        $this->maxatk = $maxatk;
+
+        return $this;
+    }
+
+    public function getMaxdef(): ?int
+    {
+        return $this->maxdef;
+    }
+
+    public function setMaxdef(int $maxdef): self
+    {
+        $this->maxdef = $maxdef;
+
+        return $this;
+    }
+
+    public function getMaxesq(): ?int
+    {
+        return $this->maxesq;
+    }
+
+    public function setMaxesq(int $maxesq): self
+    {
+        $this->maxesq = $maxesq;
+
+        return $this;
+    }
+
+    public function getMaxdgt(): ?int
+    {
+        return $this->maxdgt;
+    }
+
+    public function setMaxdgt(int $maxdgt): self
+    {
+        $this->maxdgt = $maxdgt;
 
         return $this;
     }

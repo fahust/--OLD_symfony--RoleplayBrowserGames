@@ -1,325 +1,237 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}RollCardPlay - {{questvariable.title}}{% endblock %}
 {% block body %}
-
-  
-<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;
-">
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;">
         <div class="col-md-6 px-0" style="padding: 50px;">
-          <h1 class="display-4 font-italic">{{questvariable.title}}</h1>
-          <p class="lead my-3">{{questvariable.description}}</p>
+            <h1 class="display-4 font-italic">{{questvariable.title}}</h1>
+            <p class="lead my-3">{{questvariable.description}}</p>
         </div>
-      </div>
+    </div>
 
-{% for message in app.flashes('succes') %}
+    {% for message in app.flashes('succes') %}
         <div class="alert alert-success">
             {{ message }}
         </div>
-        {% endfor %}
-
-
-            
-
-            {% if user.monsterUsers.count == 0 and action > 0 %}
-
-
-
-            {% else %}
-            
-            {% if action == 0 %}
-            
-            
-
-
-            {% set playerhp = 0 %}
-
-             {{ form_start(formUser) }}
-
-            
-   
-    {{ form_row(formUser.playerfight) }}
-    {{ form_row(formUser.username) }}
-    {{ form_row(formUser.email) }}
-    {{ form_row(formUser.password) }}
-
-{{ form_end(formUser) }}
-
-
-
-
-<div class="container">
-            <div class="row">
-                {% for players in user.playercreated %}
-                <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  >
-
-                        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{# questvariable.image #}{{ players.image }}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title"> players </h5>
-                <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
-            </div>
-            
-            <div class="card-body">
-            </div>
-            </div>
-            </div>
-                {% endfor %}
-
-            </div>
-            </div>
-            
-
-            {% elseif action == 1 %}
-
-            <!-- choix d action du joueur -->
+    {% endfor %}
     
-     
-            <div class="container">
-                <div class="row">
-                <div class="col-sm-4">
+    {% if user.monsterUsers.count == 0 and action > 0 %}
+    
+    {% else %}
+    
+            {% if action == 0 %}
+                {% set playerhp = 0 %}
+                {{ form_start(formUser) }}
+                    {{ form_row(formUser.playerfight) }}
+                    {{ form_row(formUser.username) }}
+                    {{ form_row(formUser.email) }}
+                    {{ form_row(formUser.password) }}
+                {{ form_end(formUser) }}
+                <div class="container">
+                    <div class="row">
+                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
+                        {% for players in user.playercreated %}
+                            <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  >
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="{{ players.image }}" alt="player-image">
+                                    <div class="card-body">
+                                        <h5 class="card-title"> players </h5>
+                                        <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
+                                    </div>
+                                    <div class="card-body">
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-                    <div class="col-sm-4"  id="div3" style="display:none;">
-
+            {% elseif action == 1 %}
+                <!-- choix d action du joueur -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="col-sm-4"  id="div3" style="display:none;">
                             <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{{ player.image }}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">tour du joueur {{ player.name }}</h5>
-                    
+                                <img class="card-img-top" src="{{ player.image }}" alt="choice-player-skill-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">tour du joueur {{ player.name }}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">  {{ form_start(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}
+                                        {{ form_row(formPlayer.cible) }}
+                                        {{ form_row(formPlayer.skillnow) }}
+                                        {{ form_end(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}  
+                                    </li>
+                                    <li class="list-group-item">Nombre de monstres : {{ user.monsterUsers.count }}</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">  {{ form_start(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}
-
-            
-                        {{ form_row(formPlayer.cible) }}
-
-                        {{ form_row(formPlayer.skillnow) }}
-
-                    {{ form_end(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}  </li>
-                    <li class="list-group-item">Nombre de monstres : {{ user.monsterUsers.count }}</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
-                </ul>
-                <div class="card-body">
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-
-            
             {% elseif action == 2 %}
-            <!-- latence joueur -->
-
-            <div class="container">
-            <div class="row">
-            <div class="col-sm-4">
-            </div>
-                <div class="col-sm-4"  id="div3" style="display:none;">
-                        
-                        <div class="card" style="width: 18rem;" >
-            <img class="card-img-top" src="{{ player.image }}{# for skillall in player.skillbdd #}
-            " alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">le joueur se prépare a attaquer, lancé vos dé ! </h5>
-                <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
-            </div>
-            
-            <div class="card-body">
-                <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary">continuer</a>
-            </div>
-            </div>
-            </div>
-            </div>
-            </div>
-
-
+                <!-- latence joueur -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="col-sm-4"  id="div3" style="display:none;">
+                            <div class="card" style="width: 18rem;" >
+                                <img class="card-img-top" src="{{ player.image }}" alt="player-skill-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">le joueur se prépare a attaquer, lancé vos dé ! </h5>
+                                    <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% elseif action == 3 %}
-            <!-- action des attaques -->
-
-            <div class="container">
-            <div class="row">
-
-            <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div3" >
-
-                        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{{ player.image }}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{{ player.name }}</h5>
-            </div>
-            <div class="card-body">
-            </div>
-            </div>
-            </div>
-            
-                <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div1" >
-
-                        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ infobattle.4 }}{% endif %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{% if infobattle.3 is defined %}{{ infobattle.3 }}{% endif %}</h5>
-                <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">{% if infobattle.1 is defined %}{{ infobattle.1 }}{% endif %}</li>
-                <li class="list-group-item">{% if infobattle.2 is defined %}{{ infobattle.2 }}{% endif %}</li>
-                <li class="list-group-item"></li>
-            </ul>
-            <div class="card-body">
-            </div>
-            </div>
-            </div>
-            
-
-            {% set varimage = user.monsterUsers.get((tour-1)) %}
-            
-            <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div2" >
-
-                        <div class="card" style="width: 18rem;">
-                        
-            <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
-                <p class="card-text">nombre de points de vie restant {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
-            </div>
-            <div class="card-body">
-                <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary">continuer</a>
-            </div>
-            </div>
-            </div>
-            
-
-
-
-            </div>
-            </div>
-
-
-            <!-- tour du monstre latence pour eviter bug avec form rien a calculer juste monstre pret a attaquer-->
-                    {% elseif action == 4 %}
-
-
-                    <div class="container">
-            <div class="row">
-            <div class="col-sm-4">
-            </div>
-                <div class="col-sm-4"  id="div3" style="display:none;">
-                        {% if user.monsterUsers.get((tour-1)) is not null %}
-                        {% set varimage = user.monsterUsers.get((tour-1)).image %}
-                        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{{ varimage }}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">le monstre {{ user.monsterUsers.get((tour-1)).name  }} se prépare a attaquer</h5>
-                <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-            </ul>
-            <div class="card-body">
-                <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary">continuer</a>
-            </div>
-            </div>
-            </div>
-            </div>
-            {% endif %}
-            </div>
-
-                    
-            <!-- MONSTRE ATTAQUE -->
-            
-
-                    {% elseif action == 5 %}
-
-            <!-- choix d action du monstre -->
- 
-
-            <!-- faire une cible et un choix de competence auto -->
-
-            <div class="container">
-            <div class="row">
-            <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div3" >
-
-                        <div class="card" style="width: 18rem;">{% set varimage = user.monsterUsers.get((tour-1)) %}
-            <img class="card-img-top" src="{% if varimage is not null %}{{ varimage.image }}{% endif %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{% if varimage is not null %}{{ varimage.name }}{% endif %}</h5>
-            </div>
-            <div class="card-body">
-            </div>
-            </div>
-            </div>
-
-
-                <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div1" >
-
-                        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ infobattle.4 }}{% endif %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{% if infobattle.3 is defined %}{{ infobattle.3 }}{% endif %}</h5>
-                <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">{% if infobattle.1 is defined %}{{ infobattle.1 }}{% endif %}</li>
-                <li class="list-group-item">{% if infobattle.2 is defined %}{{ infobattle.2 }}{% endif %}</li>
-                <li class="list-group-item"></li>
-            </ul>
-            <div class="card-body">
-            </div>
-            </div>
-            </div>
-
-            <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div2" ">
-
-                        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
-                <p class="card-text">Hp restant {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
-            </div>
-            <div class="card-body">
-                <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary">continuer</a>
-            </div>
-            </div>
-            </div>
-
-
-
-            </div>
-            </div>
-
+                <!-- action des attaques -->
+                <div class="container">
+                    <div class="row">
+                        <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div3" >
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{{ player.image }}" alt="attack-skill-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ player.name }}</h5>
+                                </div>
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div1" >
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ infobattle.4 }}{% endif %}" alt="attack-skill-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{% if infobattle.3 is defined %}{{ infobattle.3 }}{% endif %}</h5>
+                                    <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{% if infobattle.1 is defined %}{{ infobattle.1 }}{% endif %}</li>
+                                    <li class="list-group-item">{% if infobattle.2 is defined %}{{ infobattle.2 }}{% endif %}</li>
+                                    <li class="list-group-item"></li>
+                                </ul>
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div>
+                        {% set varimage = user.monsterUsers.get((tour-1)) %}
+                        <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div2" >
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="attack-skill-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
+                                    <p class="card-text">nombre de points de vie restant {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- tour du monstre latence pour eviter bug avec form rien a calculer juste monstre pret a attaquer-->
+            {% elseif action == 4 %}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="col-sm-4"  id="div3" style="display:none;">
+                            {% if user.monsterUsers.get((tour-1)) is not null %}
+                                {% set varimage = user.monsterUsers.get((tour-1)).image %}
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="{{ varimage }}" alt="monster-image">
+                                    <div class="card-body">
+                                        <h5 class="card-title">le monstre {{ user.monsterUsers.get((tour-1)).name  }} se prépare a attaquer</h5>
+                                        <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!-- MONSTRE ATTAQUE -->
+            {% elseif action == 5 %}
+                <!-- choix d action du monstre -->
+                <!-- faire une cible et un choix de competence auto -->
+                <div class="container">
+                    <div class="row">
+                        <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div3" >
+                            <div class="card" style="width: 18rem;">{% set varimage = user.monsterUsers.get((tour-1)) %}
+                                <img class="card-img-top" src="{% if varimage is not null %}{{ varimage.image }}{% endif %}" alt="monster-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{% if varimage is not null %}{{ varimage.name }}{% endif %}</h5>
+                                </div>
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div1" >
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ infobattle.4 }}{% endif %}" alt="monster-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{% if infobattle.3 is defined %}{{ infobattle.3 }}{% endif %}</h5>
+                                    <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">{% if infobattle.1 is defined %}{{ infobattle.1 }}{% endif %}</li>
+                                    <li class="list-group-item">{% if infobattle.2 is defined %}{{ infobattle.2 }}{% endif %}</li>
+                                </ul>
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div2" >
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="monster-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
+                                    <p class="card-text">Hp restant {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
+                                </div>
+                                <div class="card-body">
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% elseif action == 6 %}
-            <div class="container">
-  <div class="row">
-  <div class="col-sm-4">
-  </div>
-    <div class="col-sm-4"  id="div3" style="display:none;">
-
-            <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="https://s3-eu-west-1.amazonaws.com/assets.ffring.com/s3fs-public/styles/image_module_big/public/images/news/18-07-2018/final-fantasy-project-w-06.png?itok=WGWWgH9m" alt="Card image cap">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
-  <div class="card-body">
-    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary">continuer</a>
-  </div>
-</div>
-</div>
-</div>
-</div>
-
-            
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="col-sm-4"  id="div3" style="display:none;">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="https://s3-eu-west-1.amazonaws.com/assets.ffring.com/s3fs-public/styles/image_module_big/public/images/news/18-07-2018/final-fantasy-project-w-06.png?itok=WGWWgH9m" alt="fantasy-image">
+                                <div class="card-body">
+                                    <h5 class="card-title">Card title</h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Cras justo odio</li>
+                                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                                    <li class="list-group-item">Vestibulum at eros</li>
+                                </ul>
+                                <div class="card-body">
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% elseif action == 6 %}
-            <!-- choix de skill monstre -->
-           
+                <!-- choix de skill monstre -->
             {% endif %}
-
-            
-        
-            {% endif %}
-
-
+    {% endif %}
 {% endblock %}
 {% block javascripts %}<script src="{{ asset('js/scrollauto.js') }}"></script>{% endblock %}

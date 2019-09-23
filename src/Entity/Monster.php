@@ -4,12 +4,13 @@ namespace App\Entity;
 
 use App\Entity\Skill;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 /**
@@ -56,6 +57,36 @@ class Monster
     private $def;
 
     /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100000)
+     */
+    private $maxhp;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxatk;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxesq;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxdef;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
+     */
+    private $maxdgt;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $description;
@@ -74,6 +105,8 @@ class Monster
      * @ORM\ManyToMany(targetEntity="App\Entity\QuestVariable", mappedBy="monsters")
      */
     private $questVariables;
+
+    
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -102,8 +135,20 @@ class Monster
      */
     private $imageName;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Likes", mappedBy="monsters")
+     */
+    private $likes;
 
-    
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Dislikes", mappedBy="monsters")
+     */
+    private $dislikes;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
 
     
     public function __construct()
@@ -111,6 +156,8 @@ class Monster
         $this->skillbdd = new ArrayCollection();
         $this->questVariables = new ArrayCollection();
         $this->updateAt = new \Datetime();
+        $this->likes = new ArrayCollection();
+        $this->dislikes = new ArrayCollection();
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -203,6 +250,66 @@ class Monster
         return $this;
     }
 
+    public function getMaxhp(): ?int
+    {
+        return $this->maxhp;
+    }
+
+    public function setMaxhp(int $maxhp): self
+    {
+        $this->maxhp = $maxhp;
+
+        return $this;
+    }
+
+    public function getMaxatk(): ?int
+    {
+        return $this->maxatk;
+    }
+
+    public function setMaxatk(int $maxatk): self
+    {
+        $this->maxatk = $maxatk;
+
+        return $this;
+    }
+
+    public function getMaxdef(): ?int
+    {
+        return $this->maxdef;
+    }
+
+    public function setMaxdef(int $maxdef): self
+    {
+        $this->maxdef = $maxdef;
+
+        return $this;
+    }
+
+    public function getMaxesq(): ?int
+    {
+        return $this->maxesq;
+    }
+
+    public function setMaxesq(int $maxesq): self
+    {
+        $this->maxesq = $maxesq;
+
+        return $this;
+    }
+
+    public function getMaxdgt(): ?int
+    {
+        return $this->maxdgt;
+    }
+
+    public function setMaxdgt(int $maxdgt): self
+    {
+        $this->maxdgt = $maxdgt;
+
+        return $this;
+    }
+
     public function getDescription(): ?string
     {
         return $this->description;
@@ -223,6 +330,18 @@ class Monster
     public function setImage( ?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -339,7 +458,92 @@ class Monster
     {
         return $this->imageName;
     }
+
+    /**
+     * @return Collection|Likes[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->addMonster($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likes $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            $like->removeMonster($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Dislikes[]
+     */
+    public function getDislikes(): Collection
+    {
+        return $this->dislikes;
+    }
+
+    public function addDislike(Dislikes $dislike): self
+    {
+        if (!$this->dislikes->contains($dislike)) {
+            $this->dislikes[] = $dislike;
+            $dislike->addMonster($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDislike(Dislikes $dislike): self
+    {
+        if ($this->dislikes->contains($dislike)) {
+            $this->dislikes->removeElement($dislike);
+            $dislike->removeMonster($this);
+        }
+
+        return $this;
+    }
+
+
+    /** 
+     * Permet de savoir si cet article est liké par un utilisateur
+     * 
+    */
+
     
+    public function isLikedByUser(User $user)  {
+        foreach($this->likes as $like) {
+            if($like->getByuser() === $user) return $like;
+        }
+
+        return false;
+    }
+
+    public function getNbrlike(): ?int
+    {
+        return $this->nbrlike;
+    }
+
+    public function setNbrlike(int $nbrlike): self
+    {
+        $this->nbrlike = $nbrlike;
+
+        return $this;
+    }
+
+
+
 
     
 

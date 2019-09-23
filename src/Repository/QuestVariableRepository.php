@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\QuestVariable;
+use App\Entity\QuestSearch;
+use Doctrine\ORM\Query;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,6 +19,65 @@ class QuestVariableRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, QuestVariable::class);
+    }
+
+    public function findAllLastDate()
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('q.updatedAt', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    
+
+    public function findAllWithSkill(QuestSearch $search) : Query
+    {
+         $query = $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(100)
+            ->leftjoin('m.monsters', 'qm')
+            ->addSelect('qm')
+            ->leftjoin('m.objetreussite', 'qor')
+            ->addSelect('qor')
+            ->leftjoin('m.questrequismany', 'qorm')
+            ->addSelect('qorm')
+            //->getQuery()
+            //->getResult()
+        ;
+        if ($search->getMaxDeDifficult() ) {
+            $query = $query->andWhere('m.dedifficult < :maxdifficult')
+                        ->setParameter('maxdifficult', $search->getMaxDeDifficult());
+        }
+        if ($search->getMinDeDifficult() ) {
+            $query = $query->andWhere('m.dedifficult >= :mindifficult')
+                        ->setParameter('mindifficult', $search->getMinDeDifficult());
+        }
+        if ($search->getlikeAsc() ) {
+            $query = $query->addOrderBy('m.likes', 'ASC');
+        }
+        if ($search->getlikeDesc() ) {
+            $query = $query->addOrderBy('m.likes', 'DESC');
+        }
+        if ($search->getnameAsc() ) {
+            $query = $query->addOrderBy('m.title', 'ASC');
+        }
+        if ($search->getnameDesc() ) {
+            $query = $query->addOrderBy('m.title', 'DESC');
+        }
+        if ($search->getdateAsc() ) {
+            $query = $query->addOrderBy('m.created_at', 'ASC');
+        }
+        if ($search->getdateDesc() ) {
+            $query = $query->addOrderBy('m.created_at', 'DESC');
+        }
+        /*if ($search->getRegex() ) {
+            $query = $query->andWhere('m.hp >= :minhp')
+                        ->setParameter('minhp', $search->getMinHp());
+        }*/
+        return $query->getQuery();
     }
 
     public function findAllWithMonsterAndObject()

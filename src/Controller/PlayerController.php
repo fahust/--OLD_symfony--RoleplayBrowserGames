@@ -2,63 +2,62 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
+use App\Entity\Likes;
 use App\Entity\Skill;
+use App\Entity\Groups;
 use App\Entity\Player;
+use App\Form\PlayerType;
+use App\Entity\PlayerSearch;
 use App\Entity\QuestVariable;
+use App\Form\PlayerSearchType;
+use App\Repository\LikesRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PlayerController extends AbstractController
 {
     /**
      * @Route("/player", name="player")
      */
-    public function index(UserInterface $user)
+    public function index(UserInterface $user, PaginatorInterface $paginator, Request $request)
     {
-        $userrepo = $this->getDoctrine()->getRepository(User::class);
-        $user = $userrepo->findByIdWithObjAndGroups($user->getId());
-        $repo = $this->getDoctrine()->getRepository(Player::class);
-        $players = $repo->findAllWithSkill();
+        $search = new PlayerSearch();
+        $form = $this->createForm(PlayerSearchType::class, $search);
+        $form->handleRequest($request);
 
         return $this->render('player/index.html.twig', [
-            'user' => $user,
+            'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
-            'players' => $players
+            'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search),
+            $request->query->getInt('page',1),3),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
+            'form' => $form->createView()
         ]);
     }
-
 
     /**
      * @Route("/", name="home")
      */
-    public function home() {
-        
-        $repo = $this->getDoctrine()->getRepository(QuestVariable::class);
-        $quest1 = $repo->find(1);
-        $repo = $this->getDoctrine()->getRepository(QuestVariable::class);
-        $quest2 = $repo->find(31);
-        $repo = $this->getDoctrine()->getRepository(QuestVariable::class);
-        $quest3 = $repo->find(39);
+    public function home() 
+    {
+        //$repo = $this->getDoctrine()->getRepository(QuestVariable::class);
+        $repo = $this->getDoctrine()->getRepository(QuestVariable::class)->findAllLastDate();
 
         return $this->render('player/home.html.twig', [
-            'quest1' => $quest1,
-            'quest2' => $quest2,
-            'quest3' => $quest3,
-            'title' => "Rolltime - Le roleplay dont vous êtes le créateur"
+            'quest1' => $repo[1],
+            'quest2' => $repo[2],
+            'quest3' => $repo[3],
+            'title' => "RollCardPlay - Le roleplay dont vous êtes le créateur"
         ]);
     }
-
-    
-    
 
     /**
      * @Route("/player/new/{id}", name="player_create")
@@ -66,28 +65,13 @@ class PlayerController extends AbstractController
      */
     public function create($id, Request $request, ObjectManager $manager, UserInterface $user) {
         if($id == 0){$player = new Player();}else{
-        $repo = $this->getDoctrine()->getRepository(Player::class);
-        $player = $repo->find($id);}
+        $player = $this->getDoctrine()->getRepository(Player::class)->find($id);}
+        $player->setImageFile(null);
 
-        $userId2 = $user->getId(); 
-        $userrepo = $this->getDoctrine()->getRepository(User::class);
-        $user = $userrepo->findByIdWithObjAndGroups($userId2);
-        $repo = $this->getDoctrine()->getRepository(Skill::class);
-        $skill = $repo->findAll();
+        $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
+        
+        $form = $this->createForm(PlayerType::class, $player);//createFormBuilder($objet)
 
-        $form = $this->createFormBuilder($player)
-        ->add('name')
-        ->add('skillbdd', EntityType::class, [
-            'class' => Skill::class,
-            //'choices' => $skill,
-            'multiple' => true,
-            'choice_label' => 'name',
-        ])
-        ->add('image')
-        ->add('save', SubmitType::class, [
-            'label' => 'enregistrer'
-        ])
-        ->getForm();
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -97,33 +81,36 @@ class PlayerController extends AbstractController
             $player->setMaxhp(rand(50,100));
             $player->setCible(1);
             $player->setSkillnow(1);
-            $player->setHp(50);
+            $player->setHp($player->getMaxhp());
             $player->setAtk(rand(1,3));
+            $player->setMana(rand(1,3));
+            $player->setEsq(rand(1,3));
+            $player->setDef(rand(1,3));
+            $player->setMaxatk($player->getAtk());
+            $player->setMaxmana($player->getMana());
+            $player->setMaxesq($player->getEsq());
+            $player->setMaxdef($player->getDef());
             $player->setSkillpnt(1);
             $player->setLevel(1);
             $player->setExperience(1);
+            $player->setImage(1);
             }
-            
+            $player->setUpdatedAt(new \DateTime());
             
             if($player->getSkillbdd()->count() < ($player->getSkillpnt())+1 ) {
-                $user->addPlayercreated($player);
                 $manager->persist($player);
-                $manager->persist($user);
                 $manager->flush();
+                //$player->setImageFile(null);
+                //$player->setImageName(null);
+                //$user->addPlayercreated($player);
+                //$manager->persist($user);
+                //$manager->flush();
                 $this->addFlash('succes', "joueur édité/créé avec succes" );
             }else{
-                var_dump( $player->getSkillbdd()->count());
-                $this->addFlash('succes', "Vous avez sélectioner plus de compétences que vous n'avez de points, vous avez " . $player->getSkillpnt() . " points");
+                $this->addFlash('warning', "Vous avez sélectioner plus de compétences que vous n'avez de points, vous avez " . $player->getSkillpnt() . " points");
             }
-                return $this->redirectToRoute('player_create', [
-                    'id' => $player->getId(),
-                    'player' => $player,
-                    'id' => $id,
-                    'user' => $user
-                ]);
-            
+        return $this->redirectToRoute('player');
         }
-
         return $this->render('player/create.html.twig', [
             'user' => $user,
             'id' => $id,
@@ -137,19 +124,10 @@ class PlayerController extends AbstractController
      * @Route("/player/{id}", name="player_show")
      */
     public function show($id){
-        $repo = $this->getDoctrine()->getRepository(Player::class);
-        $player = $repo->find($id);
-
         return $this->render('player/show.html.twig', [
-            'player' => $player
+            'player' => $this->getDoctrine()->getRepository(Player::class)->find($id)
         ]);
     }
-
-    
-
-    
-
-
 
     /**
      * @Route("/player/delete/{id}", name="player.delete", methods="DELETE")
@@ -166,8 +144,85 @@ class PlayerController extends AbstractController
     }
    
 
-
     
+/**
+ * Permet de liker ou unliker un article
+ * @Route("/player/post/{id}/like", name="post_like_player")
+ * @param Player $player
+ * @param ObjectManager $manager
+ * @param LikesRepository $likeRepo
+ */
+public function like(Player $player, ObjectManager $manager, LikesRepository $likeRepo ,UserInterface $user) : Response {
+    $userrepo = $this->getDoctrine()->getRepository(User::class);
+    $user = $userrepo->find($user->getId());
 
+    if(!$user) return $this->json([
+        'code' => 403,
+        'message' => "Unauthorized"
+    ],403);
+
+    if($save = $player->isLikedByUser($user)) {
+        $manager->remove($save);
+        $manager->flush();
+        return $this->json([
+            'code' => 200,
+            'message' => 'like bien supprimé',
+            'likes' => count($likeRepo->findLikeWithIdPlayer($player->getId()))
+        ],200);
+    }
+
+    $like = new Likes();
+    $like->addPlayer($player)
+        ->setByuser($user);
+    $manager->persist($like);
+    $manager->flush();
+    return $this->json([
+        'code' => 200, 
+        'message' => 'Like bien ajouté',
+        'likes' => count($likeRepo->findLikeWithIdPlayer($player->getId()))
+    ], 200);
+}
+
+
+/**
+ * Permet de recharger les nouveau like
+ * @Route("/player/post/{id}/likereload", name="post_likereload_player")
+ * @param Player $player
+ * @param ObjectManager $manager
+ * @param LikesRepository $likeRepo
+ */
+public function likereload(Player $player, ObjectManager $manager,UserInterface $user, LikesRepository $likeRepo) : Response {
+    $user = $this->getDoctrine()->getRepository(User::class)->find($user->getId());
+
+    $player->setNbrlike($player->getLikes()->count());
+    $manager->persist($player);
+    $manager->flush();
+
+    return $this->json([
+        'code' => 200, 
+        'message' => 'Like bien chargé',
+        'likes' => count($likeRepo->findLikeWithIdPlayer($player->getId()))
+    ], 200);
+
+}
+
+
+
+/**
+     * @Route("/groupe/new", name="groupe_create")
+     */
+    public function createGroupe( UserInterface $user, ObjectManager $manager){
+        $group = new Groups();
+        $group->setName("test");
+        $manager->persist($group);
+        
+        $userrepo = $this->getDoctrine()->getRepository(User::class);
+        $user = $userrepo->findByIdWithObjAndGroups($user->getId());
+        $user->addGroup($group);
+        $manager->persist($user);
+        $manager->flush();
+
+        return $this->redirectToRoute('home');
+    }
     
 }

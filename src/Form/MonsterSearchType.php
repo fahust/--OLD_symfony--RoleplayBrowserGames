@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class MonsterSearchType extends AbstractType
 {
@@ -27,6 +28,33 @@ class MonsterSearchType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Vie minimal'
                 ]
+            ])
+            ->add('nameAsc', CheckboxType::class, [
+                'label'    => '',
+                'required' => false,
+            ])
+            ->add('nameDesc', CheckboxType::class, [
+                'label'    => '',
+                'required' => false,
+            ])
+            ->add('likeAsc', CheckboxType::class, [
+                'label'    => '',
+                'required' => false,
+            ])
+            ->add('likeDesc', CheckboxType::class, [
+                'label'    => '',
+                'required' => false,
+            ])
+            ->add('dateAsc', CheckboxType::class, [
+                'label'    => '',
+                'required' => false,
+            ])
+            ->add('dateDesc', CheckboxType::class, [
+                'label'    => '',
+                'required' => false,
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'enregistrer'
             ])
             /*->add('submit',SubmitType::class, [
                 'label' => 'rechercher'

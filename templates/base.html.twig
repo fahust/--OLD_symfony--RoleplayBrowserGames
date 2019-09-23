@@ -1,199 +1,159 @@
 <!DOCTYPE html>
-<html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="google-site-verification" content="VBnBmppJsNKVm7c0qPm6V3936Ykc15rgymsZL5woSIU" />
-        <meta name="description" content="Rolltime est un jeu navigateur dont tout les utilisateurs pourront participer et créer pour" />
-        <link rel="icon" type="image/png" href="{{ asset('phoenix.png') }}"/>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="keywords" content="rolltime, roleplay, role, navigateur, carte, card, creation, medieval, fantasy, fantastique" />
-        <title>{% block title %}Rolltime - Le roleplay dont vous êtes le créateur{% endblock %}</title>
-        <link href="{{ asset('css/carroussel.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/cssimagezoom.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/scrollauto.css') }}" rel="stylesheet">
-        <link rel="stylesheet"href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <html lang="fr">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="google-site-verification" content="VBnBmppJsNKVm7c0qPm6V3936Ykc15rgymsZL5woSIU" />
+          <meta name="description" content="RollCardPlay est un jeu navigateur dont tout les utilisateurs pourront participer en créant des quêtes, des personnages ,des monstres et même des compétences" />
+          <link rel="icon" type="image/png" href="{{ asset('ressources/phoenix.png') }}"/>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+          <meta name="keywords" content="RollCardPlay, roleplay, role, navigateur, carte, card, creation, medieval, fantasy, fantastique" />
+          <title>{% block title %}RollCardPlay - Le jeu de rôle dont vous êtes le créateur{% endblock %}</title>
+          <link href="{{ asset('css/carroussel.css') }}" rel="stylesheet">
+          <link href="{{ asset('css/cssimagezoom.css') }}" rel="stylesheet">
+          <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
+          <link href="{{ asset('css/scrollauto.css') }}" rel="stylesheet">
+          <link rel="stylesheet"href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-        {% block stylesheets %}
-        
-        {% endblock %}
+          {% block stylesheets %}{% endblock %}
+          <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Germania One">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+          <link rel="stylesheet" href="{{ asset('css/flippobj.css') }}" /> 
+          <style type="text/css">
+            body {font-family: 'Germania One', serif;}
+            .container { margin-top: 2em; }
+            h1 span {
+              animation: flipper 3s ease-in 4s infinite;
+              -moz-animation: flipper 3s ease-in 4s infinite;
+              -webkit-animation: flipper 3s ease-in 4s infinite;
+              transform-style: preserve-3d;
+              -webkit-transform-style: preserve-3d;
+              -moz-transform-style: preserve-3d;
+              display: inline-block;
+            }
+            @-webkit-keyframes flipper {
+              0% {
+                -webkit-transform: perspective(300px) rotateY(0deg);
+                }
+              15%, 100% {
+                  -webkit-transform: perspective(300px) rotateY(360deg);
+                }
+            }
+            @-moz-keyframes flipper {
+              0% {
+                -moz-transform: perspective(300px) rotateY(0deg);
+                }
+              15%, 100% {
+                -moz-transform: perspective(300px) rotateY(360deg);
+                }
+            }
+            @keyframes flipper {
+              0% {
+                transform: perspective(300px) rotateY(0deg);
+              }
+              15%, 100% {
+                transform: perspective(300px) rotateY(360deg);
+                }
+            }
+            .offset4{
+              margin-top:-500px;
+            }
+          </style>
+          <!-- fin de script de card return -->
+        </head>
 
-        <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Germania One">
-    <style>
-      body {
-        font-family: 'Germania One', serif;
-        
-      }
-    </style>
-
-
-        <!-- script de card return -->
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="{{ asset('css/flippobj.css') }}" /> 
-  <style type="text/css">
-    .container { margin-top: 2em; }
-
-    h1 span {
-      animation: flipper 3s ease-in 4s infinite;
-      -moz-animation: flipper 3s ease-in 4s infinite;
-      -webkit-animation: flipper 3s ease-in 4s infinite;
-
-      transform-style: preserve-3d;
-      -webkit-transform-style: preserve-3d;
-      -moz-transform-style: preserve-3d;
-      display: inline-block;
-    }
-
-    @-webkit-keyframes flipper {
-      0% {
-        -webkit-transform: perspective(300px) rotateY(0deg);
-      }
-      15%, 100% {
-        -webkit-transform: perspective(300px) rotateY(360deg);
-      }
-    }
-    @-moz-keyframes flipper {
-      0% {
-        -moz-transform: perspective(300px) rotateY(0deg);
-      }
-      15%, 100% {
-        -moz-transform: perspective(300px) rotateY(360deg);
-      }
-    }
-    @keyframes flipper {
-      0% {
-        transform: perspective(300px) rotateY(0deg);
-      }
-      15%, 100% {
-        transform: perspective(300px) rotateY(360deg);
-      }
-    }
-
-    .offset4{
-     margin-top:-500px;
-    }
-  </style>
-  <!-- fin de script de card return -->
-    </head>
-    <body>
-    
-
- <div class="wrapper">
-         <header>
-            <nav>
-               <div class="menu-icon"><i class="fa fa-bars fa-2x"></i></div>
-               
-               <div class="logo">
-               <img class="mb-2" src="{{ asset('phoenix.png') }}" alt="" width="36" height="36">
-                 
-               </div>
-               <div class="menu">
+        <body>
+          <div class="wrapper">
+            <header>
+              <nav>
+                <div class="menu-icon"><i class="fa fa-bars fa-2x"></i></div>
+                <div class="logo">
+                  <img class="mb-2" src="{{ asset('ressources/phoenix.png') }}" alt="logo" width="36" height="36">
+                </div>
+                <div class="menu">
                   <ul>
-                     {% if not app.user %}
-                     <li class="nav-item">
-                     <a href="{{ path('home') }}">Roleplay</a></li>
-                          <li class="nav-item">
-                            <a href="{{ path('security_login') }}" class="nav-link">Connexion</a>
-                          </li>
-                          <li class="nav-item">
-                            <a href="{{ path('security_registration') }}" class="nav-link">Inscription</a>
-                          </li>
-                        {% else %}
-                        <li class="nav-item">
-                     <a href="{{ path('home') }}">Roleplay</a></li>
-                        <li class="nav-item ">
-                          <a class="nav-link" href="{{ path('player') }}">Joueur <span class="sr-only">(current)</span></a>
-                        
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{ path('monster') }}">monstre</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{ path('skill') }}">Compétence</a>
-                        </li>
-                       
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{ path('quest') }}">Quest</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{ path('objet') }}">Objet</a>
-                        </li>
-                        <!--<li class="nav-item">
-                          <a class="nav-link" href="/skill/ajout/1">Add skill player</a>
-                        </li>-->
-                          <li class="nav-item">
-                              <a href="{{ path('security_logout') }}" class="nav-link">Déconnexion</a>
-                            </li>
-                        {% endif %}
+                    {% if not app.user %}
+                      <li class="nav-item">
+                        <a href="{{ path('home') }}" title="index">Roleplay</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ path('security_login') }}" class="nav-link" title="login">Connexion</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ path('security_registration') }}" class="nav-link" title="register">Inscription</a>
+                      </li>
+                    {% else %}
+                      <li class="nav-item">
+                        <a href="{{ path('home') }}" title="index">Roleplay</a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link" href="{{ path('player') }}" title="player">Joueur <span class="sr-only">(current)</span></a>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ path('monster') }}" title="monster">monstre</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ path('skill') }}" title="skill">Compétence</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ path('quest') }}" title="quest">Quête</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ path('objet') }}" title="object">Objet</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ path('account') }}" class="nav-link" title="account">Profil</a>
+                      </li>
+                    {% endif %}
                   </ul>
                </div>
-            </nav>
-         </header>
-         
-      </div>
-
-                        
-                      </ul>
-                      
-                    </div>
-                  </nav>
-                  <!--<div class="container">-->
-                        
-                  <!--</div>-->
-        {% block body %}{% endblock %}
-
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="row">
-          <div class="col-12 col-md">
-            <img class="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-            <small class="d-block mb-3 text-muted">© 2017-2018</small>
+              </nav>
+            </header>
           </div>
-          <div class="col-6 col-md">
-            <h5>Features</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Cool stuff</a></li>
-              <li><a class="text-muted" href="#">Random feature</a></li>
-              <li><a class="text-muted" href="#">Team feature</a></li>
-              <li><a class="text-muted" href="#">Stuff for developers</a></li>
-              <li><a class="text-muted" href="#">Another one</a></li>
-              <li><a class="text-muted" href="#">Last time</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>Resources</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Resource</a></li>
-              <li><a class="text-muted" href="#">Resource name</a></li>
-              <li><a class="text-muted" href="#">Another resource</a></li>
-              <li><a class="text-muted" href="#">Final resource</a></li>
-            </ul>
-          </div>
-          <div class="col-6 col-md">
-            <h5>About</h5>
-            <ul class="list-unstyled text-small">
-              <li><a class="text-muted" href="#">Team</a></li>
-              <li><a class="text-muted" href="#">Locations</a></li>
-              <li><a class="text-muted" href="#">Privacy</a></li>
-              <li><a class="text-muted" href="#">Terms</a></li>
-            </ul>
-          </div>
-        </div>
-      </footer>
 
-    
-    </body>
-    
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/navbar.js') }}"></script>
-    <script src="{{ asset('js/fadestart.js') }}"></script>
+          {% block body %}{% endblock %}
 
-  
+          <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+              <div class="col-12 col-md">
+                <img class="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="bootstrap-image" width="24" height="24">
+                <small class="d-block mb-3 text-muted">© 2017-2019</small>
+              </div>
+              <div class="col-6 col-md">
+                <h5>Création</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="{{ path('quest_create', {id: 0}) }}" title="create-quest">Créer une quête </a></li>
+                  <li><a class="text-muted" href="{{ path('player_create', {id: 0}) }}" title="create-player">Créer un personnage</a></li>
+                  <li><a class="text-muted" href="{{ path('monster_create', {id: 0}) }}" title="create-monster">Créer un monstre</a></li>
+                  <li><a class="text-muted" href="{{ path('skill_create', {id: 0}) }}" title="create-skill">Créer une compétence</a></li>
+                  <li><a class="text-muted" href="{{ path('objet_create', {id: 0}) }}" title="create-object">Créer un objet</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <h5>Resources</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="#">Resource</a></li>
+                  <li><a class="text-muted" href="#">Resource name</a></li>
+                  <li><a class="text-muted" href="#">Another resource</a></li>
+                  <li><a class="text-muted" href="#">Final resource</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <h5>About</h5>
+                <ul class="list-unstyled text-small">
+                  <li><a class="text-muted" href="#">Team</a></li>
+                  <li><a class="text-muted" href="#">Locations</a></li>
+                  <li><a class="text-muted" href="#">Privacy</a></li>
+                  <li><a class="text-muted" href="#">Terms</a></li>
+                </ul>
+              </div>
+            </div>
+          </footer>
+        </body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/navbar.js') }}"></script>
+        <script src="{{ asset('js/fadestart.js') }}"></script>
         {% block javascripts %}{% endblock %}
-  
-  
-  
-</html>
+      </html>

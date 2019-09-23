@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Player;
+use App\Entity\PlayerSearch;
+use Doctrine\ORM\Query;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -19,8 +21,51 @@ class PlayerRepository extends ServiceEntityRepository
         parent::__construct($registry, Player::class);
     }
 
+    public function findAllWithSkill(PlayerSearch $search) : Query
+    {
+         $query = $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(100)
+            ->leftjoin('m.skillbdd', 'ms')
+            ->addSelect('ms')
+            //->getQuery()
+            //->getResult()
+        ;
+        if ($search->getMaxLevel() ) {
+            $query = $query->andWhere('m.level < :maxlevel')
+                        ->setParameter('maxlevel', $search->getMaxLevel());
+        }
+        if ($search->getMinLevel() ) {
+            $query = $query->andWhere('m.level >= :minlevel')
+                        ->setParameter('minlevel', $search->getMinLevel());
+        }
+        if ($search->getlikeAsc() ) {
+            $query = $query->addOrderBy('m.likes', 'ASC');
+        }
+        if ($search->getlikeDesc() ) {
+            $query = $query->addOrderBy('m.likes', 'DESC');
+        }
+        if ($search->getnameAsc() ) {
+            $query = $query->addOrderBy('m.name', 'ASC');
+        }
+        if ($search->getnameDesc() ) {
+            $query = $query->addOrderBy('m.name', 'DESC');
+        }
+        if ($search->getdateAsc() ) {
+            $query = $query->addOrderBy('m.created_at', 'ASC');
+        }
+        if ($search->getdateDesc() ) {
+            $query = $query->addOrderBy('m.created_at', 'DESC');
+        }
+        /*if ($search->getRegex() ) {
+            $query = $query->andWhere('m.hp >= :minhp')
+                        ->setParameter('minhp', $search->getMinHp());
+        }*/
+        return $query->getQuery();
+    }
 
-    public function findAllWithSkill()
+
+    /*public function findAllWithSkill()
     {
         return $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
@@ -30,7 +75,7 @@ class PlayerRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
-    }
+    }*/
 
     
 

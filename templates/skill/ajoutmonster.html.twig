@@ -1,26 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>ajout d'une compétence</h1>
-
-    <h2>Toutes vos compétences : </h2>
-    {% set nbrcomp = 0 %}
-    
-    {% for skillnow in skill %}
-    {% if player in skillnow.players  %}  
-            {% set nbrcomp = nbrcomp+1 %}      
-            <p>Compétence  : {{ skillnow.name }}</p>
-            {% endif %}
-            {% endfor %}
-    <br><br>
-    {% if nbrcomp < 3 %} <!-- ont peut ajouter une comp -->{% endif %}
-    
-
-    {% for skillnow in skill %}
-            
-            <p>Compétence  : {{ skillnow.name }}</p>
-            
-            {% endfor %}
+        <h1>ajout d'une compétence</h1>
+        <h2>Toutes vos compétences : </h2>
+        {% set nbrcomp = 0 %}
+        {% for skillnow in skill %}
+                {% if player in skillnow.players  %}  
+                        {% set nbrcomp = nbrcomp+1 %}      
+                        <p>Compétence  : {{ skillnow.name }}</p>
+                {% endif %}
+        {% endfor %}
+        <br><br>
+        {% if nbrcomp < 3 %} <!-- ont peut ajouter une comp -->{% endif %}
+        {% for skillnow in skill %}
+                <p>Compétence  : {{ skillnow.name }}</p>
+        {% endfor %}
     
 
 {% endblock %}

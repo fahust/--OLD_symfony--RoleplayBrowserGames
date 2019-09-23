@@ -1,38 +1,31 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}RollCardPlay - Page de connexion{% endblock %}
+
 {% block body %}
 
-<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url(http://2.bp.blogspot.com/-D_irZ9f_5mU/UvD9NPUP4GI/AAAAAAAAFfg/pVUhhRuyDUM/s1600/wallpaper-fantasy-sepik.jpg); background-size: cover;background-position: center;
-">
-        <div class="col-md-6 px-0" style="padding: 50px;">
-          <h1 class="display-4 font-italic">Connexion</h1>
-          <p class="lead my-3"></p>
-          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
-          
+        <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper-fantasy-sepik-min.jpg') }}); background-size: cover;background-position: center;">
+                <div class="col-md-6 px-0" style="padding: 50px;">
+                        <h1 class="display-4 font-italic">Connexion</h1>
+                        <p class="lead my-3"></p>
+                </div>
         </div>
-      </div>
-    <div class="container" style="">
-    
-
-
-{% for message in app.flashes('succes') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
+        <div class="container" style="">
+        {% for message in app.flashes('succes') %}
+                <div class="alert alert-success">
+                        {{ message }}
+                </div>
         {% endfor %}
-
-
-
-    <form action="{{ path('security_login') }}" method="post">
-            <div class="form-group">
-                    <input placeholder="Adresse email ..." required     name="_username" type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                    <input placeholder="Mot de passe ..." required name="_password" type="password" class="form-control">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-success">Connexion !</button>
-            </div>
-    </form>
+        <form action="{{ path('security_login') }}" method="post">
+                <div class="form-group">
+                        <input placeholder="Adresse email ..." required     name="_username" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                        <input placeholder="Mot de passe ..." required name="_password" type="password" class="form-control">
+                </div>
+                <div class="form-group">
+                        <button type="submit" class="btn btn-success">Connexion !</button>
+                </div>
+        </form>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 <form method="post" action="{{ path('skill.delete', {id: skills.id}) }}" style= display:inline-block onsubmit="return confirm('Êtes vous vraiment sur ?')">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ skills.id) }}">
-                    <button class="btn btn-danger">Supprimer</button>
-                </form>
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ skills.id) }}">
+    <button class="btn btn-danger" onclick="return confirm('êtes vous sur de vouloir supprimer ?')">Supprimer</button>
+</form>

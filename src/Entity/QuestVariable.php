@@ -4,13 +4,16 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints\Range;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestVariableRepository")
+ * @Vich\Uploadable
  */
 class QuestVariable
 {
@@ -127,8 +130,44 @@ class QuestVariable
      * @ORM\ManyToOne(targetEntity="App\Entity\Objet", inversedBy="questvariablesrequismany")
      */
     private $questrequismany;
-
     
+    /**
+    * @ORM\Column(type="datetime")
+    */
+   private $updatedAt;
+
+   /**
+    * NOTE: This is not a mapped field of entity metadata, just a simple property.
+    * 
+    * @Vich\UploadableField(mapping="monster", fileNameProperty="imageName")
+    * @ORM\Column( nullable=true)
+    * 
+    * @var File
+    */
+   private $imageFile;
+
+   /**
+    * @ORM\Column(type="string", length=255, nullable=true)
+    *
+    * @var string
+    */
+   private $imageName;
+
+   /**
+    * @ORM\ManyToMany(targetEntity="App\Entity\Likes", mappedBy="quests")
+    */
+   private $likes;
+
+   /**
+    * @ORM\ManyToMany(targetEntity="App\Entity\Dislikes", mappedBy="quests")
+    */
+   private $dislikes;
+
+   /**
+    * @ORM\Column(type="datetime")
+    */
+   private $createdAt;
+
     
 
 
@@ -138,6 +177,9 @@ class QuestVariable
     {
         $this->monsters = new ArrayCollection();
         $this->objetreussite = new ArrayCollection();
+        $this->updateAt = new \Datetime();
+        $this->likes = new ArrayCollection();
+        $this->dislikes = new ArrayCollection();
     }
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
@@ -324,6 +366,18 @@ class QuestVariable
         return $this;
     }
 
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Monster[]
      */
@@ -437,6 +491,138 @@ class QuestVariable
     }
 
     
+    
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    /**
+     * @return Collection|Likes[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Likes $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->addQuest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Likes $like): self
+    {
+        if ($this->likes->contains($like)) {
+            $this->likes->removeElement($like);
+            $like->removeQuest($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Dislikes[]
+     */
+    public function getDislikes(): Collection
+    {
+        return $this->dislikes;
+    }
+
+    public function addDislike(Dislikes $dislike): self
+    {
+        if (!$this->dislikes->contains($dislike)) {
+            $this->dislikes[] = $dislike;
+            $dislike->addQuest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDislike(Dislikes $dislike): self
+    {
+        if ($this->dislikes->contains($dislike)) {
+            $this->dislikes->removeElement($dislike);
+            $dislike->removeQuest($this);
+        }
+
+        return $this;
+    }
+
+
+    /** 
+     * Permet de savoir si cet article est liké par un utilisateur
+     * 
+    */
+
+    
+    public function isLikedByUser(User $user)  {
+        foreach($this->likes as $like) {
+            if($like->getByuser() === $user) return $like;
+        }
+
+        return false;
+    }
+
+    public function getNbrlike(): ?int
+    {
+        return $this->nbrlike;
+    }
+
+    public function setNbrlike(int $nbrlike): self
+    {
+        $this->nbrlike = $nbrlike;
+
+        return $this;
+    }
+
+
 
     
 

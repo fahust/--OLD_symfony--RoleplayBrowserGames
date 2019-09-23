@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RollCardPlay - Page de compte{% endblock %}
+
+{% block body %}
+  <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper-fantasy-sepik-min.jpg') }}); background-size: cover;background-position: center;">
+    <div class="col-md-6 px-0" style="padding: 50px;">
+      <h1 class="display-4 font-italic">édition de compte</h1>
+      <p class="lead my-3"></p>
+    </div>
+  </div>
+  <div class="container" style="">
+    {% for message in app.flashes('succes') %}
+      <div class="alert alert-success">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {{ form_start(form) }}
+      {{ form_row(form.username, {'label': 'Nom d\'utilisateur','attr': {'placeholder': 'Nom d\'utilisateur ...'}}) }}
+      {{ form_row(form.email, {'label': 'Adresse email','attr': {'placeholder': 'Email de l\'utilisateur ...'}}) }}
+      {{ form_row(form.password, {'label': 'Mot de passe de l\'utilisateur','attr': {'placeholder': 'Insérer votre mot de passe ...'}}) }}
+      {{ form_row(form.confirm_password, {'label': 'Confirmation du mot de passe','attr': {'placeholder': 'Répétez votre mot de passe'}}) }}
+      <button type="submit" class="btn btn-success">Editer</button>
+    {{ form_end(form) }}
+    <br><br>
+    <a href="{{ path('security_logout') }}" class="btn btn-danger" title="logout">Déconnexion</a>
+    <a class="btn btn-danger" href="{% if app.user %}{{ path('delete_account') }}{% else %}{{ path('security_registration') }}{% endif %}" onclick="return confirm('êtes vous sur de vouloir supprimer votre compte ?')" title="delete-account"> Supprimer le compte </a>
+  </div>
+{% endblock %}
+

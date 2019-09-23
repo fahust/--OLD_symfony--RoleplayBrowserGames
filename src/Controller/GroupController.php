@@ -20,10 +20,6 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class GroupController extends AbstractController
 {
     
-
-    
-
-
     /**
      * @Route("/groupe/new", name="groupe_create")
      */
@@ -40,7 +36,6 @@ class GroupController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
-
 
     /**
      * @Route("/sendmail", name="groupe_create")

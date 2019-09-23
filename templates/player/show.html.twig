@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}RollCardPlay - Page du joueur {{ player.name }}{% endblock %}
+
 {% block body %}
-<article>
+    <article>
         <h2>{{ player.name }}</h2>
         <div class="metadata">Créer le {{ player.createdAt | date('d/m/Y') }}</div>
         <div class="content">
-            <img src="{{ player.image }}" alt="">
+            <img src="{{ player.image }}" alt="image-du-joueur">
             <p>niveau du joueur : {{ player.level }}</p>
         </div>
     </article>

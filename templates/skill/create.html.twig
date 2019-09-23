@@ -1,71 +1,80 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}RollCardPlay - Page de création des compétences{% endblock %}
+
 {% form_theme formSkill 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
 
-<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url(http://2.bp.blogspot.com/-D_irZ9f_5mU/UvD9NPUP4GI/AAAAAAAAFfg/pVUhhRuyDUM/s1600/wallpaper-fantasy-sepik.jpg); background-size: cover;background-position: center;
-">
-        <div class="col-md-6 px-0" style="padding: 50px;">
-          <h1 class="display-4 font-italic">Création d'une compétence</h1>
-          <p class="lead my-3"></p>
-          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
+  <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper-fantasy-sepik-min.jpg') }}); background-size: cover;background-position: center;">
+    <div class="col-md-6 px-0" style="padding: 50px;">
+      <h1 class="display-4 font-italic">Création d'une compétence</h1>
+        <p class="lead my-3"></p>
+    </div>
+  </div>
+
+  {% for message in app.flashes('succes') %}
+    <div class="alert alert-success">
+      {{ message }}
+    </div>
+  {% endfor %}
+  <div class="row">
+    <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
+    <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
+    <p>Bien qu'il n'y ait virtuellement peu de limite, les compétences les plus courants devrait être configuré de la façon suivante :</p>
+            <ul>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La compétence est divisé en quatre possibilité qui peuvent intéragir toutes les quatres sur la vie, l'attaque, les dégats, l'esquive,la défense de la cible;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La première possibilité est le succès, cela interviens en cas d'un lancé de dé positif ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La deuxième possibilité est l'échec, cela interviens en cas d'un lancé de dé négatif, dans ce cas rien ne ce passe;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La troisième possibilité est l'échec critique, cela interviens en cas d'un lancé de dé entre 0 et 10;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La quatrième possibilité est le succès critique, cela interviens en cas d'un lancé de dé entre 90 et 100;</li>
+            </ul>
+      {{ form_start(formSkill) }}
+        <div class="card-body">
+          <h5 class="card-title">{{ form_row(formSkill.name, {'attr': {'placeholder': "Nom de la compétence";'label' : 'Nom'}}) }}</h5>
+          <p class="card-text"> {{ form_row(formSkill.description, {'attr': {'placeholder': "Description de la compétence"}}) }}</p>
+          <table align="center">
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.skdgt, {'attr': {'placeholder': "Gain de dégat de la compétence";'label' : 'Dégat Succès'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skmana, {'attr': {'placeholder': "Consomation basique de mana de la compétence";'label' : 'Mana Succès'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skatk, {'attr': {'placeholder': "Dégat basique de la compétence";'label' : 'Attaque Succès'}}) }}</p></td>
+            </tr>
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.skesq, {'attr': {'placeholder': "Gain d'esquive basique de la compétence";'label' : 'Esquive Succès'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skdef, {'attr': {'placeholder': "Gain de défense basique de la compétence";'label' : 'Défense Succès'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skhp, {'attr': {'placeholder': "Gain de vie basique de la compétence";'label' : 'Soin Succès'}}) }}</p></td>
+            </tr>
+            <p class="card-text">{{ form_row(formSkill.dialsc, {'attr': {'placeholder': "Dialogue en cas de succès critique";'label' : 'Dialogue Succès Critique'}}) }}</p>
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.atksc, {'attr': {'placeholder': "Dégat de succès critique de la compétence";'label' : 'Attaque Succès Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.dgtsc, {'attr': {'placeholder': "Gain de dégat de succès critique de la compétence";'label' : 'Dégat Succès Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.manasc, {'attr': {'placeholder': "Consomation de mana de succès critique de la compétence";'label' : 'Mana Succès Critique'}}) }}</p></td>
+            </tr>
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.esqsc, {'attr': {'placeholder': "Gain d'esquive de succès critique de la compétence";'label' : 'Esquive Succès Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.defsc, {'attr': {'placeholder': "Gain de défense de succès critique de la compétence";'label' : 'Défense Succès Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.hpsc, {'attr': {'placeholder': "Gain de vie de succès critique de la compétence";'label' : 'Soin Succès Critique'}}) }}</p></td>
+            </tr>
+            <p class="card-text">{{ form_row(formSkill.dialec, {'attr': {'placeholder': "Dialogue d'échec critique de la compétence";'label' : 'Dialogue Echec Critique'}}) }}</p>
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.dgtec, {'attr': {'placeholder': "Perte de dégat d'echec critique de la compétence";'label' : 'Dégat Echec Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.manaec, {'attr': {'placeholder': "Consomation de mana d'echec critique de la compétence";'label' : 'Mana Echec Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.atkec, {'attr': {'placeholder': "Attaque contre le lanceur d'echec critique de la compétence";'label' : 'Attaque Echec Critique'}}) }}</p></td>
+            </tr>
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.esqec, {'attr': {'placeholder': "Perte d'esquive d'echec critique de la compétence";'label' : 'Esquive Echec Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.defec, {'attr': {'placeholder': "Perte de défense d'echec critique de la compétence";'label' : 'Défense Echec Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.hpec, {'attr': {'placeholder': "Gain de vie d'echec critique de la compétence";'label' : 'Soin Echec Critique'}}) }}</p></td>
+            </tr>
+          </table>
         </div>
-      </div>
-
-      
-{% for message in app.flashes('succes') %}
-        <div class="alert alert-success">
-            {{ message }}
+        <div class="card-body">
         </div>
-        {% endfor %}
-
-
-                <div class="row">
-                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
-                        </div>
-                        <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
-            {{ form_start(formSkill) }}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ form_row(formSkill.name, {'attr': {'placeholder': "Nom du monstre"}}) }}</h5>
-                                <p class="card-text">{{ form_row(formSkill.image, {'attr': {'placeholder': "Point de vie du monstre"}}) }}</p>
-                                <p class="card-text"> {{ form_row(formSkill.description, {'attr': {'placeholder': "Dégat d'attaque du monstre"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.skdgt, {'attr': {'placeholder': "Dégat magique"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.skmana, {'attr': {'placeholder': "Esquive du monstre"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.skatk, {'attr': {'placeholder': "Défense du monstre"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.skesq, {'attr': {'placeholder': "description"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.skdef, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.skhp, {'attr': {'placeholder': "description"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.dialsc, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.atksc, {'attr': {'placeholder': "description"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.dgtsc, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.manasc, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.esqsc, {'attr': {'placeholder': "description"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.defsc, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.hpsc, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.dialec, {'attr': {'placeholder': "description"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.dgtec, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.manaec, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.atkec, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.esqec, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.defec, {'attr': {'placeholder': "Image"}}) }}</p>
-                                <p class="card-text">{{ form_row(formSkill.hpec, {'attr': {'placeholder': "Image"}}) }}</p>
-
-                            </div>
-
-                            
-            
-                            <div class="card-body">
-                            <!-- button form -->
-                            </div>
-                        {{ form_end(formSkill) }}
-                        </div>
-                        <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
-                        </div>
-            
-            
-
-                </div>
+      {{ form_end(formSkill) }}
+    </div>
+    <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" >
+    </div>
+  </div>
 
 
 

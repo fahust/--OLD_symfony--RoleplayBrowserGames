@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\Skill;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use App\Entity\SkillSearch;
 use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Skill|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,29 @@ class SkillRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Skill::class);
+    }
+
+    public function findAllWithSearch(SkillSearch $search) : Query
+    {
+         $query = $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(100)
+            //->getQuery()
+            //->getResult()
+        ;
+        if ($search->getMaxHp() ) {
+            $query = $query->andWhere('m.skdgt < :skdgt')
+                        ->setParameter('skdgt', $search->getMaxHp());
+        }
+        if ($search->getMinHp() ) {
+            $query = $query->andWhere('m.skdgt >= :skdgt')
+                        ->setParameter('skdgt', $search->getMinHp());
+        }
+        /*if ($search->getRegex() ) {
+            $query = $query->andWhere('m.hp >= :minhp')
+                        ->setParameter('minhp', $search->getMinHp());
+        }*/
+        return $query->getQuery();
     }
 
     public function findByPlayers($playerid){

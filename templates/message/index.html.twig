@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PlayerController!{% endblock %}
+
+{% block body %}
+
+<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url(https://cdn.desktopwallpapers4.me/wallpapers/fantasy/2880x1800/2/17974-warrior-battling-the-giant-monsters-2880x1800-fantasy-wallpaper.jpg); background-size: cover;background-position: center;
+">
+
+        <div class="col-md-6 px-0" style="padding: 50px;">
+          <h1 class="display-4 font-italic">Page des messages</h1>
+          <p class="lead my-3">Sur cet page vous pourrez visualiser, editer, supprimer ou créer de nouveau monstre.</p>
+          <!--<p class="lead mb-0"><a href="{{ path('monster_create', {id: 0}) }}" class="text-white font-weight-bold">Créer un monstre</a></p>-->
+          <a class="btn btn-primary" href="{{ path('monster_create', {id: 0}) }}">Créer un monstre</a>
+        </div>
+      </div>
+    <div class="container" style="">
+    <p class="lead my-3">Les monstres présents sont utilisable dans la création de quête, Touts les monstres validé pourrons être utilisé par touts les joueurs.
+    Bien sur les monstres ne peuvent êtes supprimé et edité que par leur créateur ou bien des admins. </p>
+
+
+        {% for message in app.flashes('succes') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+            {{ form_start(form) }}
+            <div class="form-row">
+                <div class="col">
+                {{ form_row(form.maxHp) }}
+                </div>
+                <div class="col">
+                {{ form_row(form.minHp) }}
+                </div>
+                <div class="col">
+                <button class="btn btn-primary">rechercher</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+            <div class="row"  id="div3" style="display:none;">
+            <div class="navigation col-12" style="display: inline-block;">
+                {{ knp_pagination_render(messages) }}
+            </div>
+
+        {% for message in messages %}
+
+        {% endfor %}
+
+
+
+
+
+<div class="navigation col-12" style="display: inline-block;">
+                {{ knp_pagination_render(messages) }}
+            </div>
+            </div>
+            </div>
+
+
+    
+    
+
+
+{% endblock %}

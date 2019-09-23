@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Objet;
+use App\Entity\ObjetSearch;
+use Doctrine\ORM\Query;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,6 +19,47 @@ class ObjetRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Objet::class);
+    }
+
+    public function findAllWithSkill(ObjetSearch $search) : Query
+    {
+         $query = $this->createQueryBuilder('m')
+            ->orderBy('m.id', 'ASC')
+            ->setMaxResults(100)
+            //->getQuery()
+            //->getResult()
+        ;
+        if ($search->getMaxHp() ) {
+            $query = $query->andWhere('m.hp < :maxhp')
+                        ->setParameter('maxhp', $search->getMaxHp());
+        }
+        if ($search->getMinHp() ) {
+            $query = $query->andWhere('m.hp >= :minhp')
+                        ->setParameter('minhp', $search->getMinHp());
+        }
+        if ($search->getlikeAsc() ) {
+            $query = $query->addOrderBy('m.likes', 'ASC');
+        }
+        if ($search->getlikeDesc() ) {
+            $query = $query->addOrderBy('m.likes', 'DESC');
+        }
+        if ($search->getnameAsc() ) {
+            $query = $query->addOrderBy('m.name', 'ASC');
+        }
+        if ($search->getnameDesc() ) {
+            $query = $query->addOrderBy('m.name', 'DESC');
+        }
+        if ($search->getdateAsc() ) {
+            $query = $query->addOrderBy('m.created_at', 'ASC');
+        }
+        if ($search->getdateDesc() ) {
+            $query = $query->addOrderBy('m.created_at', 'DESC');
+        }
+        /*if ($search->getRegex() ) {
+            $query = $query->andWhere('m.hp >= :minhp')
+                        ->setParameter('minhp', $search->getMinHp());
+        }*/
+        return $query->getQuery();
     }
 
     public function createAlphabeticalQueryBuilder()

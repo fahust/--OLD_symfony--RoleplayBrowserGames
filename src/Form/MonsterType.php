@@ -8,16 +8,16 @@ use App\Form\SkillType;
 use App\Repository\SkillRepository;
 use Symfony\Component\Form\AbstractType;
 //use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\PropertyAccess\PropertyPath;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 //use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class MonsterType extends AbstractType
@@ -25,13 +25,15 @@ class MonsterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name',TextType::class,  [
+                'attr' => array('style' => 'width: 200px')])
             ->add('hp')
             ->add('atk')
             ->add('dgt')
             ->add('esq')
             ->add('def')
-            ->add('description')
+            ->add('description',TextType::class,  [
+                'attr' => array('style' => 'height: 100px')])
             ->add('image')
             ->add('imageFile', VichFileType::class, [
                 'download_link'     => false,

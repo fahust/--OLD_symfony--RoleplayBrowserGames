@@ -26,7 +26,7 @@ class MonsterRepository extends ServiceEntityRepository
          $query = $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
             ->setMaxResults(100)
-            ->innerJoin('m.skillbdd', 'ms')
+            ->leftjoin('m.skillbdd', 'ms')
             ->addSelect('ms')
             //->getQuery()
             //->getResult()
@@ -38,6 +38,28 @@ class MonsterRepository extends ServiceEntityRepository
         if ($search->getMinHp() ) {
             $query = $query->andWhere('m.hp >= :minhp')
                         ->setParameter('minhp', $search->getMinHp());
+        }
+        if ($search->getMaxHp() ) {
+            $query = $query->andWhere('m.hp < :maxhp')
+                        ->setParameter('maxhp', $search->getMaxHp());
+        }
+        if ($search->getlikeAsc() ) {
+            $query = $query->addOrderBy('m.likes', 'ASC');
+        }
+        if ($search->getlikeDesc() ) {
+            $query = $query->addOrderBy('m.likes', 'DESC');
+        }
+        if ($search->getnameAsc() ) {
+            $query = $query->addOrderBy('m.name', 'ASC');
+        }
+        if ($search->getnameDesc() ) {
+            $query = $query->addOrderBy('m.name', 'DESC');
+        }
+        if ($search->getdateAsc() ) {
+            $query = $query->addOrderBy('m.created_at', 'ASC');
+        }
+        if ($search->getdateDesc() ) {
+            $query = $query->addOrderBy('m.created_at', 'DESC');
         }
         return $query->getQuery();
     }

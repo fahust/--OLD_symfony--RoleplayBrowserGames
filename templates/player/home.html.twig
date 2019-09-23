@@ -1,192 +1,169 @@
 {% extends 'base.html.twig' %}
      
 {% block body %}
-    
-
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1" class=""></li>
-          <li data-target="#myCarousel" data-slide-to="2" class=""></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active" style="background-image:url({{ quest1.image }});background-size: cover;background-position: center;">
-            <!--https://newevolutiondesigns.com/images/freebies/fantasy-wallpaper-40.jpg
-            <img class="first-slide" src="https://newevolutiondesigns.com/images/freebies/fantasy-wallpaper-40.jpg" alt="First slide">-->
-            <div class="container">
-              <div class="carousel-caption text-left">
-                <h1 style="padding:15px;text-shadow: 2px 2px 20px red, 0 0 2em green, 0 0 2em blue;
-            font-size: 22px;">{{ quest1.title }}</h1>
-                <p style="padding:15px;text-shadow: 2px 2px 20px red, 0 0 2em green, 0 0 2em blue;
-            font-size: 22px;">{{ quest1.description|slice(0, 350) ~ '...' }}</p>
-                <p style="padding:15px;text-shadow: 2px 2px 20px red, 0 0 2em green, 0 0 2em blue;
-            font-size: 22px;"><a class="btn btn-lg btn-primary" href="#" role="button">Lancer la quête</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item" style="background-image:url({{ quest2.image }});background-size: cover;background-position: center;">
-            <!--
-            <img class="second-slide" src="https://www.pixelstalk.net/wp-content/uploads/2016/04/Fantasy-wallpapers-HD.jpg" alt="Second slide">-->
-            <div class="container">
-              <div class="carousel-caption">
-                <h1 style="padding:15px;text-shadow: 1px 1px 100px red, 0 0 1em green, 0 0 5em blue;
-            font-size: 22px;">{{ quest2.title }}</h1>
-                <p style="padding:15px;text-shadow: 1px 1px 100px red, 0 0 1em green, 0 0 5em blue;
-            font-size: 22px;">{{ quest2.description|slice(0, 350) ~ '...' }}</p>
-                <p style="padding:15px;text-shadow: 1px 1px 100px red, 0 0 1em green, 0 0 5em blue;
-            font-size: 22px;"><a class="btn btn-lg btn-primary" href="#" role="button">Lancer la quête</a></p>
-              </div>
-            </div>
-          </div>
-          <div class="carousel-item" style="background-image:url({{ quest3.image }});background-size: cover;background-position: center;">
-            <!--<img class="third-slide" src="http://www.biocenit.cat/mypics/97/971969/fantasy-wallpaper-1920x1080.jpg" alt="Third slide">-->
-            <div class="container">
-              <div class="carousel-caption text-right">
-                <h1 style="padding:15px;text-shadow: 1px 1px 50px red, 0 0 5em green, 0 0 1em blue;
-            font-size: 22px;">{{ quest3.title }}</h1>
-                <p style="padding:15px;text-shadow: 1px 1px 50px red, 0 0 5em green, 0 0 1em blue;
-            font-size: 22px;">{{ quest3.description|slice(0, 350) ~ '...' }}</p>
-                <p style="padding:15px;text-shadow: 1px 1px 50px red, 0 0 5em green, 0 0 1em blue;
-            font-size: 22px;"><a class="btn btn-lg btn-primary" href="#" role="button">Lancer la quête</a></p>
-              </div>
-            </div>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+      <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active" style="background-image:url({% if quest1 %}{{ vich_uploader_asset(quest1, 'imageFile') }}{% endif %});background-size: cover;background-position: center;">
+        <div class="container">
+          <div class="carousel-caption text-left">
+            <h2 style="padding:15px;text-shadow: 2px 2px 20px red, 0 0 2em green, 0 0 2em blue;font-size: 22px;">{% if quest1 %}{{ quest1.title }}{% endif %}</h2>
+            <p style="padding:15px;text-shadow: 2px 2px 20px red, 0 0 2em green, 0 0 2em blue;font-size: 22px;">{% if quest1 %}{{ quest1.description|slice(0, 350) ~ '...' }}{% endif %}</p>
+            <p style="padding:15px;text-shadow: 2px 2px 20px red, 0 0 2em green, 0 0 2em blue;font-size: 22px;">
+              <a class="btn btn-lg btn-primary" href="#" role="button" title="launch-quest">Lancer la quête</a>
+            </p>
           </div>
         </div>
-        <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="sr-only">Next</span>
-        </a>
       </div>
+      <div class="carousel-item" style="background-image:url({% if quest2 %}{{ vich_uploader_asset(quest2, 'imageFile') }}{% endif %});background-size: cover;background-position: center;">
+        <div class="container">
+          <div class="carousel-caption">
+            <h2 style="padding:15px;text-shadow: 1px 1px 100px red, 0 0 1em green, 0 0 5em blue;font-size: 22px;">{% if quest2 %}{{ quest2.title }}{% endif %}</h2>
+            <p style="padding:15px;text-shadow: 1px 1px 100px red, 0 0 1em green, 0 0 5em blue;font-size: 22px;">{% if quest2 %}{{ quest2.description|slice(0, 350) ~ '...' }}{% endif %}</p>
+            <p style="padding:15px;text-shadow: 1px 1px 100px red, 0 0 1em green, 0 0 5em blue;font-size: 22px;">
+              <a class="btn btn-lg btn-primary" href="#" role="button" title="launch-quest">Lancer la quête</a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item" style="background-image:url({% if quest3 %}{{ vich_uploader_asset(quest3, 'imageFile') }}{% endif %});background-size: cover;background-position: center;">
+        <div class="container">
+          <div class="carousel-caption text-right">
+            <h2 style="padding:15px;text-shadow: 1px 1px 50px red, 0 0 5em green, 0 0 1em blue;font-size: 22px;">{% if quest3 %}{{ quest3.title }}{% endif %}</h2>
+            <p style="padding:15px;text-shadow: 1px 1px 50px red, 0 0 5em green, 0 0 1em blue;font-size: 22px;">{% if quest3 %}{{ quest3.description|slice(0, 350) ~ '...' }}{% endif %}</p>
+            <p style="padding:15px;text-shadow: 1px 1px 50px red, 0 0 5em green, 0 0 1em blue;font-size: 22px;">
+              <a class="btn btn-lg btn-primary" href="#" role="button" title="launch-quest">Lancer la quête</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev" title="previous-quest">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next" title="previous-quest">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
 
-
-
-
-
-
-
-
-
-    <div class="container"><h1></h1>
-        <div class="row">
-        
-				<div class="col-md-6 ml1" style="padding: 50px;">
-
-                
-                <h3 class="w3l_head">Introduction</h3>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 ml1" style="padding: 50px;">
+        <h1 class="w3l_head">RollCardPlay</h1>
 				<p class="w3ls_head_para"></p>
-					
-					<p>Vous êtes ici dans un jeu navigateur participatif, ou chaque utilisateur peut créer son histoire et la partager avec les autres utilisateurs. 
-						Accéder a un mécanisme simple pour créer des quêtes, personnages, compétences, monstres et objets, qui seront immédiatement partagé avec les autres joueurs.
-            Vous pouvez donc participer à de nombreuses quêtes établit a l'avance par d'autres joueurs.</p>
-            <h4>Mécanique de jeu</h4>
-            <p>Soyez avant toute choses prêt a perdre vos personnages
-            Parcourez des terres et histoires imaginaires
-            évidement tout comportement irréspectueux envers la communauté sera lourdement sanctionné par une supression définitive de tout vos personnages pour un plaisir de jeu absolu de ce voulant respecter les régles et autrui</p>
-				</div>
-				<div class="col-md-6 ">
-					<div class=""  >
-                    <img src="http://myzeroone.com/myzeroone/16921-beautiful-fantasy-wallpaper.jpg"   style="float:left;width:100%;position: relative;">
-						<img src="https://i.pinimg.com/originals/30/82/0b/30820b8e76228f64036b26f77bfad634.jpg" style="float:right;width:50%;top:-150px;right:-50px;position: relative;">
-						
-							
-						
-					</div>
+				<p>Vous êtes ici dans un jeu navigateur participatif, ou chaque utilisateur peut créer son histoire et la <strong>partager</strong> avec les autres utilisateurs. 
+						Accéder a un mécanisme simple pour créer des <b>quêtes</b>, <b>personnages</b>, <b>compétences</b>, <b>monstres</b> et <b>objets</b>, qui seront immédiatement partagé avec les autres joueurs.
+            Vous pouvez donc <strong>participer</strong> à de nombreuses quêtes établit a l'avance par d'autres joueurs.</p>
+        <h4>Mécanique de jeu</h4>
+        <p>Soyez avant toute choses prêt a perdre vos personnages
+            Parcourez des terres et histoires imaginaires écrites par vous ou d'autres
+            évidement tout comportement irréspectueux envers la communauté sera lourdement sanctionné par une supression définitive de tout vos personnages pour un plaisir de jeu absolu de ce voulant respecter les régles et autrui.</p>
+        <h4>Comment jouer</h4>
+        <p>La première choses a faire est bien sur de créer un compte depuis l'onglet inscription si ce n'est pas fais.
+            Une fois inscrit et connécté il vous faudra créer un personnage depuis l'onglet joueur.
+            A partir de la plusieurs choix s'offre a vous, vous pouvez choisir de participer a la création de compétences, de monstres, ou même de quêtes auxquels d'autres joueur et vous pourrez participer, ou bien commencer dés maintenant a participer a des quêtes déja écrites depuis l'onglet quête.
+            Choisissez enfin la quête qui vous intéresse, vos personnages avec lesquels vous voulez y participer et préparez vous au combat.</p>
+			</div>
+			<div class="col-md-6 ">
+			  <div class="">
+          <img src="{{ asset('ressources/Ug4CGKC-min.jpg') }}"   style="float:left;width:100%;position: relative;">
+          <img src="{{ asset('ressources/30820b8e76228f64036b26f77bfad634-min.jpg') }}" style="float:right;width:50%;top:-150px;right:-50px;position: relative;">
 				</div>
 			</div>
-        </div>
-
-
-
-    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark " style="background-image:url(http://cdn.desktopwallpapers4.me/wallpapers/fantasy/2880x1800/2/17974-warrior-battling-the-giant-monsters-2880x1800-fantasy-wallpaper.jpg); background-size: cover;background-position: center;
+		</div>
+  </div>
+  <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark " style="background-image:url({{ asset('ressources/17974-warrior-battling-the-giant-monsters-2880x1800-fantasy-wallpaper-min.jpg') }}); background-size: cover;background-position: center;
 ">
-        <div class="col-md-6 px-0">
-          <h1 class="display-4 font-italic">Commencer des maintenant a créer</h1>
-          <p class="lead my-3">Partager vos idées en établissant des suites de quêtes complexe pour raconter vos histoires</p>
-          <p class="lead mb-0"><a href="#" class="text-white font-weight-bold"></a></p>
+    <div class="col-md-6 px-0">
+      <h2 class="display-4 font-italic">Commencer des maintenant a <strong>créer</strong></h2>
+        <p class="lead my-3">Partager vos idées en établissant des suites de quêtes complexe pour raconter vos <strong>histoires</strong></p>
+        <p class="lead mb-0"><a href="#" class="text-white font-weight-bold" title="create-quest-page"></a></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+      <div class="slider-ctr">
+        <div class="slider-scroll">
+          <div class="slide">
+            <figure>
+              <a class="nav-link" href="{% if app.user %}{{ path('skill') }}{% else %}{{ path('security_registration') }}{% endif %}" title="skill-page"> 
+                <div class="image-ctr">
+                  <div class="image monster" data-index="">
+                    <div class="light">
+                    </div>
+                    <figcaption><h2><span>Monstres</span></h2></figcaption>
+                  </div>
+                </div>
+              </a>
+            </figure>
+          </div>
         </div>
       </div>
-
-      
-                  
-
-                  
-                <div class="row">
-        
-				<div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
-                <div class="slider-ctr">
-                    <div class="slider-scroll">
-                        <div class="slide">
-                        <figure><a class="nav-link" href="{% if app.user %}{{ path('skill') }}{% else %}{{ path('security_registration') }}{% endif %}"> 
-                            <div class="image-ctr">
-                            <div class="image monster" data-index="">
-                                <div class="light"></div>
-                                <figcaption><h1><span>Monstres</span></h1></figcaption>
-                            </div>
-                            </div></a>
-                        </figure>
-                        </div>
+    </div>
+    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+      <div class="slider-ctr">
+        <div class="slider-scroll">
+          <div class="slide">
+            <figure>
+              <a class="nav-link" href="{% if app.user %}{{ path('player') }}{% else %}{{ path('security_registration') }}{% endif %}" title="player-page"> 
+                <div class="image-ctr">
+                  <div class="image player" data-index="">
+                    <div class="light">
                     </div>
+                    <figcaption><h2><span>Personnages</span></h2></figcaption>
+                  </div>
+                </div>
+              </a>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+      <div class="slider-ctr">
+        <div class="slider-scroll">
+          <div class="slide">
+            <figure>
+              <a class="nav-link" href="{% if app.user %}{{ path('quest') }}{% else %}{{ path('security_registration') }}{% endif %}" title="quest-page"> 
+                <div class="image-ctr">
+                  <div class="image quest" data-index="">
+                    <div class="light">
                     </div>
+                    <figcaption><h2><span>Quêtes</span></h2></figcaption>
+                  </div>
+                </div>
+              </a>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
+      <div class="slider-ctr">
+        <div class="slider-scroll">
+          <div class="slide">
+            <figure>
+              <a class="nav-link" href="{% if app.user %}{{ path('skill') }}{% else %}{{ path('security_registration') }}{% endif %}" title="skill-page"> 
+                <div class="image-ctr">
+                  <div class="image skill" data-index="">
+                    <div class="light">
                     </div>
-
-                    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
-                <div class="slider-ctr">
-                    <div class="slider-scroll">
-                        <div class="slide">
-                        <figure><a class="nav-link" href="{% if app.user %}{{ path('player') }}{% else %}{{ path('security_registration') }}{% endif %}"> 
-                            <div class="image-ctr">
-                            <div class="image player" data-index="">
-                                <div class="light"></div>
-                                <figcaption><h1><span>Personnages</span></h1></figcaption>
-                            </div>
-                            </div></a>
-                        </figure>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-
-                    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
-                <div class="slider-ctr">
-                    <div class="slider-scroll">
-                        <div class="slide">
-                        <figure><a class="nav-link" href="{% if app.user %}{{ path('quest') }}{% else %}{{ path('security_registration') }}{% endif %}"> 
-                            <div class="image-ctr">
-                            <div class="image quest" data-index="">
-                                <div class="light"></div>
-                                <figcaption><h1><span>Quêtes</span></h1></figcaption>
-                            </div>
-                            </div></a>
-                        </figure>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-
-                    <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-2 col-xl-2" style="margin: 70px;">
-                <div class="slider-ctr">
-                    <div class="slider-scroll">
-                        <div class="slide">
-                        <figure><a class="nav-link" href="{% if app.user %}{{ path('skill') }}{% else %}{{ path('security_registration') }}{% endif %}"> 
-                            <div class="image-ctr">
-                            <div class="image skill" data-index="">
-                                <div class="light"></div>
-                                <figcaption><h1><span>Compétences</span></h1></figcaption>
-                            </div>
-                            </div></a>
-                        </figure>
-                        </div>
-                    </div>
-                    </div>
-                    </div>
-                    
-
-
-                    </div>
+                    <figcaption><h2><span>Compétences</span></h2></figcaption>
+                  </div>
+                </div>
+              </a>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
     
 {% endblock %}

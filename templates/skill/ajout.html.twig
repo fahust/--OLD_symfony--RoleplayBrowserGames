@@ -2,30 +2,24 @@
 
 {% block body %}
     <h1>ajout d'une compétence</h1>
-
-    <h2>Toutes vos compétences : </h2>
+    <h2>Toutes vos compétences :</h2>
     {% set nbrcomp = 0 %}
-    
     {% for skill in player.skillbdd %}
-    {# for skillnow in skill #}
-    {# if player in skillnow.players  #}  
-            {% set nbrcomp = nbrcomp+1 %}      
-            <p>Compétence  : {{ skill.name }}</p>
-            {# endif #}
-            {% endfor %}
+        {% set nbrcomp = nbrcomp+1 %}      
+        <p>Compétence  : {{ skill.name }}</p>
+    {% endfor %}
     <br><br>
     {% if nbrcomp < 3 %} <!-- ont peut ajouter une comp -->{% endif %}
-    
-        <p>Toutes les compétences</p>
-        <div class="container">
+    <p>Toutes les compétences</p>
+    <div class="container">
         <table  class="table table-condensed">
-    {% for skillnow in skill %}
-            <tr>
-            <td><p>name  : {{ skillnow.name }}</p></td>
-            <td><p>Compétence  : {{ skillnow.name }}</p></td>
-            </tr>
+            {% for skillnow in skill %}
+                <tr>
+                    <td><p>name  : {{ skillnow.name }}</p></td>
+                    <td><p>Compétence  : {{ skillnow.name }}</p></td>
+                </tr>
             {% endfor %}
         </table>
-        </div>
+    </div>
 
 {% endblock %}
