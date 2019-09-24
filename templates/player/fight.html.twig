@@ -2,7 +2,7 @@
 
 {% block title %}RollCardPlay - {{questvariable.title}}{% endblock %}
 {% block body %}
-    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{questvariable.image}}); background-size: cover;background-position: center;">
+    <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ vich_uploader_asset(questvariable, 'imageFile') }}); background-size: cover;background-position: center;">
         <div class="col-md-6 px-0" style="padding: 50px;">
             <h1 class="display-4 font-italic">{{questvariable.title}}</h1>
             <p class="lead my-3">{{questvariable.description}}</p>
@@ -11,7 +11,12 @@
 
     {% for message in app.flashes('succes') %}
         <div class="alert alert-success">
-            {{ message }}
+        {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">
+        {{ message }}
         </div>
     {% endfor %}
     
@@ -55,15 +60,15 @@
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="{{ player.image }}" alt="choice-player-skill-image">
                                 <div class="card-body">
-                                    <h5 class="card-title">tour du joueur {{ player.name }}</h5>
+                                    <h5 class="card-title">Player's turn {{ player.name }}</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">  {{ form_start(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}
+                                    <li class="list-group-item">  {{ form_start(formPlayer, {'attr': {'placeholder': "Player\'s name" , 'class': 'hidden-row' , 'type':"hidden" }}) }}
                                         {{ form_row(formPlayer.cible) }}
                                         {{ form_row(formPlayer.skillnow) }}
-                                        {{ form_end(formPlayer, {'attr': {'placeholder': "Nom du joueur" , 'class': 'hidden-row' , 'type':"hidden" }}) }}  
+                                        {{ form_end(formPlayer, {'attr': {'placeholder': "Player\'s name" , 'class': 'hidden-row' , 'type':"hidden" }}) }}  
                                     </li>
-                                    <li class="list-group-item">Nombre de monstres : {{ user.monsterUsers.count }}</li>
+                                    <li class="list-group-item">Number of monsters : {{ user.monsterUsers.count }}</li>
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
                                 <div class="card-body">
@@ -82,11 +87,11 @@
                             <div class="card" style="width: 18rem;" >
                                 <img class="card-img-top" src="{{ player.image }}" alt="player-skill-image">
                                 <div class="card-body">
-                                    <h5 class="card-title">le joueur se prépare a attaquer, lancé vos dé ! </h5>
+                                    <h5 class="card-title">the player prepares to attack, rolls your dice ! </h5>
                                     <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
                                 </div>
                             </div>
                         </div>
@@ -128,10 +133,10 @@
                                 <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="attack-skill-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
-                                    <p class="card-text">nombre de points de vie restant {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
+                                    <p class="card-text">number of remaining life points {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
                                 </div>
                             </div>
                         </div>
@@ -149,11 +154,11 @@
                                 <div class="card" style="width: 18rem;">
                                     <img class="card-img-top" src="{{ varimage }}" alt="monster-image">
                                     <div class="card-body">
-                                        <h5 class="card-title">le monstre {{ user.monsterUsers.get((tour-1)).name  }} se prépare a attaquer</h5>
+                                        <h5 class="card-title">the monster {{ user.monsterUsers.get((tour-1)).name  }} is preparing to attack</h5>
                                         <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
                                     </div>
                                     <div class="card-body">
-                                        <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                        <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
                                     </div>
                                 </div>
                             {% endif %}
@@ -196,10 +201,10 @@
                                 <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="monster-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
-                                    <p class="card-text">Hp restant {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
+                                    <p class="card-text">Remaining life {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +228,7 @@
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continuer</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
                                 </div>
                             </div>
                         </div>

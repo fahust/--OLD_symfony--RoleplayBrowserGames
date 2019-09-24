@@ -33,12 +33,32 @@ class PlayerController extends AbstractController
         $search = new PlayerSearch();
         $form = $this->createForm(PlayerSearchType::class, $search);
         $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('player/index.html.twig', [
             'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
             'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search),
-            $request->query->getInt('page',1),3),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
+            $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/playerunlogin", name="playerunlogin")
+     */
+    public function playerunlogin(PaginatorInterface $paginator, Request $request)
+    {
+        $search = new PlayerSearch();
+        $form = $this->createForm(PlayerSearchType::class, $search);
+        $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
+
+        return $this->render('player/index.html.twig', [
+            'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'controller_name' => 'PlayerController',
+            'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search),
+            $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
             'form' => $form->createView()
         ]);
     }
@@ -52,9 +72,9 @@ class PlayerController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(QuestVariable::class)->findAllLastDate();
 
         return $this->render('player/home.html.twig', [
-            'quest1' => $repo[1],
-            'quest2' => $repo[2],
-            'quest3' => $repo[3],
+            'quest1' => $repo[0],
+            'quest2' => $repo[1],
+            'quest3' => $repo[2],
             'title' => "RollCardPlay - Le roleplay dont vous êtes le créateur"
         ]);
     }
@@ -96,18 +116,23 @@ class PlayerController extends AbstractController
             $player->setImage(1);
             }
             $player->setUpdatedAt(new \DateTime());
-            
-            if($player->getSkillbdd()->count() < ($player->getSkillpnt())+1 ) {
-                $manager->persist($player);
-                $manager->flush();
-                //$player->setImageFile(null);
-                //$player->setImageName(null);
-                //$user->addPlayercreated($player);
-                //$manager->persist($user);
-                //$manager->flush();
-                $this->addFlash('succes', "joueur édité/créé avec succes" );
+            if ($user->getConstructpnt() > 0 ) {
+                if($player->getSkillbdd()->count() < ($player->getSkillpnt())+1 ) {
+                    $user->setConstructpnt(($user->getConstructpnt())-1);
+                    $manager->persist($user);
+                    $manager->persist($player);
+                    $manager->flush();
+                    //$player->setImageFile(null);
+                    //$player->setImageName(null);
+                    //$user->addPlayercreated($player);
+                    //$manager->persist($user);
+                    //$manager->flush();
+                    $this->addFlash('succes', "player successfully edited/created" );
+                }else{
+                    $this->addFlash('warning', "You have selected more skills than you have points, you have " . $player->getSkillpnt() . " points");
+                }
             }else{
-                $this->addFlash('warning', "Vous avez sélectioner plus de compétences que vous n'avez de points, vous avez " . $player->getSkillpnt() . " points");
+                $this->addFlash('warning', "You no longer have map building points, do quests !");
             }
         return $this->redirectToRoute('player');
         }
@@ -134,12 +159,15 @@ class PlayerController extends AbstractController
      * @param Property $property
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deletePlayer(Player $player, Request $request, ObjectManager $manager){
+    public function deletePlayer(Player $player, Request $request, ObjectManager $manager ,UserInterface $user){
         if ($this->isCsrfTokenValid('delete' . $player->getId(), $request->get('_token'))) {
-        $manager->remove($player);
-        $manager->flush();
-        $this->addFlash('succes', 'Joueur supprimé avec succès');
-        return $this->redirectToRoute('player');
+            $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
+            $user->setConstructpnt(($user->getConstructpnt())+1);
+            $manager->persist($user);
+            $manager->remove($player);
+            $manager->flush();
+            $this->addFlash('succes', 'Player successfully deleted');
+            return $this->redirectToRoute('player');
         } 
     }
    

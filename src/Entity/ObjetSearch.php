@@ -19,44 +19,45 @@ class ObjetSearch {
     
     /**
     * @var bool|null
-    * @Assert\Range(min=0,max = 1000000)
     */
    private $likeAsc;
 
    
    /**
    * @var bool|null
-   * @Assert\Range(min=0,max = 1000000)
    */
     private $likeDesc;
 
    
     /**
     * @var bool|null
-    * @Assert\Range(min=0,max = 1000000)
     */
      private $nameAsc;
 
    
      /**
      * @var bool|null
-     * @Assert\Range(min=0,max = 1000000)
      */
       private $nameDesc;
 
    
       /**
       * @var bool|null
-      * @Assert\Range(min=0,max = 1000000)
       */
        private $dateAsc;
   
      
        /**
        * @var bool|null
-       * @Assert\Range(min=0,max = 1000000)
        */
         private $dateDesc;
+  
+     
+        /**
+        * @var int|null
+        * @Assert\Range(min=3,max = 18)
+        */
+         private $choiceNbrPerPage;
 
     /**
      * @param integer|null $maxHp
@@ -135,6 +136,77 @@ class ObjetSearch {
     {
         return $this->dateDesc;
     }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setNameAsc(bool $nameAsc): ObjetSearch
+    {
+        $this->nameAsc = $nameAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setNameDesc(bool $nameDesc): ObjetSearch
+    {
+        $this->nameDesc = $nameDesc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setLikeAsc(bool $likeAsc): ObjetSearch
+    {
+        $this->likeAsc = $likeAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setLikeDesc(bool $likeDesc): ObjetSearch
+    {
+        $this->likeDesc = $likeDesc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setDateAsc(bool $dateAsc): ObjetSearch
+    {
+        $this->dateAsc = $dateAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setDateDesc(bool $dateDesc): ObjetSearch
+    {
+        $this->dateDesc = $dateDesc;
+        return $this;
+    }
+    /**
+     * @return integer|null
+     */
+    public function getChoiceNbrPerPage(): ?int
+    {
+        return $this->choiceNbrPerPage;
+    }
+    /**
+     * @param integer|null $choiceNbrPerPage
+     * @return SkillSearch
+     */
+    public function setChoiceNbrPerPage(int $choiceNbrPerPage): ObjetSearch
+    {
+        $this->choiceNbrPerPage = $choiceNbrPerPage;
+        return $this;
+    }
+    
     
 
 

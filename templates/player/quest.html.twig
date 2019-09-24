@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Lancement de quête {{questvariable.title}}{% endblock %}
+{% block title %}RollCardPlay - Quest Launch {{questvariable.title}}{% endblock %}
      
 {% block body %}
     
@@ -12,7 +12,12 @@
     </div>
     {% for message in app.flashes('succes') %}
         <div class="alert alert-success">
-            {{ message }}
+        {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">
+        {{ message }}
         </div>
     {% endfor %}
     {% if user.monsterUsers.count == 0 and action > 0 %}
@@ -35,7 +40,7 @@
                                     <div class="image-ctr">
                                         <div class="image tresor" data-index="">
                                             <figcaption>
-                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">Vous obtenez l'objet : {{objetreu.name}}</p>
+                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">You get the object : {{objetreu.name}}</p>
                                             </figcaption>
                                         </div>
                                     </div>
@@ -57,7 +62,7 @@
                                         <div class="image victoire" data-index="">
                                             <div class="light"></div>
                                             <figcaption>
-                                                <h2 style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;"><span>Fin du combat</span></h2><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">Récuperer votre <strong>récompenses</strong> et mêttre fin au <strong>combat</strong></p>
+                                                <h2 style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;"><span>End of the fight</span></h2><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">Get your <strong>rewards</strong> and end the <strong>combat</strong></p>
                                             </figcaption>
                                         </div>
                                     </div>
@@ -105,7 +110,7 @@
                                         <div class="image attaquer" data-index="">
                                             <div class="light"></div>
                                             <figcaption>
-                                                <h2><span>Attaquer</span></h2><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;"><strong>Attaquer</strong> immédiatement vos énemies sans possibilité de retour en arrière</p>
+                                                <h2><span>Attack</span></h2><p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;"><strong>Attack</strong> immediately your enemies without the possibility of going back</p>
                                             </figcaption>
                                         </div>
                                     </div>
@@ -125,8 +130,8 @@
                                     <div class="image negocier" data-index="">
                                         <div class="light"></div>
                                             <figcaption>
-                                                <h2><span>Negocier</span></h2>
-                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">Tenter la <strong>négociation</strong> pour vous sortir de cet situation</p>
+                                                <h2><span>Negotiate</span></h2>
+                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">Tenter la <strong>negotiation</strong> to get you out of this situation</p>
                                             </figcaption>
                                         </div>
                                     </div>
@@ -146,8 +151,8 @@
                                         <div class="image menacer" data-index="">
                                             <div class="light"></div>
                                             <figcaption>
-                                                <h2><span>Menacer</span></h2>
-                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">Utiliser vos talents de <strong>persuation</strong> pour faire fuir la cible</p>
+                                                <h2><span>Threatening</span></h2>
+                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">Use your <strong>persuation</strong> skills to scare off the target</p>
                                             </figcaption>
                                         </div>
                                     </div>
@@ -167,8 +172,8 @@
                                         <div class="image chance" data-index="">
                                             <div class="light"></div>
                                             <figcaption>
-                                                <h2><span>Chance</span></h2>
-                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">laissez vous guider par la <strong>chance</strong> et tenter quelque choses de vraiment stupide..</p>
+                                                <h2><span>Luck</span></h2>
+                                                <p style="padding:15px;text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 0.2em blue;font-size: 22px;">let yourself be guided by the <strong>chance</strong> and try something really stupid..</p>
                                             </figcaption>
                                         </div>
                                     </div>

@@ -1,19 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Page des monstres{% endblock %}
+{% block title %}RollCardPlay - Monster page{% endblock %}
+{% block description %}<meta name="description" content="This is the monster page where you can see the many monsters created by users or by you." />
+{% endblock %}
 {% block body %}
   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/98b94bffc2ae72382a9ea0e2bd4ec9d4-min.jpg') }}); background-size: cover;background-position: center;">
     <div class="col-md-6 px-0" style="padding: 50px;">
-      <h1 class="display-4 font-italic">Page des monstres</h1>
-      <p class="lead my-3">Sur cet page vous pourrez visualiser, editer, supprimer ou créer de nouveau <strong>monstre</strong>.</p>
+      <h1 class="display-4 font-italic">Monster page</h1>
+      <p class="lead my-3">On this page you can view, edit, delete or create again <strong>monster</strong>.</p>
       <a class="btn btn-primary" href="{{ path('monster_create', {id: 0}) }} " title="create-monster"><strong>Créer</strong> un monstre</a>
     </div>
   </div>
   <div class="container" style="">
-    <p class="lead my-3">Les monstres présents sont utilisable dans la création de quête, Touts les monstres validé pourrons être utilisé par touts les joueurs.
-    Bien sur les monstres ne peuvent êtes supprimé et edité que par leur <strong>créateur</strong> ou bien des admins. </p>
+    <p class="lead my-3">The monsters present are usable in the quest creation, All validated monsters can be used by all players. Of course monsters can only be deleted and edited by their <strong>creator</strong> or admins.</p>
     {% for message in app.flashes('succes') %}
       <div class="alert alert-success">
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+      <div class="alert alert-warning">
         {{ message }}
       </div>
     {% endfor %}
@@ -26,7 +32,7 @@
           {{ form_row(form.minHp) }}
         </div>
         <div class="col">
-          <button class="btn btn-primary">rechercher</button>
+          <button class="btn btn-primary">Search</button>
         </div>
       </div>
     {{ form_end(form) }}
@@ -46,17 +52,17 @@
                 <li class="list-group-item list-group-item-action  flex-column align-items-start">
                   <div class="d-flex w-100 justify-content-between">
                     <p class="card-text">{{ monster.description }}</p>
-                    <small>3 days ago</small>
+                    <small>{{ monster.createdAt|date("m/d/Y") }}</small>
                   </div>
                 </li>
                 <li class="list-group-item list-group-item-action">
                   <div class="row">
                     <div class="col-12">
                       <div class="list-group" id="list-tab" role="tablist">
-                        <a class="list-group-item list-group-item-action" id="list-profile-list{{ monster.id }}" data-toggle="list" href="#list-profile{{ monster.id }}" role="tab" aria-controls="profile{{ monster.id }}" title="life">vie</a>
-                        <a class="list-group-item list-group-item-action" id="list-messages-list{{ monster.id }}" data-toggle="list" href="#list-messages{{ monster.id }}" role="tab" aria-controls="messages{{ monster.id }}" title="defence">defense</a>
-                        <a class="list-group-item list-group-item-action" id="list-settings-list{{ monster.id }}" data-toggle="list" href="#list-settings{{ monster.id }}" role="tab" aria-controls="settings{{ monster.id }}" title="attack">Attaque</a>
-                        <a class="list-group-item list-group-item-action" id="list-autre-list{{ monster.id }}" data-toggle="list" href="#list-autre{{ monster.id }}" role="tab" aria-controls="autre{{ monster.id }}" title="skill">Compétences</a>
+                        <a class="list-group-item list-group-item-action" id="list-profile-list{{ monster.id }}" data-toggle="list" href="#list-profile{{ monster.id }}" role="tab" aria-controls="profile{{ monster.id }}" title="life">Life</a>
+                        <a class="list-group-item list-group-item-action" id="list-messages-list{{ monster.id }}" data-toggle="list" href="#list-messages{{ monster.id }}" role="tab" aria-controls="messages{{ monster.id }}" title="defence">Defense</a>
+                        <a class="list-group-item list-group-item-action" id="list-settings-list{{ monster.id }}" data-toggle="list" href="#list-settings{{ monster.id }}" role="tab" aria-controls="settings{{ monster.id }}" title="attack">Attack</a>
+                        <a class="list-group-item list-group-item-action" id="list-autre-list{{ monster.id }}" data-toggle="list" href="#list-autre{{ monster.id }}" role="tab" aria-controls="autre{{ monster.id }}" title="skill">Skill</a>
                       </div>
                     </div>
                   </div>
@@ -64,11 +70,11 @@
                 <li class="list-group-item list-group-item-action">
                   <div class="col-12">
                     <div class="tab-content" id="nav-tabContent">
-                      <div class="tab-pane fade" id="list-profile{{ monster.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ monster.id }}">Nombre de point de vie du monstre {{ monster.hp }}
+                      <div class="tab-pane fade" id="list-profile{{ monster.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ monster.id }}">Number of life points of the monster {{ monster.hp }}
                       </div>
-                      <div class="tab-pane fade" id="list-messages{{ monster.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ monster.id }}">Defense du monstre {{ monster.def }}
+                      <div class="tab-pane fade" id="list-messages{{ monster.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ monster.id }}">Defence of monster {{ monster.def }}
                       </div>
-                      <div class="tab-pane fade" id="list-settings{{ monster.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ monster.id }}">Degat d'attaque du monstre {{ monster.atk }}
+                      <div class="tab-pane fade" id="list-settings{{ monster.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ monster.id }}">Monster attack damage {{ monster.atk }}
                       </div>
                       <div class="tab-pane fade" id="list-autre{{ monster.id }}" role="tabpanel" aria-labelledby="list-autre-list{{ monster.id }}">
                         <ul>
@@ -80,25 +86,27 @@
                     </div>
                   </div>
                 </li>
-                {% if monster.createur == user.id or user.hasGroup("superadmin") %}
-                  <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">
-                    <a href="{{ path('monster_edit', {id: monster.id}) }}" class="btn btn-primary" title="edit-monster">editer</a>
-                    {{ include('monster/_delete_form.html.twig') }}
-                  </li>
+                {% if user %}
+                  {% if monster.createur == user.id or user.hasGroup("superadmin") %}
+                    <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">
+                      <a href="{{ path('monster_edit', {id: monster.id}) }}" class="btn btn-primary" title="edit-monster">editer</a>
+                      {{ include('monster/_delete_form.html.twig') }}
+                    </li>
+                  {% endif %}
+                  <!--SUPER LIKE -->
+                  <a href="{{ path('post_like_monster', {'id': monster.id}) }}" class="btn btn-link js-like" title="like-monster">
+                    <div style="display: inline">
+                      {% if app.user and monster.isLikedByUser(app.user) %}
+                        <i class="fas fa-thumbs-up idelta"></i>
+                      {% else %}
+                        <i class="far fa-thumbs-up idelta"></i>
+                      {% endif %}
+                      <span class="js-likes">{{ monster.likes | length }}</span>
+                      <span class="js-label" >I like</span>
+                      <p style="opacity:0;">{{ path('post_likereload_monster', {'id': monster.id}) }}</p>
+                    </div>
+                  </a>
                 {% endif %}
-                <!--SUPER LIKE -->
-                <a href="{{ path('post_like_monster', {'id': monster.id}) }}" class="btn btn-link js-like" title="like-monster">
-                  <div style="display: inline">
-                    {% if app.user and monster.isLikedByUser(app.user) %}
-                      <i class="fas fa-thumbs-up idelta"></i>
-                    {% else %}
-                      <i class="far fa-thumbs-up idelta"></i>
-                    {% endif %}
-                    <span class="js-likes">{{ monster.likes | length }}</span>
-                    <span class="js-label" >J'aime</span>
-                    <p style="opacity:0;">{{ path('post_likereload_monster', {'id': monster.id}) }}</p>
-                  </div>
-                </a>
               </ul>
             </div>
           </div>

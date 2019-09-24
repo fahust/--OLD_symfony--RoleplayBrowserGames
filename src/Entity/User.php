@@ -81,6 +81,11 @@ class User implements UserInterface, Serializable
     private $objet;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $constructpnt;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Groups", inversedBy="users")
      */
     private $Groups;
@@ -254,6 +259,18 @@ class User implements UserInterface, Serializable
     public function setAction(int $action): self
     {
         $this->action = $action;
+
+        return $this;
+    }
+
+    public function getConstructpnt(): ?int
+    {
+        return $this->constructpnt;
+    }
+
+    public function setConstructpnt(int $constructpnt): self
+    {
+        $this->constructpnt = $constructpnt;
 
         return $this;
     }

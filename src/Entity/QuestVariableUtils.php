@@ -141,13 +141,16 @@ class QuestVariableUtils extends AbstractController
 
             if(!empty($userId->getPlayerfight()->get(($userId->getTour())-1))){
                 if($userId->getPlayerfight()->get(($userId->getTour())-1)->getHp() <= 0) {//$manager->remove($player);
-                    $thiss->addFlash('succes', 'joueur vainqu');
+                    $thiss->addFlash('warning', 'joueur vaincu');
+                    //$playerbase = $thiss->getDoctrine()->getRepository(Player::class)->findById($userId->getPlayerfight()->get(($userId->getTour())-1)->getIdPlayer());
+                    //$manager->remove($playerbase);
                     $userId->removePlayerfight(($userId->getPlayerfight()->get(($userId->getTour())-1)));
+                    $manager->persist($userId);
                 }
             }
             if(!empty($cibleobj)){
                 if($cibleobj->getHp() <= 0) {//$manager->remove($cibleobj);
-                    $thiss->addFlash('succes', 'monstre vainqu');
+                    $thiss->addFlash('succes', 'monstre vaincu');
                     $attaquant->setExperience(($attaquant->getExperience())+1);
                     if($attaquant->getExperience() > ($attaquant->getLevel())*10 ){
                         $attaquant->setLevel(($attaquant->getLevel())+1);

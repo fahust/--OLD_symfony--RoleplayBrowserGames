@@ -16,13 +16,10 @@ security:
             security: false
         main:
             anonymous: true
-
             provider: in_database
-
             form_login:
                 login_path: security_login
                 check_path: security_login
-
             logout:
                 path: security_logout
                 target: security_login
@@ -39,6 +36,11 @@ security:
     access_control:
         #- { path: ^/connexion, roles: "not has_role('ROLE_USER')"  }
         # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/monster, roles: ROLE_USER }
+         - { path: ^/quest, roles: ROLE_USER }
+         - { path: ^/skill, roles: ROLE_USER }
+         - { path: ^/objet, roles: ROLE_USER }
+         - { path: ^/player, roles: ROLE_USER }
          - { path: ^/monster, roles: ROLE_USER }
          - { path: ^/quest, roles: ROLE_USER }
          - { path: ^/skill, roles: ROLE_USER }

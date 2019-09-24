@@ -13,12 +13,14 @@ use App\Entity\PlayerSearch;
 use App\Entity\MonsterSearch;
 use App\Entity\QuestVariable;
 use App\Form\RegistrationType;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class SecurityController extends AbstractController
@@ -37,6 +39,7 @@ class SecurityController extends AbstractController
             $user->setPassword($hash);
             $user->setTour(0);
             $user->setAction(0);
+            $user->setConstructpnt(3);
             $user->addGroup($groups);
             $manager->persist($user);
             $manager->flush();
@@ -75,8 +78,18 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login", name="security_login")
      */
-    public function login(){
-        return $this->render('user/login.html.twig');
+    public function login(AuthenticationUtils $authenticationUtils): Response{
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        if ($error){
+        $this->addFlash('warning', 'Login/password error');
+        }
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        return $this->render('user/login.html.twig', [
+            'last_username' => $lastUsername,
+            'error' => $error
+        ]);
     }
 
     /**
@@ -114,7 +127,7 @@ class SecurityController extends AbstractController
         $userToDelete = $this->getDoctrine()->getRepository(User::class)->find($user->getId());
         $manager->remove($userToDelete);
         $manager->flush();
-        $this->addFlash('succes', 'Compte supprimé');
+        $this->addFlash('succes', 'Deleted account');
         return $this->render('user/login.html.twig');
     }
 

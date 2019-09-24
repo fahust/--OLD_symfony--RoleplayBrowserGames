@@ -52,10 +52,10 @@ class PlayerRepository extends ServiceEntityRepository
             $query = $query->addOrderBy('m.name', 'DESC');
         }
         if ($search->getdateAsc() ) {
-            $query = $query->addOrderBy('m.created_at', 'ASC');
+            $query = $query->addOrderBy('m.createdAt', 'ASC');
         }
         if ($search->getdateDesc() ) {
-            $query = $query->addOrderBy('m.created_at', 'DESC');
+            $query = $query->addOrderBy('m.createdAt', 'DESC');
         }
         /*if ($search->getRegex() ) {
             $query = $query->andWhere('m.hp >= :minhp')

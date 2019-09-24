@@ -141,6 +141,9 @@ class QuestVariable
     * 
     * @Vich\UploadableField(mapping="monster", fileNameProperty="imageName")
     * @ORM\Column( nullable=true)
+    * @Assert\File(maxSize = "512k",
+    * maxSizeMessage = "Le fichier est trop grand ({{ size }} {{ suffix }}). Taille maximum authorisé {{ limit }} {{ suffix }}"
+    * )
     * 
     * @var File
     */

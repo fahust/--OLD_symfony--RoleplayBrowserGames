@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Page de création des compétences{% endblock %}
+{% block title %}RollCardPlay - Skills creation page{% endblock %}
 
 {% form_theme formSkill 'bootstrap_4_layout.html.twig' %}
-
+{% block description %}<meta name="description" content="This is the skills creation page where you can create new skills maps that can be used by you and others." />
+{% endblock %}
 {% block body %}
 
   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper-fantasy-sepik-min.jpg') }}); background-size: cover;background-position: center;">
     <div class="col-md-6 px-0" style="padding: 50px;">
-      <h1 class="display-4 font-italic">Création d'une compétence</h1>
+      <h1 class="display-4 font-italic">Skills creation page</h1>
         <p class="lead my-3"></p>
     </div>
   </div>
@@ -18,53 +19,58 @@
       {{ message }}
     </div>
   {% endfor %}
+  {% for message in app.flashes('warning') %}
+    <div class="alert alert-warning">
+      {{ message }}
+    </div>
+  {% endfor %}
   <div class="row">
     <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
     <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
-    <p>Bien qu'il n'y ait virtuellement peu de limite, les compétences les plus courants devrait être configuré de la façon suivante :</p>
+    <p>Although there are virtually no limits, the most common skills should be configured as follows :</p>
             <ul>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La compétence est divisé en quatre possibilité qui peuvent intéragir toutes les quatres sur la vie, l'attaque, les dégats, l'esquive,la défense de la cible;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La première possibilité est le succès, cela interviens en cas d'un lancé de dé positif ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La deuxième possibilité est l'échec, cela interviens en cas d'un lancé de dé négatif, dans ce cas rien ne ce passe;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La troisième possibilité est l'échec critique, cela interviens en cas d'un lancé de dé entre 0 et 10;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- La quatrième possibilité est le succès critique, cela interviens en cas d'un lancé de dé entre 90 et 100;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The skill is divided into four possibilities that can interact all four on life, attack, damage, dodge, defense of the target ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The first possibility is success, this occurs in the event of a positive die roll ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The second possibility is failure, this occurs in the event of a negative die roll, in which case nothing happens ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The third possibility is critical failure, which occurs in the event of a die roll between 0 and 10 ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The fourth possibility is critical success, which occurs in the event of a roll of the die between 90 and 100 ;</li>
             </ul>
       {{ form_start(formSkill) }}
         <div class="card-body">
-          <h5 class="card-title">{{ form_row(formSkill.name, {'attr': {'placeholder': "Nom de la compétence";'label' : 'Nom'}}) }}</h5>
-          <p class="card-text"> {{ form_row(formSkill.description, {'attr': {'placeholder': "Description de la compétence"}}) }}</p>
+          <h5 class="card-title">{{ form_row(formSkill.name, {'attr': {'placeholder': "Name of the skill",'label' : 'Name'}}) }}</h5>
+          <p class="card-text"> {{ form_row(formSkill.description, {'attr': {'placeholder': "Description of the skill"}}) }}</p>
           <table align="center">
             <tr align="center">
-              <td><p class="card-text">{{ form_row(formSkill.skdgt, {'attr': {'placeholder': "Gain de dégat de la compétence";'label' : 'Dégat Succès'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.skmana, {'attr': {'placeholder': "Consomation basique de mana de la compétence";'label' : 'Mana Succès'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.skatk, {'attr': {'placeholder': "Dégat basique de la compétence";'label' : 'Attaque Succès'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skdgt, {'attr': {'placeholder': "Gain of damage of the skill",'label' : 'Damage Success'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skmana, {'attr': {'placeholder': "Basic consumption of mana of skill",'label' : 'Mana Success'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skatk, {'attr': {'placeholder': "Basic damage of the skill",'label' : 'Success Attack'}}) }}</p></td>
             </tr>
             <tr align="center">
-              <td><p class="card-text">{{ form_row(formSkill.skesq, {'attr': {'placeholder': "Gain d'esquive basique de la compétence";'label' : 'Esquive Succès'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.skdef, {'attr': {'placeholder': "Gain de défense basique de la compétence";'label' : 'Défense Succès'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.skhp, {'attr': {'placeholder': "Gain de vie basique de la compétence";'label' : 'Soin Succès'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skesq, {'attr': {'placeholder': "Basic dodge gain of the skill",'label' : 'Dodging Success'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skdef, {'attr': {'placeholder': "Basic defence gain of skill",'label' : 'Defence Success'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.skhp, {'attr': {'placeholder': "Basic life saving of the skill",'label' : 'Success Healing'}}) }}</p></td>
             </tr>
-            <p class="card-text">{{ form_row(formSkill.dialsc, {'attr': {'placeholder': "Dialogue en cas de succès critique";'label' : 'Dialogue Succès Critique'}}) }}</p>
+            <p class="card-text">{{ form_row(formSkill.dialsc, {'attr': {'placeholder': "Dialog in case of critical success",'label' : 'Critical Success Dialogue'}}) }}</p>
             <tr align="center">
-              <td><p class="card-text">{{ form_row(formSkill.atksc, {'attr': {'placeholder': "Dégat de succès critique de la compétence";'label' : 'Attaque Succès Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.dgtsc, {'attr': {'placeholder': "Gain de dégat de succès critique de la compétence";'label' : 'Dégat Succès Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.manasc, {'attr': {'placeholder': "Consomation de mana de succès critique de la compétence";'label' : 'Mana Succès Critique'}}) }}</p></td>
-            </tr>
-            <tr align="center">
-              <td><p class="card-text">{{ form_row(formSkill.esqsc, {'attr': {'placeholder': "Gain d'esquive de succès critique de la compétence";'label' : 'Esquive Succès Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.defsc, {'attr': {'placeholder': "Gain de défense de succès critique de la compétence";'label' : 'Défense Succès Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.hpsc, {'attr': {'placeholder': "Gain de vie de succès critique de la compétence";'label' : 'Soin Succès Critique'}}) }}</p></td>
-            </tr>
-            <p class="card-text">{{ form_row(formSkill.dialec, {'attr': {'placeholder': "Dialogue d'échec critique de la compétence";'label' : 'Dialogue Echec Critique'}}) }}</p>
-            <tr align="center">
-              <td><p class="card-text">{{ form_row(formSkill.dgtec, {'attr': {'placeholder': "Perte de dégat d'echec critique de la compétence";'label' : 'Dégat Echec Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.manaec, {'attr': {'placeholder': "Consomation de mana d'echec critique de la compétence";'label' : 'Mana Echec Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.atkec, {'attr': {'placeholder': "Attaque contre le lanceur d'echec critique de la compétence";'label' : 'Attaque Echec Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.atksc, {'attr': {'placeholder': "Critical success rate of the skill",'label' : 'Critical Success Attack Critical Success'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.dgtsc, {'attr': {'placeholder': "Critical success damage gain from skill",'label' : 'Damage Success Critical'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.manasc, {'attr': {'placeholder': "Consumption of mana of critical success of the skill",'label' : 'Mana Critical Success'}}) }}</p></td>
             </tr>
             <tr align="center">
-              <td><p class="card-text">{{ form_row(formSkill.esqec, {'attr': {'placeholder': "Perte d'esquive d'echec critique de la compétence";'label' : 'Esquive Echec Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.defec, {'attr': {'placeholder': "Perte de défense d'echec critique de la compétence";'label' : 'Défense Echec Critique'}}) }}</p></td>
-              <td><p class="card-text">{{ form_row(formSkill.hpec, {'attr': {'placeholder': "Gain de vie d'echec critique de la compétence";'label' : 'Soin Echec Critique'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.esqsc, {'attr': {'placeholder': "Gain of critical success avoidance of the skill",'label' : 'Dodging Critical Success'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.defsc, {'attr': {'placeholder': "Gain of defence of critical success of the skill",'label' : 'Defence Success Critical'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.hpsc, {'attr': {'placeholder': "Lifetime gain of critical success of the skill",'label' : 'Critical Success Healing'}}) }}</p></td>
+            </tr>
+            <p class="card-text">{{ form_row(formSkill.dialec, {'attr': {'placeholder': "Critical skill failure dialogue",'label' : 'Critical Failure Dialog'}}) }}</p>
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.dgtec, {'attr': {'placeholder': "Loss of critical failure damage to the skill",'label' : 'Damage Critical Failure'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.manaec, {'attr': {'placeholder': "Consumption of mana of critical failure of the skill",'label' : 'Mana Critical Failure'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.atkec, {'attr': {'placeholder': "Attack against the critical failure launcher of the skill",'label' : 'Attack Critical Failure'}}) }}</p></td>
+            </tr>
+            <tr align="center">
+              <td><p class="card-text">{{ form_row(formSkill.esqec, {'attr': {'placeholder': "Loss of avoidance of critical failure of the skill",'label' : 'Dodge Critical Failure'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.defec, {'attr': {'placeholder': "Loss of defence of critical failure of the skill",'label' : 'Defense Critical Failure'}}) }}</p></td>
+              <td><p class="card-text">{{ form_row(formSkill.hpec, {'attr': {'placeholder': "Life saving of critical failure of the skill",'label' : 'Critical Failure Healing'}}) }}</p></td>
             </tr>
           </table>
         </div>

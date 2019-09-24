@@ -137,7 +137,7 @@ class Skill
     private $hpec;
 
     /**
-     * @ORM\Column(type="bool")
+     * @ORM\Column(type="boolean")
      */
     private $destinataire;
 
@@ -171,6 +171,9 @@ class Skill
      * 
      * @Vich\UploadableField(mapping="monster", fileNameProperty="imageName")
      * @ORM\Column( nullable=true)
+     * @Assert\File(maxSize = "512k",
+     * maxSizeMessage = "Le fichier est trop grand ({{ size }} {{ suffix }}). Taille maximum authorisé {{ limit }} {{ suffix }}"
+     * )
      * 
      * @var File
      */

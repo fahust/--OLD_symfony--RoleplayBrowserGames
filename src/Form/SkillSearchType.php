@@ -30,7 +30,7 @@ class SkillSearchType extends AbstractType
                     'placeholder' => 'Vie minimal'
                 ]
             ])
-            ->add('nameAsc', CheckboxType::class, [
+            /*->add('nameAsc', CheckboxType::class, [
                 'label'    => '',
                 'required' => false,
             ])
@@ -54,11 +54,15 @@ class SkillSearchType extends AbstractType
                 'label'    => '',
                 'required' => false,
             ])
-            ->add('save', SubmitType::class, [
-                'label' => 'enregistrer'
-            ])
-            /*->add('submit',SubmitType::class, [
-                'label' => 'rechercher'
+            ->add('choiceNbrPerPage', ChoiceType::class, [
+            'choices' => [
+                    '3 par pages' => '3',
+                    '6 par pages' => '6',
+                    '9 par pages' => '9',
+                    '12 par pages' => '12',
+                    '15 par pages' => '15',
+                    '18 par pages' => '18',
+                ]
             ])*/
         ;
     }

@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Page de création des objets{% endblock %}
+{% block title %}RollCardPlay - Object creation page{% endblock %}
 
 {% form_theme formObjet 'bootstrap_4_layout.html.twig' %}
-
+{% block description %}<meta name="description" content="This is the object creation page where you can create new object maps that can be used by you and others." />
+{% endblock %}
 {% block body %}
   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/17974-warrior-battling-the-giant-monsters-2880x1800-fantasy-wallpaper-min.jpg') }}); background-size: cover;background-position: center;">
     <div class="col-md-6 px-0" style="padding: 50px;">
-      <h1 class="display-4 font-italic">Création d'objet</h1>
+      <h1 class="display-4 font-italic">Object creation page</h1>
       <p class="lead my-3"></p>
     </div>
   </div>
@@ -16,16 +17,21 @@
       {{ message }}
     </div>
   {% endfor %}
+  {% for message in app.flashes('warning') %}
+    <div class="alert alert-warning">
+      {{ message }}
+    </div>
+  {% endfor %}
   <div class="row">
     <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
     <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;">
             <ul>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- Les objets ne sont nécessaire que pour lancer une quête, il n'ajoute ni point de compétence, ni dégats, juste la possibilité de lancer une quête ou non;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- Items are only necessary to launch a quest, it does not add any skill or damage, just the possibility of launching a quest or not ;</li>
             </ul>
       {{ form_start(formObjet) }}
         <div class="card-body">
-          <h5 class="card-title">{{ form_row(formObjet.name, {'attr': {'placeholder': "Nom de l'objet"}}) }}</h5>
-          <p class="card-text"> {{ form_row(formObjet.description, {'attr': {'placeholder': "Description de l'objet"}}) }}</p>
+          <h5 class="card-title">{{ form_row(formObjet.name, {'attr': {'placeholder': "Name of the object"}}) }}</h5>
+          <p class="card-text"> {{ form_row(formObjet.description, {'attr': {'placeholder': "Description of the object"}}) }}</p>
           <p class="card-text">{{ form_row(formObjet.save, {'attr': {'placeholder': ""}}) }}</p>
         </div>
       {{ form_end(formObjet) }}

@@ -5,6 +5,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class MonsterSearch {
 
+
+    /**
+     * @var int|null
+     */
+    private $name;
+
+
+    /**
+     * @var int|null
+     */
+    private $createdByMe;
+
+
+    /**
+     * @var int|null
+     */
+    private $language;
+
     /**
      * @var int|null
      */
@@ -24,44 +42,45 @@ class MonsterSearch {
     
     /**
     * @var bool|null
-    * @Assert\Range(min=0,max = 1000000)
     */
    private $likeAsc;
 
    
    /**
    * @var bool|null
-   * @Assert\Range(min=0,max = 1000000)
    */
     private $likeDesc;
 
    
     /**
     * @var bool|null
-    * @Assert\Range(min=1,max = 1000000)
     */
      private $nameAsc;
 
    
      /**
      * @var bool|null
-     * @Assert\Range(min=0,max = 1000000)
      */
       private $nameDesc;
 
    
       /**
       * @var bool|null
-      * @Assert\Range(min=1,max = 1000000)
       */
        private $dateAsc;
   
      
        /**
        * @var bool|null
-       * @Assert\Range(min=0,max = 1000000)
        */
         private $dateDesc;
+  
+     
+        /**
+        * @var int|null
+        * @Assert\Range(min=3,max = 18)
+        */
+         private $choiceNbrPerPage;
 
 
 
@@ -157,6 +176,76 @@ class MonsterSearch {
     public function getdateDesc(): ?bool
     {
         return $this->dateDesc;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setNameAsc(bool $nameAsc): MonsterSearch
+    {
+        $this->nameAsc = $nameAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setNameDesc(bool $nameDesc): MonsterSearch
+    {
+        $this->nameDesc = $nameDesc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setLikeAsc(bool $likeAsc): MonsterSearch
+    {
+        $this->likeAsc = $likeAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setLikeDesc(bool $likeDesc): MonsterSearch
+    {
+        $this->likeDesc = $likeDesc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setDateAsc(bool $dateAsc): MonsterSearch
+    {
+        $this->dateAsc = $dateAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setDateDesc(bool $dateDesc): MonsterSearch
+    {
+        $this->dateDesc = $dateDesc;
+        return $this;
+    }
+    /**
+     * @return integer|null
+     */
+    public function getChoiceNbrPerPage(): ?int
+    {
+        return $this->choiceNbrPerPage;
+    }
+    /**
+     * @param integer|null $choiceNbrPerPage
+     * @return SkillSearch
+     */
+    public function setChoiceNbrPerPage(int $choiceNbrPerPage): MonsterSearch
+    {
+        $this->choiceNbrPerPage = $choiceNbrPerPage;
+        return $this;
     }
     
 

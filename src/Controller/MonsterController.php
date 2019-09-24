@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MonsterController extends AbstractController
 {
@@ -30,12 +31,32 @@ class MonsterController extends AbstractController
         $search = new MonsterSearch();
         $form = $this->createForm(MonsterSearchType::class, $search);
         $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('monster/index.html.twig', [
             'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
             'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search),
-            $request->query->getInt('page',1),3),
+            $request->query->getInt('page',1),$maxByPage),
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/monsterunlogin", name="monsterunlogin")
+     */
+    public function monsterunlogin( PaginatorInterface $paginator, Request $request)
+    {
+        $search = new MonsterSearch();
+        $form = $this->createForm(MonsterSearchType::class, $search);
+        $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
+
+        return $this->render('monster/index.html.twig', [
+            'user' => null,
+            'controller_name' => 'PlayerController',
+            'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search),
+            $request->query->getInt('page',1),$maxByPage),
             'form' => $form->createView()
         ]);
     }
@@ -57,18 +78,24 @@ class MonsterController extends AbstractController
         $form = $this->createForm(MonsterType::class, $monster);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $monster->setImage(1);
-            $monster->setMaxhp($monster->getHp());
-            $monster->setMaxatk($monster->getAtk());
-            $monster->setMaxdef($monster->getDef());
-            $monster->setMaxesq($monster->getEsq());
-            $monster->setMaxdgt($monster->getDgt());
-            $monster->setCreateur($user->getId());
-            $monster->setUpdatedAt(new \DateTime());
-            $manager->persist($monster);
-            $this->addFlash('succes', "Monstre édité/créé avec succes" );
-            $manager->flush();
-            return $this->redirectToRoute('monster');
+            if ($user->getConstructpnt() > 0 ) {
+                $user->setConstructpnt(($user->getConstructpnt())-1);
+                $manager->persist($user);
+                $monster->setImage(1);
+                $monster->setMaxhp($monster->getHp());
+                $monster->setMaxatk($monster->getAtk());
+                $monster->setMaxdef($monster->getDef());
+                $monster->setMaxesq($monster->getEsq());
+                $monster->setMaxdgt($monster->getDgt());
+                $monster->setCreateur($user->getId());
+                $monster->setUpdatedAt(new \DateTime());
+                $manager->persist($monster);
+                $this->addFlash('succes', "Successfully edited/created monster" );
+                $manager->flush();
+                return $this->redirectToRoute('monster');
+            }else{
+                $this->addFlash('warning', "You no longer have map building points, do quests !");
+            }
         }
 
         return $this->render('monster/create.html.twig', [
@@ -83,12 +110,15 @@ class MonsterController extends AbstractController
      * @param Monster $monster
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteMonster(Monster $monster, Request $request, ObjectManager $manager){
+    public function deleteMonster(Monster $monster, Request $request, ObjectManager $manager, UserInterface $user){
         if ($this->isCsrfTokenValid('delete' . $monster->getId(), $request->get('_token'))) {
-        $manager->remove($monster);
-        $manager->flush();
-        $this->addFlash('succes', 'Monstre supprimé avec succès');
-        return $this->redirectToRoute('monster');
+            $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
+            $user->setConstructpnt(($user->getConstructpnt())+1);
+            $manager->persist($user);
+            $manager->remove($monster);
+            $manager->flush();
+            $this->addFlash('succes', 'Monster successfully deleted');
+            return $this->redirectToRoute('monster');
         } 
     }
 

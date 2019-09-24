@@ -1,21 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Pages des quêtes{% endblock %}
-
+{% block title %}RollCardPlay - Quests page{% endblock %}
+{% block description %}<meta name="description" content="This is the quests page where you can see the many quests created by users or by you." />
+{% endblock %}
 {% block body %}
 
 
     <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/Ug4CGKC-min.jpg') }}); background-size: cover;background-position: center;">
         <div class="col-md-6 px-0" style="padding: 50px;">
-            <h1 class="display-4 font-italic">Page des quêtes</h1>
-            <p class="lead my-3">Sur cet page vous pourrez visualiser, editer, supprimer ou créer de nouvelle <strong>quêtes</strong> ainsi que les lancer pour tenter d'obtenir des <strong>récompenses</strong>.</p>
-            <a class="btn btn-primary" href="{{ path('quest_create', {id: 0}) }}" title="create-quest"><strong>Créer</strong> une quête</a>
+            <h1 class="display-4 font-italic">Quests page</h1>
+            <p class="lead my-3">On this page you can view, edit, delete or create new <strong>quests</strong> as well as launch them to try to get <strong>rewards</strong>.</p>
+            <a class="btn btn-primary" href="{{ path('quest_create', {id: 0}) }}" title="create-quest"><strong>Creating</strong> a quest</a>
         </div>
     </div>
     <div class="container" style="">
     {% for message in app.flashes('succes') %}
         <div class="alert alert-success">
-            {{ message }}
+        {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">
+        {{ message }}
         </div>
     {% endfor %}
     {{ form_start(form) }}
@@ -27,13 +33,12 @@
         {{ form_row(form.minDeDifficult) }}
         </div>
         <div class="col">
-        <button class="btn btn-primary">rechercher</button>
+        <button class="btn btn-primary">search</button>
         </div>
     </div>
     {{ form_end(form) }}
     <div class="container" style="">
-        <p class="lead my-3">Les quêtes présentes sont utilisable des maintenant, Toutes les quêtes validé pourrons être utilisé par touts les joueurs.
-        Bien sur les quêtes ne peuvent êtes supprimé et edité que par leur <strong>créateur</strong> ou bien des admins. </p>
+        <p class="lead my-3">The quests present are usable from now on, All validated quests can be used by all players. Of course quests can only be deleted and edited by their <strong>creator</strong> or admins .</p>
         <div class="row" id="div3" style="display:none;">
             <div class="navigation col-12" style="display: inline-block;">
                 {{ knp_pagination_render(quest) }}
@@ -49,16 +54,16 @@
                                     <li class="list-group-item list-group-item-action  flex-column align-items-start">
                                         <div class="d-flex w-100 justify-content-between">
                                             <p class="card-text">{{ quests.description|slice(0,200)  ~  "..." }}</p>
-                                            <small>3 days ago</small>
+                                            <small>{{ quests.createdAt|date("m/d/Y") }}</small>
                                         </div>
                                     </li>
                                     <li class="list-group-item list-group-item-action">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="list-group" id="list-tab" role="tablist">
-                                                    <a class="list-group-item list-group-item-action" id="list-profile-list{{ quests.id }}" data-toggle="list" href="#list-profile{{ quests.id }}" role="tab" aria-controls="profile{{ quests.id }}" title="name-quest">Nom du lieu</a>
-                                                    <a class="list-group-item list-group-item-action" id="list-messages-list{{ quests.id }}" data-toggle="list" href="#list-messages{{ quests.id }}" role="tab" aria-controls="messages{{ quests.id }}" title="difficult-quest">Difficulté</a>
-                                                    <a class="list-group-item list-group-item-action" id="list-settings-list{{ quests.id }}" data-toggle="list" href="#list-settings{{ quests.id }}" role="tab" aria-controls="settings{{ quests.id }}" title="monster-quest">Monstres</a>
+                                                    <a class="list-group-item list-group-item-action" id="list-profile-list{{ quests.id }}" data-toggle="list" href="#list-profile{{ quests.id }}" role="tab" aria-controls="profile{{ quests.id }}" title="name-quest">Name of the place</a>
+                                                    <a class="list-group-item list-group-item-action" id="list-messages-list{{ quests.id }}" data-toggle="list" href="#list-messages{{ quests.id }}" role="tab" aria-controls="messages{{ quests.id }}" title="difficult-quest">Difficulty</a>
+                                                    <a class="list-group-item list-group-item-action" id="list-settings-list{{ quests.id }}" data-toggle="list" href="#list-settings{{ quests.id }}" role="tab" aria-controls="settings{{ quests.id }}" title="monster-quest">Monster</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -66,11 +71,11 @@
                                     <li class="list-group-item list-group-item-action">
                                         <div class="col-12">
                                             <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade" id="list-profile{{ quests.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ quests.id }}">Nom du lieu : {{ quests.titlezone }}
+                                                <div class="tab-pane fade" id="list-profile{{ quests.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ quests.id }}">Name of the place : {{ quests.titlezone }}
                                                 </div>
-                                                <div class="tab-pane fade" id="list-messages{{ quests.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ quests.id }}">Difficulté : {{ quests.dedifficult }} / 100
+                                                <div class="tab-pane fade" id="list-messages{{ quests.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ quests.id }}">Difficulty : {{ quests.dedifficult }} / 100
                                                 </div>
-                                                <div class="tab-pane fade" id="list-settings{{ quests.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ quests.id }}">Monstres potentiellement présent :
+                                                <div class="tab-pane fade" id="list-settings{{ quests.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ quests.id }}">Potentially present monsters :
                                                     <ul>
                                                         {% for monsters in quests.monsters %}
                                                             <li>{{ monsters.name }}</li>
@@ -80,35 +85,36 @@
                                             </div>
                                         </div>
                                     </li>
-                                    {% if quests.createur == user.id or user.hasGroup("superadmin") %}
-                                        <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">
-                                            <a href="{{ path('quest_edit', {id: quests.id}) }}" class="btn btn-primary" title="edit-quest">editer</a> 
-                                            {{ include('quest/_delete_form.html.twig') }}
-                                        </li>
-                                    {% endif %}
-                                    {% if quests.questrequismany in user.objet or quests.questrequismany is empty %}
-                                        <li class="list-group-item" style="padding: 55px;">
-                                            <a href="{{ path('player_choixjoueur', {id: 0, action: '0', quest: quests.id, cible: '0', tour: '0'}) }}" class="btn btn-success" title="launch-quest">Lancer la quête</a> 
-                                        </li>
-                                    {% else %}
-                                        <li class="list-group-item" style="padding: 55px;">
-                                            <p class="btn btn-danger">Besoin de l'<strong>objet</strong> {{ quests.questrequismany.name }} pour lancer cet quête </p>
-                                        </li>
+                                    {% if user %}
+                                        {% if quests.createur == user.id or user.hasGroup("superadmin") %}
+                                            <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">
+                                                <a href="{{ path('quest_edit', {id: quests.id}) }}" class="btn btn-primary" title="edit-quest">edit</a> 
+                                                {{ include('quest/_delete_form.html.twig') }}
+                                            </li>
+                                        {% endif %}
+                                        {% if quests.questrequismany in user.objet or quests.questrequismany is empty %}
+                                            <li class="list-group-item" style="padding: 55px;">
+                                                <a href="{{ path('player_choixjoueur', {id: 0, action: '0', quest: quests.id, cible: '0', tour: '0'}) }}" class="btn btn-success" title="launch-quest">Start the quest</a> 
+                                            </li>
+                                        {% else %}
+                                            <li class="list-group-item" style="padding: 55px;">
+                                                <p class="btn btn-danger">Need the <strong>object</strong> {{ quests.questrequismany.name }} to start this quest</p>
+                                            </li>
+                                        {% endif  %}
+                                        <!--SUPER LIKE -->
+                                        <a href="{{ path('post_like_quest', {'id': quests.id}) }}" class="btn btn-link js-like" title="like-quest">
+                                            <div style="display: inline">
+                                                {% if app.user and quests.isLikedByUser(app.user) %}
+                                                    <i class="fas fa-thumbs-up idelta"></i>
+                                                {% else %}
+                                                    <i class="far fa-thumbs-up idelta"></i>
+                                                {% endif %}
+                                                <span class="js-likes">{{ quests.likes | length }}</span>
+                                                <span class="js-label" >I like</span>
+                                                <p style="opacity:0;">{{ path('post_likereload_quest', {'id': quests.id}) }}</p>
+                                            </div>
+                                        </a>
                                     {% endif  %}
-                                    <!--SUPER LIKE -->
-                                    <a href="{{ path('post_like_quest', {'id': quests.id}) }}" class="btn btn-link js-like" title="like-quest">
-                                        <div style="display: inline">
-                                            {% if app.user and quests.isLikedByUser(app.user) %}
-                                                <i class="fas fa-thumbs-up idelta"></i>
-                                            {% else %}
-                                                <i class="far fa-thumbs-up idelta"></i>
-                                            {% endif %}
-                                            <span class="js-likes">{{ quests.likes | length }}</span>
-                                            <span class="js-label" >J'aime</span>
-                                            <p style="opacity:0;">{{ path('post_likereload_quest', {'id': quests.id}) }}</p>
-                                        </div>
-
-                                    </a>
                                 </ul>
                             </div>
                         </div>

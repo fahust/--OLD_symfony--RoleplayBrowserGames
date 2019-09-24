@@ -3,11 +3,12 @@
         <head>
           <meta charset="UTF-8">
           <meta name="google-site-verification" content="VBnBmppJsNKVm7c0qPm6V3936Ykc15rgymsZL5woSIU" />
-          <meta name="description" content="RollCardPlay est un jeu navigateur dont tout les utilisateurs pourront participer en créant des quêtes, des personnages ,des monstres et même des compétences" />
+          {% block description %}<meta name="description" content="RollCardPlay is a browser game that all users can participate in by creating quests, characters, monsters and even skills" />
+          {% endblock %}
           <link rel="icon" type="image/png" href="{{ asset('ressources/phoenix.png') }}"/>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
           <meta name="keywords" content="RollCardPlay, roleplay, role, navigateur, carte, card, creation, medieval, fantasy, fantastique" />
-          <title>{% block title %}RollCardPlay - Le jeu de rôle dont vous êtes le créateur{% endblock %}</title>
+          <title>{% block title %}RollCardPlay - the role-playing game you created{% endblock %}</title>
           <link href="{{ asset('css/carroussel.css') }}" rel="stylesheet">
           <link href="{{ asset('css/cssimagezoom.css') }}" rel="stylesheet">
           <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
@@ -59,6 +60,29 @@
             .offset4{
               margin-top:-500px;
             }
+            @media only screen and (max-width: 800px) {
+            h1 {
+            font-size: 4.5em;
+            }
+            h2 {
+            font-size: 4em;
+            }
+            h3 {
+            font-size: 3.5em;
+            }
+            h4 {
+            font-size: 3em;
+            }
+            h5 {
+            font-size: 2.5em;
+            }
+            p {
+            font-size: 1.5em;
+            }
+            a {
+            font-size: 1.5em;
+            }
+            }
           </style>
           <!-- fin de script de card return -->
         </head>
@@ -73,36 +97,45 @@
                 </div>
                 <div class="menu">
                   <ul>
+                      <li class="nav-item">
+                        <a href="{{ path('home') }}" title="index">Roleplay</a>
+                      </li>
                     {% if not app.user %}
                       <li class="nav-item">
-                        <a href="{{ path('home') }}" title="index">Roleplay</a>
+                        <a class="nav-link" href="{{ path('monsterunlogin') }}" title="monster">Monster</a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ path('security_login') }}" class="nav-link" title="login">Connexion</a>
+                        <a class="nav-link" href="{{ path('skillunlogin') }}" title="skill">Skill</a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ path('security_registration') }}" class="nav-link" title="register">Inscription</a>
+                        <a class="nav-link" href="{{ path('questunlogin') }}" title="quest">Quest</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="{{ path('objetunlogin') }}" title="object">Object</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ path('security_login') }}" class="nav-link" title="login">Login</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ path('security_registration') }}" class="nav-link" title="register">Registration</a>
                       </li>
                     {% else %}
-                      <li class="nav-item">
-                        <a href="{{ path('home') }}" title="index">Roleplay</a>
-                      </li>
                       <li class="nav-item ">
-                        <a class="nav-link" href="{{ path('player') }}" title="player">Joueur <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ path('player') }}" title="player">Player <span class="sr-only">(current)</span></a>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('monster') }}" title="monster">monstre</a>
+                        <a class="nav-link" href="{{ path('monster') }}" title="monster">Monster</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('skill') }}" title="skill">Compétence</a>
+                        <a class="nav-link" href="{{ path('skill') }}" title="skill">Skill</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('quest') }}" title="quest">Quête</a>
+                        <a class="nav-link" href="{{ path('quest') }}" title="quest">Quest</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('objet') }}" title="object">Objet</a>
+                        <a class="nav-link" href="{{ path('objet') }}" title="object">Object</a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ path('account') }}" class="nav-link" title="account">Profil</a>
+                        <a href="{{ path('account') }}" class="nav-link" title="account">Profile</a>
                       </li>
                     {% endif %}
                   </ul>
@@ -122,11 +155,11 @@
               <div class="col-6 col-md">
                 <h5>Création</h5>
                 <ul class="list-unstyled text-small">
-                  <li><a class="text-muted" href="{{ path('quest_create', {id: 0}) }}" title="create-quest">Créer une quête </a></li>
-                  <li><a class="text-muted" href="{{ path('player_create', {id: 0}) }}" title="create-player">Créer un personnage</a></li>
-                  <li><a class="text-muted" href="{{ path('monster_create', {id: 0}) }}" title="create-monster">Créer un monstre</a></li>
-                  <li><a class="text-muted" href="{{ path('skill_create', {id: 0}) }}" title="create-skill">Créer une compétence</a></li>
-                  <li><a class="text-muted" href="{{ path('objet_create', {id: 0}) }}" title="create-object">Créer un objet</a></li>
+                  <li><a class="text-muted" href="{{ path('quest_create', {id: 0}) }}" title="create-quest">Create a quest</a></li>
+                  <li><a class="text-muted" href="{{ path('player_create', {id: 0}) }}" title="create-player">Create a character</a></li>
+                  <li><a class="text-muted" href="{{ path('monster_create', {id: 0}) }}" title="create-monster">Create a monster</a></li>
+                  <li><a class="text-muted" href="{{ path('skill_create', {id: 0}) }}" title="create-skill">Create a skill</a></li>
+                  <li><a class="text-muted" href="{{ path('objet_create', {id: 0}) }}" title="create-object">Create an object</a></li>
                 </ul>
               </div>
               <div class="col-6 col-md">

@@ -1,20 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Page de création des joueurs{% endblock %}
+{% block title %}RollCardPlay - Player creation page{% endblock %}
 
 {% form_theme formPlayer 'bootstrap_4_layout.html.twig' %}
 {% block stylesheets %}{% endblock %}  
-
+{% block description %}<meta name="description" content="This is the character creation page where you can create new character cards that can be used by you and others." />
+{% endblock %}
 {% block body %}
         <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper_magic_the_gathering_-_duels_of_the_planeswalkers_01_1920x1080-min.jpg') }}); background-size: cover;background-position: center;">
                 <div class="col-md-6 px-0" style="padding: 50px;">
-                        <h1 class="display-4 font-italic">Création de personnage</h1>
+                        <h1 class="display-4 font-italic">Player creation page</h1>
                         <p class="lead my-3"></p>
                 </div>
         </div>
         {% for message in app.flashes('succes') %}
                 <div class="alert alert-success">
-                    {{ message }}
+                {{ message }}
+                </div>
+        {% endfor %}
+        {% for message in app.flashes('warning') %}
+                <div class="alert alert-warning">
+                {{ message }}
                 </div>
         {% endfor %}
         {% if player is null %}
@@ -24,9 +30,9 @@
                                 <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
                                         {{ form_start(formPlayer) }}
                                                 <div class="card-body">
-                                                        <h5 class="card-title">{{ form_row(formPlayer.name, {'attr': {'placeholder': "Nom du joueur"}}) }}</h5>
+                                                        <h5 class="card-title">{{ form_row(formPlayer.name, {'attr': {'placeholder': "Player\'s name"}}) }}</h5>
                                                         <p class="card-text">{{ form_row(formPlayer.image, {'attr': {'placeholder': "Image"}}) }}</p>
-                                                        <p class="card-text">{{ form_row(formPlayer.skillbdd, {'attr': {'placeholder': "Image"}}) }}</p>
+                                                        <p class="card-text">{{ form_row(formPlayer.skillbdd, {'attr': {'placeholder': "Skill"}}) }}</p>
                                                 </div>
                                         {{ form_end(formPlayer) }}
                                 </div>
@@ -39,9 +45,9 @@
                                 <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
                                         {{ form_start(formPlayer) }}
                                                 <div class="card-body">
-                                                        <h5 class="card-title">{{ form_row(formPlayer.name, {'attr': {'placeholder': "Nom du joueur"}}) }}</h5>
+                                                        <h5 class="card-title">{{ form_row(formPlayer.name, {'attr': {'placeholder': "Player\'s name"}}) }}</h5>
                                                         <p class="card-text">{{ form_row(formPlayer.image, {'attr': {'placeholder': "Image"}}) }}</p>
-                                                        <p class="card-text">{{ form_row(formPlayer.skillbdd, {'attr': {'placeholder': "Image"}}) }}</p>
+                                                        <p class="card-text">{{ form_row(formPlayer.skillbdd, {'attr': {'placeholder': "Skill"}}) }}</p>
                                                 </div>
                                         {{ form_end(formPlayer) }}
                                 </div>

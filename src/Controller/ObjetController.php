@@ -29,12 +29,32 @@ class ObjetController extends AbstractController
         $search = new ObjetSearch();
         $form = $this->createForm(ObjetSearchType::class, $search);
         $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('objet/index.html.twig', [
             'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
             'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search),
-            $request->query->getInt('page',1),3),//$this->getDoctrine()->getRepository(Objet::class)->findAll()
+            $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Objet::class)->findAll()
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/objectunlogin", name="objetunlogin")
+     */
+    public function objetunlogin(PaginatorInterface $paginator, Request $request)
+    {
+        $search = new ObjetSearch();
+        $form = $this->createForm(ObjetSearchType::class, $search);
+        $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
+
+        return $this->render('objet/index.html.twig', [
+            'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'controller_name' => 'PlayerController',
+            'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search),
+            $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Objet::class)->findAll()
             'form' => $form->createView()
         ]);
     }
@@ -54,13 +74,19 @@ class ObjetController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $objet->setCreateur($user->getId());
-            $objet->setImage(1);
-            $objet->setUpdatedAt(new \DateTime());
-            $manager->persist($objet);
-            $this->addFlash('succes', "Objet édité/créé avec succes" );
-            $manager->flush();
-            return $this->redirectToRoute('objet');
+            if ($user->getConstructpnt() > 0 ) {
+                $user->setConstructpnt(($user->getConstructpnt())-1);
+                $manager->persist($user);
+                $objet->setCreateur($user->getId());
+                $objet->setImage(1);
+                $objet->setUpdatedAt(new \DateTime());
+                $manager->persist($objet);
+                $this->addFlash('succes', "Successfully edited/created object" );
+                $manager->flush();
+                return $this->redirectToRoute('objet');
+            }else{
+                $this->addFlash('warning', "You no longer have map building points, do quests !");
+            }
         }
 
         return $this->render('objet/create.html.twig', [
@@ -74,12 +100,15 @@ class ObjetController extends AbstractController
      * @param Property $property
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteObjet(Objet $objet, Request $request, ObjectManager $manager){
+    public function deleteObjet(Objet $objet, Request $request, ObjectManager $manager ,UserInterface $user){
         if ($this->isCsrfTokenValid('delete' . $objet->getId(), $request->get('_token'))) {
-        $manager->remove($objet);
-        $manager->flush();
-        $this->addFlash('succes', 'Objet supprimé avec succès');
-        return $this->redirectToRoute('objet');
+            $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
+            $user->setConstructpnt(($user->getConstructpnt())+1);
+            $manager->persist($user);
+            $manager->remove($objet);
+            $manager->flush();
+            $this->addFlash('succes', 'Object successfully deleted');
+            return $this->redirectToRoute('objet');
         } 
     }
 

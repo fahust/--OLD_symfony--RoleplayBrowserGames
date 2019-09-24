@@ -37,6 +37,24 @@ class SkillRepository extends ServiceEntityRepository
             $query = $query->andWhere('m.skdgt >= :skdgt')
                         ->setParameter('skdgt', $search->getMinHp());
         }
+        if ($search->getlikeAsc() ) {
+            $query = $query->addOrderBy('m.likes', 'ASC');
+        }
+        if ($search->getlikeDesc() ) {
+            $query = $query->addOrderBy('m.likes', 'DESC');
+        }
+        if ($search->getnameAsc() ) {
+            $query = $query->addOrderBy('m.name', 'ASC');
+        }
+        if ($search->getnameDesc() ) {
+            $query = $query->addOrderBy('m.name', 'DESC');
+        }
+        if ($search->getdateAsc() ) {
+            $query = $query->addOrderBy('m.createdAt', 'ASC');
+        }
+        if ($search->getdateDesc() ) {
+            $query = $query->addOrderBy('m.createdAt', 'DESC');
+        }
         /*if ($search->getRegex() ) {
             $query = $query->andWhere('m.hp >= :minhp')
                         ->setParameter('minhp', $search->getMinHp());

@@ -19,44 +19,45 @@ class QuestSearch {
     
     /**
     * @var bool|null
-    * @Assert\Range(min=0,max = 1000000)
     */
    private $likeAsc;
 
    
    /**
    * @var bool|null
-   * @Assert\Range(min=0,max = 1000000)
    */
     private $likeDesc;
 
    
     /**
     * @var bool|null
-    * @Assert\Range(min=0,max = 1000000)
     */
      private $nameAsc;
 
    
      /**
      * @var bool|null
-     * @Assert\Range(min=0,max = 1000000)
      */
       private $nameDesc;
 
    
       /**
       * @var bool|null
-      * @Assert\Range(min=0,max = 1000000)
       */
        private $dateAsc;
   
      
        /**
        * @var bool|null
-       * @Assert\Range(min=0,max = 1000000)
        */
         private $dateDesc;
+  
+     
+        /**
+        * @var int|null
+        * @Assert\Range(min=3,max = 18)
+        */
+         private $choiceNbrPerPage;
 
     /**
      * @param integer|null $maxdedifficult
@@ -134,6 +135,76 @@ class QuestSearch {
     public function getdateDesc(): ?bool
     {
         return $this->dateDesc;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setNameAsc(bool $nameAsc): QuestSearch
+    {
+        $this->nameAsc = $nameAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setNameDesc(bool $nameDesc): QuestSearch
+    {
+        $this->nameDesc = $nameDesc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setLikeAsc(bool $likeAsc): QuestSearch
+    {
+        $this->likeAsc = $likeAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setLikeDesc(bool $likeDesc): QuestSearch
+    {
+        $this->likeDesc = $likeDesc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setDateAsc(bool $dateAsc): QuestSearch
+    {
+        $this->dateAsc = $dateAsc;
+        return $this;
+    }
+    /**
+     * @param boolean|null $minHp
+     * @return SkillSearch
+     */
+    public function setDateDesc(bool $dateDesc): QuestSearch
+    {
+        $this->dateDesc = $dateDesc;
+        return $this;
+    }
+    /**
+     * @return integer|null
+     */
+    public function getChoiceNbrPerPage(): ?int
+    {
+        return $this->choiceNbrPerPage;
+    }
+    /**
+     * @param integer|null $choiceNbrPerPage
+     * @return SkillSearch
+     */
+    public function setChoiceNbrPerPage(int $choiceNbrPerPage): QuestSearch
+    {
+        $this->choiceNbrPerPage = $choiceNbrPerPage;
+        return $this;
     }
     
 

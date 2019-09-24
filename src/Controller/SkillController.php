@@ -30,12 +30,33 @@ class SkillController extends AbstractController
         $search = new SkillSearch();
         $form = $this->createForm(SkillSearchType::class, $search);
         $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('skill/index.html.twig', [
             'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
             'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search),
-            $request->query->getInt('page',1),3),
+            $request->query->getInt('page',1),$maxByPage),
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/skillunlogin", name="skillunlogin")
+     */
+    public function skillunlogin( PaginatorInterface $paginator, Request $request)
+    {
+        $search = new SkillSearch();
+        $form = $this->createForm(SkillSearchType::class, $search);
+        $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
+
+        return $this->render('skill/index.html.twig', [
+            'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'controller_name' => 'PlayerController',
+            'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search),
+            $request->query->getInt('page',1),$maxByPage),
+            'form' => $form->createView()
         ]);
     }
 
@@ -59,16 +80,23 @@ class SkillController extends AbstractController
             $skill->setCreatedAt(new \DateTime());}else{$skill = $this->getDoctrine()->getRepository(Skill::class)->find($id);}
         $skill->setImageFile(null);//supprimé l'image
         $form = $this->createForm(SkillType::class, $skill);
+        $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $skill->setUpdatedAt(new \DateTime());
-            $skill->setCreateur($this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId())->getId());
-            $skill->setImage(1);
-            $manager->persist($skill);
-            $this->addFlash('succes', "Compétence édité/créé avec succes" );
-            $manager->flush();
-            return $this->redirectToRoute('skill');
+            if ($user->getConstructpnt() > 0 ) {
+                $user->setConstructpnt(($user->getConstructpnt())-1);
+                $manager->persist($user);
+                $skill->setUpdatedAt(new \DateTime());
+                $skill->setCreateur($this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId())->getId());
+                $skill->setImage(1);
+                $manager->persist($skill);
+                $this->addFlash('succes', "Skill successfully edited/created" );
+                $manager->flush();
+                return $this->redirectToRoute('skill');
+            }else{
+                $this->addFlash('warning', "You no longer have map building points, do quests !");
+            }
         }
 
         return $this->render('skill/create.html.twig', [
@@ -85,7 +113,7 @@ class SkillController extends AbstractController
         if ($this->isCsrfTokenValid('delete' . $skill->getId(), $request->get('_token'))) {
             $manager->remove($skill);
             $manager->flush();
-            $this->addFlash('succes', 'Compétence supprimé avec succès');
+            $this->addFlash('succes', 'Skill successfully deleted');
             return $this->redirectToRoute('skill');
         } 
     }

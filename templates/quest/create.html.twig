@@ -1,14 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Page de création des quêtes{% endblock %}
+{% block title %}RollCardPlay - Quest creation page{% endblock %}
 
 {% form_theme formQuest 'bootstrap_4_layout.html.twig' %}
-
+{% block description %}<meta name="description" content="This is the quest creation page where you can create new quest cards that can be used by you and others." />
+{% endblock %}
 {% block body %}
 
     <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/Ug4CGKC-min.jpg') }}); background-size: cover;background-position: center;">
         <div class="col-md-6 px-0" style="padding: 50px;">
-            <h1 class="display-4 font-italic">Création d'une quête</h1>
+            <h1 class="display-4 font-italic">Quest creation page</h1>
             <p class="lead my-3"></p>
         </div>
     </div>
@@ -16,7 +17,12 @@
       
     {% for message in app.flashes('succes') %}
         <div class="alert alert-success">
-            {{ message }}
+        {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('warning') %}
+        <div class="alert alert-warning">
+        {{ message }}
         </div>
     {% endfor %}
 
@@ -24,34 +30,33 @@
     <div class="row">
         <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
         <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;">
-            <p>Bien qu'il n'y ait virtuellement peu de limite, les quêtes les plus courantes consistent à :</p>
+            <p>Although there are virtually no limits, the most common quests are :</p>
             <ul>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- aller parler à quelqu'un ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- apporter quelque chose à quelqu'un ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- trouver quelque chose et le rapporter à quelqu'un ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- tuer quelqu'un et revenir voir le donneur de quête ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- tuer quelqu'un pour obtenir quelque chose</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- aller parler à quelqu'un ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- go talk to someone ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- bring something to someone ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- find something and bring it back to someone ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- kill someone and come back to see the quest giver ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- killing someone to get something ;</li>
             </ul>      
             {{ form_start(formQuest) }}
                 <div class="card-body">
                     <table>
                         <tr align="center">
-                            <td><h5 class="card-title">{{ form_row(formQuest.title, {'attr': {'placeholder': "Titre de la quête" , 'label': 'Titre Quête' } }) }}</h5></td>
-                            <td>{{ form_row(formQuest.titlezone, {'attr': {'placeholder': "Nom du lieu";'label' : 'Nom Du Lieu'}}) }}</td>
+                            <td><h5 class="card-title">{{ form_row(formQuest.title, {'attr': {'placeholder': "Quest title" , 'label': 'Quest title' } }) }}</h5></td>
+                            <td>{{ form_row(formQuest.titlezone, {'attr': {'placeholder': "Name of the place",'label' : 'Name of the place'}}) }}</td>
                         </tr>
                     </table>
-                            <p>{{ form_row(formQuest.description, {'attr': {'placeholder': "Description de la quête";'label' : 'Quête Description'}}) }}</p>
-                            <p>{{ form_row(formQuest.initiative, {'attr': {'placeholder': "Dialogue d'initiative de la quête";'label' : 'Dialogue Initiative'}}) }}</p>
-                            <p>{{ form_row(formQuest.dedifficult, {'attr': {'placeholder': "Difficulté de la quête";'label' : 'Quête Difficulté'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialreussitenego, {'attr': {'placeholder': "dialogue de réussite en cas de négociation";'label' : 'Dialogue Négociation Succès'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialoguedereussitepersu, {'attr': {'placeholder': "dialogue de réussite en cas de persuasion";'label' : 'Dialogue Persuasion Succès'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialoguedereussitetaunt, {'attr': {'placeholder': "dialogue de réussite en cas de menace";'label' : 'Dialogue Menace Succès'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialoguedereussitenawak, {'attr': {'placeholder': "dialogue de réussite en cas de chance";'label' : 'Dialogue Chance Succès'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialoguededefaitenego, {'attr': {'placeholder': "dialogue de défaite en cas de négociation";'label' : 'Dialogue Négociation Echec'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialoguededefaitepersu, {'attr': {'placeholder': "dialogue de défaite en cas de persuasion";'label' : 'Dialogue Persuasion Echec'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialoguededefaitetaunt, {'attr': {'placeholder': "dialogue de défaite en cas de menace";'label' : 'Dialogue Menace Echec'}}) }}</p>
-                            <p>{{ form_row(formQuest.dialoguededefaitenawak, {'attr': {'placeholder': "dialogue de défaite en cas de chance";'label' : 'Dialogue Chance Echec'}}) }}</p>
+                            <p>{{ form_row(formQuest.description, {'attr': {'placeholder': "Description of the quest",'label' : 'Quest Description'}}) }}</p>
+                            <p>{{ form_row(formQuest.initiative, {'attr': {'placeholder': "Quest Initiative Dialog",'label' : 'Dialog Initiative'}}) }}</p>
+                            <p>{{ form_row(formQuest.dedifficult, {'attr': {'placeholder': "Difficulty of the quest",'label' : 'Quest Difficulty'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialreussitenego, {'attr': {'placeholder': "Successful dialog in case of negotiation",'label' : 'Dialog Negotiation Success'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialoguedereussitepersu, {'attr': {'placeholder': "Successful dialog in case of persuasion",'label' : 'Dialog Persuasion Success'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialoguedereussitetaunt, {'attr': {'placeholder': "Dialog for success in the event of a threat",'label' : 'Dialog Threat Success'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialoguedereussitenawak, {'attr': {'placeholder': "Dialog of luck in case of success",'label' : 'Dialog Chance Success'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialoguededefaitenego, {'attr': {'placeholder': "Dialog defeat in case of negotiation",'label' : 'Dialog Negotiation Failure'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialoguededefaitepersu, {'attr': {'placeholder': "Dialog of defeat in case of persuasion",'label' : 'Dialog Persuasion Failure'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialoguededefaitetaunt, {'attr': {'placeholder': "Dialog of defeat in the event of a threat",'label' : 'Dialog of Threat Failure'}}) }}</p>
+                            <p>{{ form_row(formQuest.dialoguededefaitenawak, {'attr': {'placeholder': "Dialog of defeat in case of luck",'label' : 'Dialog of Chance Failed'}}) }}</p>
                     <p class="card-text">{{ form_row(formQuest.monsters) }}</p>
                 </div>
                 <div class="card-body">

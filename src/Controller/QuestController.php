@@ -36,32 +36,64 @@ class QuestController extends AbstractController
         $search = new QuestSearch();
         $form = $this->createForm(QuestSearchType::class, $search);
         $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('quest/index.html.twig', [
             'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
             'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search),
-            $request->query->getInt('page',1),3),//$this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithMonster()
+            $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithMonster()
             'form' => $form->createView()
         ]);
     }
 
     /**
+     * @Route("/questunlogin", name="questunlogin")
+     */
+    public function questunlogin( PaginatorInterface $paginator, Request $request)
+    {
+        $search = new QuestSearch();
+        $form = $this->createForm(QuestSearchType::class, $search);
+        $form->handleRequest($request);
+        $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
+
+        return $this->render('quest/index.html.twig', [
+            'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'controller_name' => 'PlayerController',
+            'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search),
+            $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithMonster()
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * ajout des objets de la quête / ajout de conscruct point pour faire des cartes / remettre les stat du joueur a son max
      * @Route("/quest/victory/{id}-{action}-{quest}-{cible}-{tour}", name="victoire")
      */
     public function victoire($id, $action, $quest, $cible, $tour, ObjectManager $manager, UserInterface $user)
     {
         $questvariable = $this->getDoctrine()->getRepository(QuestVariable::class)->find($quest);
+        $userId = $this->getDoctrine()->getRepository(User::class)->find($user->getId());
         if(!empty($questvariable->getObjetreussite()->get(0)))
-            ($user->addObjet($questvariable->getObjetreussite()->get(0)));
+            ($userId->addObjet($questvariable->getObjetreussite()->get(0)));
         if(!empty($questvariable->getObjetreussite()->get(1)))
-            ($user->addObjet($questvariable->getObjetreussite()->get(1)));
+            ($userId->addObjet($questvariable->getObjetreussite()->get(1)));
         if(!empty($questvariable->getObjetreussite()->get(2)))
-            ($user->addObjet($questvariable->getObjetreussite()->get(2)));
+            ($userId->addObjet($questvariable->getObjetreussite()->get(2)));
         if(!empty($questvariable->getObjetreussite()->get(3)))
-            ($user->addObjet($questvariable->getObjetreussite()->get(3)));
+            ($userId->addObjet($questvariable->getObjetreussite()->get(3)));
 
-        $manager->persist($user);
+        $userId->setConstructpnt(($userId->getConstructpnt())+1);
+
+        foreach($userId->getPlayerfight() as $fighter){
+            $fighter->setHp($fighter->getMaxhp());
+            $fighter->setAtk($fighter->getMaxatk());
+            $fighter->setEsq($fighter->getMaxesq());
+            $fighter->setDef($fighter->getMaxdef());
+            $fighter->setMana($fighter->getMaxmana());
+            $manager->persist($fighter);
+        }
+        $manager->persist($userId);
         $manager->flush();
 
         return $this->redirectToRoute('quest', [
@@ -110,13 +142,19 @@ class QuestController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $quest->setUpdatedAt(new \DateTime());
-            $quest->setCreateur($user->getId());
-            $quest->setImage(1);
-            $manager->persist($quest);
-            $this->addFlash('succes', 'quête créé/édité avec succès');
-            $manager->flush();
-            return $this->redirectToRoute('quest');
+            if ($user->getConstructpnt() > 0 ) {
+                $user->setConstructpnt(($user->getConstructpnt())-1);
+                $manager->persist($user);
+                $quest->setUpdatedAt(new \DateTime());
+                $quest->setCreateur($user->getId());
+                $quest->setImage(1);
+                $manager->persist($quest);
+                $this->addFlash('succes', 'quest successfully created/edited');
+                $manager->flush();
+                return $this->redirectToRoute('quest');
+            }else{
+                $this->addFlash('warning', "You no longer have map building points, do quests !");
+            }
         }
 
         return $this->render('quest/create.html.twig', [
@@ -187,9 +225,9 @@ class QuestController extends AbstractController
         $userId = $this->getDoctrine()->getRepository(User::class)->find($user->getId());
         if((empty($userId->getMonsterUsers()->get(0))) or (empty($userId->getPlayerfight()->get(0)))){
             if(empty($userId->getPlayerfight()->get(0)))
-                $this->addFlash('succes', "Aucun joueurs dans l'équipe");
+                $this->addFlash('succes', "No players in the team");
             if((empty($userId->getMonsterUsers()->get(0))))
-                $this->addFlash('succes', 'Plus aucun monstre a affronté ');
+                $this->addFlash('succes', 'No monster has ever faced');
             return $this->redirectToRoute('questlaunch', [
                 'id' => $id,
                 'quest' => $quest,
@@ -330,12 +368,15 @@ class QuestController extends AbstractController
          * @param Property $property
          * @return \Symfony\Component\HttpFoundation\Response
          */
-        public function deleteQuest(QuestVariable $quest, Request $request, ObjectManager $manager){
+        public function deleteQuest(QuestVariable $quest, Request $request, ObjectManager $manager ,UserInterface $user){
             if ($this->isCsrfTokenValid('delete' . $quest->getId(), $request->get('_token'))) {
-            $manager->remove($quest);
-            $manager->flush();
-            $this->addFlash('succes', 'Quête supprimé avec succès');
-            return $this->redirectToRoute('quest');
+                $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
+                $user->setConstructpnt(($user->getConstructpnt())+1);
+                $manager->persist($user);
+                $manager->remove($quest);
+                $manager->flush();
+                $this->addFlash('succes', 'Quest successfully deleted');
+                return $this->redirectToRoute('quest');
             } 
         }
         

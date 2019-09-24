@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Page de création des monstres{% endblock %}
-
+{% block title %}RollCardPlay - Monster creation page{% endblock %}
+{% block description %}<meta name="description" content="This is the monster creation page where you can create new monster cards that can be used by you and others." />
+{% endblock %}
 {% form_theme formMonster 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/98b94bffc2ae72382a9ea0e2bd4ec9d4-min.jpg') }}); background-size: cover;background-position: center;">
     <div class="col-md-6 px-0" style="padding: 50px;">
-      <h1 class="display-4 font-italic">Création de monstre</h1>
+      <h1 class="display-4 font-italic">Monster creation page</h1>
       <p class="lead my-3"></p>
     </div>
   </div>
@@ -16,28 +17,33 @@
       {{ message }}
     </div>
   {% endfor %}
+  {% for message in app.flashes('warning') %}
+    <div class="alert alert-warning">
+      {{ message }}
+    </div>
+  {% endfor %}
   <div class="row">
     <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
     <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
-    <p>Bien qu'il n'y ait virtuellement peu de limite, les monstres les plus courants devrait être configuré de la façon suivante :</p>
+    <p>Although there are virtually no limits, the most common monsters should be configured as follows :</p>
             <ul>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- un monstre basique possède entre 50 et 200 points de vie, le boss eux sont dans une tranche de 200 a 5000, au dela de 5000 soyez conscient que votre monstre sera imbattable ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- un nombre de point de vie trop élevé sera certainement trop contraignent pour être mis dans une quête et bien trop long a tuer pour être apprécié ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- les statistiques d'attaque, d'esquive et défense ce situe autour de 5 à 20 pour un monstre normal et de 20 a 50 pour un boss;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- les dégats d'attaque et de magie augmenterons la puissance en combat du monstres ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- l'esquive augmentera la chance du monstre d'éviter une attaque ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- la défense augmentera la capacité du monstre à résister a une attaque ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- a basic monster has between 50 and 200 life points, the boss they are in a range of 200 to 5000, beyond 5000 be aware that your monster will be unbeatable ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- a too high number of life points will certainly be too constraining to be put on a quest and far too long to kill to be appreciated ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the attack, dodge and defense statistics are around 5 to 20 for a normal monster and 20 to 50 for a boss ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the attack and magic damage will increase the monster's combat power ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the dodge will increase the monster's chance of avoiding an attack ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the defense will increase the monster's ability to resist an attack ;</li>
             </ul>
       {{ form_start(formMonster) }}
         <div class="card-body">
-          <h5 class="card-title">{{ form_row(formMonster.name, {'attr': {'placeholder': "Nom du monstre"}}) }}</h5>
+          <h5 class="card-title">{{ form_row(formMonster.name, {'attr': {'placeholder': "Name of the monster"}}) }}</h5>
           <table>
             <tr align="center">
-              <td>{{ form_row(formMonster.hp, {'attr': {'placeholder': "Point de vie du monstre"}}) }}</td>
-              <td>{{ form_row(formMonster.atk, {'attr': {'placeholder': "Dégat d'attaque du monstre"}}) }}</td>
-              <td>{{ form_row(formMonster.dgt, {'attr': {'placeholder': "Dégat magique"}}) }}</td>
-              <td>{{ form_row(formMonster.esq, {'attr': {'placeholder': "Esquive du monstre"}}) }}</td>
-              <td>{{ form_row(formMonster.def, {'attr': {'placeholder': "Défense du monstre"}}) }}</td>
+              <td>{{ form_row(formMonster.hp, {'attr': {'placeholder': "Point of life of the monster"}}) }}</td>
+              <td>{{ form_row(formMonster.atk, {'attr': {'placeholder': "Damage caused by the monster's attack"}}) }}</td>
+              <td>{{ form_row(formMonster.dgt, {'attr': {'placeholder': "Magic damage"}}) }}</td>
+              <td>{{ form_row(formMonster.esq, {'attr': {'placeholder': "Dodging of monster"}}) }}</td>
+              <td>{{ form_row(formMonster.def, {'attr': {'placeholder': "Defence of monster"}}) }}</td>
             </tr>
           <p class="card-text">{{ form_row(formMonster.description) }}</p>
           <p class="card-text">{{ form_row(formMonster.image, {'attr': {'placeholder': "Image"}}) }}</p>
