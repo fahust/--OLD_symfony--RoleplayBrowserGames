@@ -5,6 +5,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class PlayerSearch {
 
+
+    /**
+     * @var int|null
+     */
+    private $createdByMe;
+
+
+    /**
+     * @var string|null
+     */
+    private $language;
+
+
+    /**
+     * @var string|null
+     */
+    private $type;
+
     /**
      * @var int|null
      */
@@ -138,7 +156,7 @@ class PlayerSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return PlayerSearch
      */
     public function setNameAsc(bool $nameAsc): PlayerSearch
     {
@@ -147,7 +165,7 @@ class PlayerSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return PlayerSearch
      */
     public function setNameDesc(bool $nameDesc): PlayerSearch
     {
@@ -156,7 +174,7 @@ class PlayerSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return PlayerSearch
      */
     public function setLikeAsc(bool $likeAsc): PlayerSearch
     {
@@ -165,7 +183,7 @@ class PlayerSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return PlayerSearch
      */
     public function setLikeDesc(bool $likeDesc): PlayerSearch
     {
@@ -174,7 +192,7 @@ class PlayerSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return PlayerSearch
      */
     public function setDateAsc(bool $dateAsc): PlayerSearch
     {
@@ -183,7 +201,7 @@ class PlayerSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return PlayerSearch
      */
     public function setDateDesc(bool $dateDesc): PlayerSearch
     {
@@ -199,11 +217,65 @@ class PlayerSearch {
     }
     /**
      * @param integer|null $choiceNbrPerPage
-     * @return SkillSearch
+     * @return PlayerSearch
      */
     public function setChoiceNbrPerPage(int $choiceNbrPerPage): PlayerSearch
     {
         $this->choiceNbrPerPage = $choiceNbrPerPage;
+        return $this;
+    }
+
+    
+    /**
+     * @return integer|null
+     */
+    public function getCreatedByMe(): ?int
+    {
+        return $this->createdByMe;
+    }
+
+
+    /**
+     * @param integer|null $createdByMe
+     * @return PlayerSearch
+     */
+    public function setCreatedByMe(int $createdByMe): PlayerSearch
+    {
+        $this->createdByMe = $createdByMe;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage(): ?int
+    {
+        return $this->language;
+    }
+    /**
+     * @param string|null $language
+     * @return PlayerSearch
+     */
+    public function setLanguage(int $language): PlayerSearch
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+    /**
+     * @param string|null $type
+     * @return PlayerSearch
+     */
+    public function setType(int $type): PlayerSearch
+    {
+        $this->type = $type;
         return $this;
     }
     

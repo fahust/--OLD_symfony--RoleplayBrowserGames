@@ -4,7 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'fr'
+    #app.supported_locales: ['en', 'es', 'fr']
+    locale: 'en'
+    app.locales: en|fr_FR
     #mailer_transport: smtp
     #mailer_host: smtp.gmail.com
     #mailer_user: fostraceur999@gmail.com

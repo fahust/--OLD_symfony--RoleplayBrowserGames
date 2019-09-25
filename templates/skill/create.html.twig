@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Skills creation page{% endblock %}
+{% block title %}RollCardPlay - {% trans %}Skills creation page{% endtrans %}{% endblock %}
 
 {% form_theme formSkill 'bootstrap_4_layout.html.twig' %}
-{% block description %}<meta name="description" content="This is the skills creation page where you can create new skills maps that can be used by you and others." />
+{% block description %}<meta name="description" content="{% trans %}This is the skills creation page where you can create new skills maps that can be used by you and others.{% endtrans %}" />
 {% endblock %}
 {% block body %}
 
   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper-fantasy-sepik-min.jpg') }}); background-size: cover;background-position: center;">
     <div class="col-md-6 px-0" style="padding: 50px;">
-      <h1 class="display-4 font-italic">Skills creation page</h1>
+      <h1 class="display-4 font-italic">{% trans %}Skills creation page{% endtrans %}</h1>
         <p class="lead my-3"></p>
     </div>
   </div>
@@ -27,13 +27,13 @@
   <div class="row">
     <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
     <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
-    <p>Although there are virtually no limits, the most common skills should be configured as follows :</p>
+    <p>{% trans  %}Although there are virtually no limits, the most common skills should be configured as follows{% endtrans %} :</p>
             <ul>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The skill is divided into four possibilities that can interact all four on life, attack, damage, dodge, defense of the target ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The first possibility is success, this occurs in the event of a positive die roll ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The second possibility is failure, this occurs in the event of a negative die roll, in which case nothing happens ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The third possibility is critical failure, which occurs in the event of a die roll between 0 and 10 ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- The fourth possibility is critical success, which occurs in the event of a roll of the die between 90 and 100 ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}The skill is divided into four possibilities that can interact all four on life, attack, damage, dodge, defense of the target{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}The first possibility is success, this occurs in the event of a positive die roll{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}The second possibility is failure, this occurs in the event of a negative die roll, in which case nothing happens{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}The third possibility is critical failure, which occurs in the event of a die roll between 0 and 10{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}The fourth possibility is critical success, which occurs in the event of a roll of the die between 90 and 100{% endtrans %} ;</li>
             </ul>
       {{ form_start(formSkill) }}
         <div class="card-body">

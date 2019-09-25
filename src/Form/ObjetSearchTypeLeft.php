@@ -9,52 +9,54 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
-class ObjetSearchType extends AbstractType
+class ObjetSearchTypeLeft extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('maxHp', IntegerType::class, [
+                'label' => 'Life max.',
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Vie maximal'
+                    'placeholder' => 'Life max'
                 ]
             ])
             ->add('minHp', IntegerType::class, [
+                'label' => 'Life min.',
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Vie minimal'
+                    'placeholder' => 'Life min'
                 ]
             ])
-            /*->add('nameAsc', CheckboxType::class, [
-                'label'    => '',
-                'required' => false,
-            ])
-            ->add('nameDesc', CheckboxType::class, [
-                'label'    => '',
-                'required' => false,
-            ])
-            ->add('likeAsc', CheckboxType::class, [
-                'label'    => '',
-                'required' => false,
-            ])
-            ->add('likeDesc', CheckboxType::class, [
-                'label'    => '',
-                'required' => false,
-            ])
-            ->add('dateAsc', CheckboxType::class, [
-                'label'    => '',
-                'required' => false,
-            ])
-            ->add('dateDesc', CheckboxType::class, [
-                'label'    => '',
-                'required' => false,
-            ])
+            ->add('language', ChoiceType::class, [
+                'choices' => [
+                        '' => null,
+                        'French' => 'french',
+                        'English' => 'english',
+                        'Spanish' => 'spanish',
+                        'Italia' => 'italia',
+                        'Deutsch' => 'deutsch',
+                ],
+                    'required' => false,
+                ])
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                        '' => null,
+                        'Fantasy' => 'Fantasy',
+                        'Dark' => 'Dark',
+                        'Sf' => 'Sf',
+                        'Medieval' => 'Medieval',
+                        'Modern' => 'Modern',
+                ],
+                    'required' => false,
+                ])
             ->add('choiceNbrPerPage', ChoiceType::class, [
             'choices' => [
+                    '' => null,
                     '3 par pages' => '3',
                     '6 par pages' => '6',
                     '9 par pages' => '9',
@@ -62,7 +64,7 @@ class ObjetSearchType extends AbstractType
                     '15 par pages' => '15',
                     '18 par pages' => '18',
                 ]
-            ])*/
+            ])
         ;
     }
 

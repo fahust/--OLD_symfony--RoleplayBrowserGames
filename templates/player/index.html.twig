@@ -1,14 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Characters page{% endblock %}
-{% block description %}<meta name="description" content="This is the character page where you can see the many characters created by users or by you." />
+{% block title %}RollCardPlay - {% trans %}Characters page{% endtrans %}{% endblock %}
+{% block description %}<meta name="description" content="{% trans %}This is the character page where you can see the many characters created by users or by you.{% endtrans %}" />
 {% endblock %}
 {% block body %}
     <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper_magic_the_gathering_-_duels_of_the_planeswalkers_01_1920x1080-min.jpg') }}); background-size: cover;background-position: center;">
         <div class="col-md-6 px-0" style="padding: 50px;">
-            <h1 class="display-4 font-italic">Characters page</h1>
-            <p class="lead my-3">On this page you can view, edit, delete or create again <strong>characters</strong>.</p>
-            <a class="btn btn-primary" href="{{ path('player_create', {id: 0}) }}">Create a player</a>
+            <h1 class="display-4 font-italic">{% trans %}Characters page{% endtrans %}</h1>
+            <p class="lead my-3">{% trans %}On this page you can view, edit, delete or create again <strong>characters</strong>{% endtrans %}.</p>
+            {% if app.user %}
+                <a class="btn btn-primary" href="{{ path('player_create', {id: 0}) }}">{% trans %}Create a player{% endtrans %}</a>
+            {% endif %}
         </div>
     </div>
     <div class="container" style="">
@@ -22,22 +24,22 @@
             {{ message }}
             </div>
         {% endfor %}
-        {{ form_start(form) }}
+        {{ form_start(formLeft) }}
         <div class="form-row">
             <div class="col">
-            {{ form_row(form.maxLevel) }}
+            {{ form_row(formLeft.maxLevel) }}
             </div>
             <div class="col">
-            {{ form_row(form.minLevel) }}
+            {{ form_row(formLeft.minLevel) }}
             </div>
             <div class="col">
-            <button class="btn btn-primary">search</button>
+            <button class="btn btn-primary">{% trans %}search{% endtrans %}</button>
             </div>
         </div>
-        {{ form_end(form) }}
+        {{ form_end(formLeft) }}
     <div class="container" style="">
-        <p class="lead my-3">The characters present are usable in <strong>quests</strong>.
-        Of course characters can only be deleted and edited by their <strong>creator</strong> or administrators. </p>
+        <p class="lead my-3">{% trans %}The characters present are usable in <strong>quests</strong>.
+        Of course characters can only be deleted and edited by their <strong>creator</strong> or administrators.{% endtrans %} </p>
         <div class="row" id="div3" style="display:none;">
             <div class="navigation col-12" style="display: inline-block;">
                 {{ knp_pagination_render(players) }}
@@ -55,18 +57,18 @@
                                     </li>
                                     <li class="list-group-item list-group-item-action  flex-column align-items-start">
                                         <div class="d-flex w-100 justify-content-between">
-                                            <p class="card-text">Player level : {{ player.level }}</p>
-                                            <p class="card-text">Skill\'s points : {{ player.skillpnt }}</p>
+                                            <p class="card-text">{% trans %}Player level{% endtrans %} : {{ player.level }}</p>
+                                            <p class="card-text">{% trans %}Skill's points{% endtrans %} : {{ player.skillpnt }}</p>
                                         </div>
                                     </li>
                                     <li class="list-group-item list-group-item-action">
                                         <div class="row" >
                                             <div class="col-12">
                                                 <div class="list-group" id="list-tab" role="tablist">
-                                                    <a class="list-group-item list-group-item-action" id="list-profile-list{{ player.id }}" data-toggle="list" href="#list-profile{{ player.id }}" role="tab" aria-controls="profile{{ player.id }}" title="life-player"><strong>Life</strong></a>
-                                                    <a class="list-group-item list-group-item-action" id="list-messages-list{{ player.id }}" data-toggle="list" href="#list-messages{{ player.id }}" role="tab" aria-controls="messages{{ player.id }}" title="defence-player"><strong>Defense</strong></a>
-                                                    <a class="list-group-item list-group-item-action" id="list-settings-list{{ player.id }}" data-toggle="list" href="#list-settings{{ player.id }}" role="tab" aria-controls="settings{{ player.id }}" title="attack-player"><strong>Attack</strong></a>
-                                                    <a class="list-group-item list-group-item-action" id="list-autre-list{{ player.id }}" data-toggle="list" href="#list-autre{{ player.id }}" role="tab" aria-controls="autre{{ player.id }}" title="skill-player"><strong>Skill</strong></a>
+                                                    <a class="list-group-item list-group-item-action" id="list-profile-list{{ player.id }}" data-toggle="list" href="#list-profile{{ player.id }}" role="tab" aria-controls="profile{{ player.id }}" title="life-player"><strong>{% trans %}Life{% endtrans %}</strong></a>
+                                                    <a class="list-group-item list-group-item-action" id="list-messages-list{{ player.id }}" data-toggle="list" href="#list-messages{{ player.id }}" role="tab" aria-controls="messages{{ player.id }}" title="defence-player"><strong>{% trans %}Defense{% endtrans %}</strong></a>
+                                                    <a class="list-group-item list-group-item-action" id="list-settings-list{{ player.id }}" data-toggle="list" href="#list-settings{{ player.id }}" role="tab" aria-controls="settings{{ player.id }}" title="attack-player"><strong>{% trans %}Attack{% endtrans %}</strong></a>
+                                                    <a class="list-group-item list-group-item-action" id="list-autre-list{{ player.id }}" data-toggle="list" href="#list-autre{{ player.id }}" role="tab" aria-controls="autre{{ player.id }}" title="skill-player"><strong>{% trans %}Skill{% endtrans %}</strong></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -74,11 +76,11 @@
                                     <li class="list-group-item list-group-item-action">
                                         <div class="col-12">
                                             <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade" id="list-profile{{ player.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ player.id }}">Number of life points of the character {{ player.hp }}
+                                                <div class="tab-pane fade" id="list-profile{{ player.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ player.id }}">{% trans %}Number of life points of the character{% endtrans %} {{ player.hp }}
                                                 </div>
-                                                <div class="tab-pane fade" id="list-messages{{ player.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ player.id }}">Defense of the character {{ player.hp }}
+                                                <div class="tab-pane fade" id="list-messages{{ player.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ player.id }}">{% trans %}Defense of the character{% endtrans %} {{ player.hp }}
                                                 </div>
-                                                <div class="tab-pane fade" id="list-settings{{ player.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ player.id }}">Damage to the character's attack {{ player.atk }}
+                                                <div class="tab-pane fade" id="list-settings{{ player.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ player.id }}">{% trans %}Damage to the character's attack{% endtrans %} {{ player.atk }}
                                                 </div>
                                                 <div class="tab-pane fade" id="list-autre{{ player.id }}" role="tabpanel" aria-labelledby="list-autre-list{{ player.id }}">
                                                     <ul>
@@ -105,7 +107,7 @@
                                                 <i class="far fa-thumbs-up idelta"></i>
                                             {% endif %}
                                             <span class="js-likes">{{ player.likes | length }}</span>
-                                            <span class="js-label" >I like</span>
+                                            <span class="js-label" >{% trans %}I like{% endtrans %}</span>
                                             <p style="opacity:0;">{{ path('post_likereload_player', {'id': player.id}) }}</p>
                                         </div>
                                     </a>
@@ -122,7 +124,6 @@
     </div>
 {% endblock %}
 {% block javascripts %}
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
   function onClickBtnLike(event){
     event.preventDefault();

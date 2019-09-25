@@ -7,16 +7,18 @@ use App\Entity\Likes;
 use App\Entity\Skill;
 use App\Form\SkillType;
 use App\Entity\SkillSearch;
-use App\Form\SkillSearchType;
+use App\Form\SkillSearchTypeLeft;
+use App\Form\SkillSearchTypeRight;
+use App\Repository\LikesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Repository\LikesRepository;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SkillController extends AbstractController
@@ -28,16 +30,20 @@ class SkillController extends AbstractController
     public function indexSkill(UserInterface $user, PaginatorInterface $paginator, Request $request)
     {
         $search = new SkillSearch();
-        $form = $this->createForm(SkillSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(SkillSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(SkillSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
+        $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('skill/index.html.twig', [
-            'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'user' => $user,
             'controller_name' => 'PlayerController',
-            'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search),
+            'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search,$user),
             $request->query->getInt('page',1),$maxByPage),
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -47,16 +53,19 @@ class SkillController extends AbstractController
     public function skillunlogin( PaginatorInterface $paginator, Request $request)
     {
         $search = new SkillSearch();
-        $form = $this->createForm(SkillSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(SkillSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(SkillSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('skill/index.html.twig', [
             'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
-            'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search),
+            'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search,null),
             $request->query->getInt('page',1),$maxByPage),
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -84,8 +93,8 @@ class SkillController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            if ($user->getConstructpnt() > 0 ) {
-                $user->setConstructpnt(($user->getConstructpnt())-1);
+            if ($user->getConstructpnt() > 0  || $id != 0) {
+                if ($id == 0){$user->setConstructpnt(($user->getConstructpnt()-1));}
                 $manager->persist($user);
                 $skill->setUpdatedAt(new \DateTime());
                 $skill->setCreateur($this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId())->getId());

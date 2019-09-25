@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Registration page{% endblock %}
-{% block description %}<meta name="description" content="This is the registration page to access the quests and create maps." />
+{% block title %}RollCardPlay - {% trans %}Registration page{% endtrans %}{% endblock %}
+{% block description %}<meta name="description" content="{% trans %}This is the registration page to access the quests and create maps.{% endtrans %}" />
 {% endblock %}
 {% block body %}
   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper-fantasy-sepik-min.jpg') }}); background-size: cover;background-position: center;">
     <div class="col-md-6 px-0" style="padding: 50px;">
-      <h1 class="display-4 font-italic">Registration process</h1>
+      <h1 class="display-4 font-italic">{% trans %}Registration process{% endtrans %}</h1>
       <p class="lead my-3"></p>
     </div>
   </div>
@@ -26,7 +26,7 @@
       {{ form_row(form.email, {'label': 'Email address','attr': {'placeholder': 'User\'s email address ...'}}) }}
       {{ form_row(form.password, {'label': 'User password','attr': {'placeholder': 'Insert your password ...'}}) }}
       {{ form_row(form.confirm_password, {'label': 'Password confirmation','attr': {'placeholder': 'Repeat your password'}}) }}
-      <button type="submit" class="btn btn-success">Inscription !</button>
+      <button type="submit" class="btn btn-success">{% trans %}Inscription !{% endtrans %}</button>
     {{ form_end(form) }}
   </div>
 {% endblock %}

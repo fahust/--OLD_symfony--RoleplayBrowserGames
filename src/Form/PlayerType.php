@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 //use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PlayerType extends AbstractType
 {
@@ -22,9 +23,11 @@ class PlayerType extends AbstractType
     {
         $builder
         ->add('name', TextType::class , [
+            'label' => 'Character name',
             'attr' => array('style' => 'width: 200px')
         ])
         ->add('skillbdd', EntityType::class, [
+            'label' => 'Skill of character',
             'class' => Skill::class,
             //'choices' => $skill,
             'multiple' => true,
@@ -37,6 +40,7 @@ class PlayerType extends AbstractType
         ->add('atk', HiddenType::class)
         ->add('image', HiddenType::class)
         ->add('imageFile', VichFileType::class, [
+            'label' => 'Image character',
             'download_link'     => false,
             'required'          => false,
             'delete_label'          => false,
@@ -52,8 +56,30 @@ class PlayerType extends AbstractType
                 ])
             ],
         ])
+        ->add('language', ChoiceType::class, [
+            'choices' => [
+                    '' => null,
+                    'French' => 'french',
+                    'English' => 'english',
+                    'Spanish' => 'spanish',
+                    'Italia' => 'italia',
+                    'Deutsch' => 'deutsch',
+            ],
+                'required' => false,
+            ])
+        ->add('type', ChoiceType::class, [
+            'choices' => [
+                    '' => null,
+                    'Fantasy' => 'Fantasy',
+                    'Dark' => 'Dark',
+                    'Sf' => 'Sf',
+                    'Medieval' => 'Medieval',
+                    'Modern' => 'Modern',
+            ],
+                'required' => false,
+            ])
         ->add('save', SubmitType::class, [
-            'label' => 'enregistrer'
+            'label' => 'save'
         ])
     ;
     }

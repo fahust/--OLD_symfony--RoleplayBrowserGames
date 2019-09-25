@@ -21,7 +21,7 @@ class MonsterRepository extends ServiceEntityRepository
         parent::__construct($registry, Monster::class);
     }
 
-    public function findAllWithSkill(MonsterSearch $search) : Query
+    public function findAllWithSkill(MonsterSearch $search,$user) : Query
     {
          $query = $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
@@ -60,6 +60,20 @@ class MonsterRepository extends ServiceEntityRepository
         }
         if ($search->getdateDesc() ) {
             $query = $query->addOrderBy('m.createdAt', 'DESC');
+        }
+        if ($search->getLanguage() ) {
+            $query = $query->andWhere('m.language = :language')
+                        ->setParameter('language', $search->getLanguage());
+        }
+        if ($search->getType() ) {
+            $query = $query->andWhere('m.type = :type')
+                        ->setParameter('type', $search->getType());
+        }
+        if ($user){
+            if ($search->getCreatedByMe() ) {
+                $query = $query->andWhere('m.createdByMe = :createdByMe')
+                            ->setParameter('createdByMe', $user->getId());
+            }
         }
         return $query->getQuery();
     }

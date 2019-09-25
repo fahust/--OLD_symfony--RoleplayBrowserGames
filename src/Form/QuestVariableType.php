@@ -9,14 +9,13 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 //use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\PropertyAccess\PropertyPath;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use App\Repository\ObjetRepository;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class QuestVariableType extends AbstractType
 {
@@ -24,56 +23,56 @@ class QuestVariableType extends AbstractType
     {
         $builder
             ->add('title', TextType::class , [
-                'label' => 'Titre de la quête',
+                'label' => 'Quest title',
                 'attr' => array('style' => 'width: 200px')
             ])
             ->add('titlezone', TextType::class , [
-                'label' => 'Nom du lieu de la quête'
+                'label' => 'Name of the place'
             ])
             ->add('description', TextType::class , [
-                'label' => 'Description de quête',
+                'label' => 'Quest Description',
                 'attr' => array('style' => 'height: 100px')
             ])
             /*->add('image', TextType::class , [
                 'label' => 'Image de la quête'
             ])*/
             ->add('initiative', TextType::class , [
-                'label' => 'Initiative de la quête',
+                'label' => 'Dialog Initiative',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dedifficult', TextType::class , [
-                'label' => 'Difficulté des dé de la quête'
+                'label' => 'Quest Difficulty'
             ])
             ->add('dialreussitenego', TextType::class , [
-                'label' => 'Dialogue de réussite de négociation',
+                'label' => 'Dialog Negotiation Success',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguedereussitepersu', TextType::class , [
-                'label' => 'Dialogue de réussite de persuation',
+                'label' => 'Dialog Persuasion Success',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguedereussitetaunt', TextType::class , [
-                'label' => 'Dialogue de réussite de menace',
+                'label' => 'Dialog Threat Success',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguedereussitenawak', TextType::class , [
-                'label' => 'Dialogue de réussite de chance',
+                'label' => 'Dialog Chance Success',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguededefaitenego', TextType::class , [
-                'label' => 'Dialogue de défaite de négociation',
+                'label' => 'Dialog Negotiation Failure',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguededefaitepersu', TextType::class , [
-                'label' => 'Dialogue de défaite de persuation',
+                'label' => 'Dialog Persuasion Failure',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguededefaitetaunt', TextType::class , [
-                'label' => 'Dialogue de défaite de menace',
+                'label' => 'Dialog of Threat Failure',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguededefaitenawak', TextType::class , [
-                'label' => 'Dialogue de défaite de chance',
+                'label' => 'Dialog of Chance Failed',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('dialoguedereussitefin', TextType::class , [
@@ -108,25 +107,46 @@ class QuestVariableType extends AbstractType
                 'multiple' => true,
                 'choice_label' => 'name',
                 ])
-                ->add('imageFile', VichFileType::class, [
-                    'download_link'     => false,
-                    'required'          => false,
-                    'delete_label'          => false,
-                    'allow_delete' => false,
-                    'download_label' => false,
-                    'download_uri' => false,
-                    //'image_uri' => false,
-                      
-                    'constraints' => [
-                        new Image([
-                             'mimeTypesMessage' => 'Please upload a valid Png/jpeg/jpg or Csv/xml',
-                            'mimeTypes' => ['image/jpg', 'image/jpeg', 'image/png', ]
-                        ])
-                    ],
+            ->add('imageFile', VichFileType::class, [
+                'download_link'     => false,
+                'required'          => false,
+                'delete_label'          => false,
+                'allow_delete' => false,
+                'download_label' => false,
+                'download_uri' => false,
+                //'image_uri' => false,
+                'constraints' => [
+                    new Image([
+                        'mimeTypesMessage' => 'Please upload a valid Png/jpeg/jpg or Csv/xml',
+                        'mimeTypes' => ['image/jpg', 'image/jpeg', 'image/png', ]
+                    ])
+                ],
                 ])
+                ->add('language', ChoiceType::class, [
+                    'choices' => [
+                            '' => null,
+                            'French' => 'french',
+                            'English' => 'english',
+                            'Spanish' => 'spanish',
+                            'Italia' => 'italia',
+                            'Deutsch' => 'deutsch',
+                    ],
+                        'required' => false,
+                    ])
+                ->add('type', ChoiceType::class, [
+                    'choices' => [
+                            '' => null,
+                            'Fantasy' => 'Fantasy',
+                            'Dark' => 'Dark',
+                            'Sf' => 'Sf',
+                            'Medieval' => 'Medieval',
+                            'Modern' => 'Modern',
+                    ],
+                        'required' => false,
+                    ])
             
             ->add('save', SubmitType::class, [
-                'label' => 'enregistrer'
+                'label' => 'save'
             ])
             
         ;

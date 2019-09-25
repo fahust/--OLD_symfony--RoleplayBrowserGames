@@ -10,7 +10,8 @@ use App\Form\FightType1;
 use App\Form\FightType2;
 use App\Entity\QuestSearch;
 use App\Entity\QuestVariable;
-use App\Form\QuestSearchType;
+use App\Form\QuestSearchTypeLeft;
+use App\Form\QuestSearchTypeRight;
 use App\Form\QuestVariableType;
 use App\Entity\QuestVariableUtils;
 use App\Repository\LikesRepository;
@@ -34,16 +35,20 @@ class QuestController extends AbstractController
     public function indexQuest(UserInterface $user, PaginatorInterface $paginator, Request $request)
     {
         $search = new QuestSearch();
-        $form = $this->createForm(QuestSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(QuestSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(QuestSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
+        $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('quest/index.html.twig', [
-            'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'user' => $user,
             'controller_name' => 'PlayerController',
-            'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search),
+            'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithMonster()
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -53,16 +58,19 @@ class QuestController extends AbstractController
     public function questunlogin( PaginatorInterface $paginator, Request $request)
     {
         $search = new QuestSearch();
-        $form = $this->createForm(QuestSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(QuestSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(QuestSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('quest/index.html.twig', [
             'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
-            'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search),
+            'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithMonster()
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -142,8 +150,8 @@ class QuestController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            if ($user->getConstructpnt() > 0 ) {
-                $user->setConstructpnt(($user->getConstructpnt())-1);
+            if ($user->getConstructpnt() > 0  || $id != 0) {
+                if ($id == 0){$user->setConstructpnt(($user->getConstructpnt()-1));}
                 $manager->persist($user);
                 $quest->setUpdatedAt(new \DateTime());
                 $quest->setCreateur($user->getId());
@@ -222,7 +230,7 @@ class QuestController extends AbstractController
      */
     public function fight($id, $action, $quest, $cible, $tour, Request $request, ObjectManager $manager, UserInterface $user)
     {
-        $userId = $this->getDoctrine()->getRepository(User::class)->find($user->getId());
+        $userId = $this->getDoctrine()->getRepository(User::class)->findWithMonsterUserAndPlayerFighter($user->getId());
         if((empty($userId->getMonsterUsers()->get(0))) or (empty($userId->getPlayerfight()->get(0)))){
             if(empty($userId->getPlayerfight()->get(0)))
                 $this->addFlash('succes', "No players in the team");

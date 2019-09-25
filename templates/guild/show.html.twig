@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<article>
+        <h2>{{ message.name }}</h2>
+        <div class="metadata">Envoyé le {{ message.createdAt | date('d/m/Y') }}</div>
+        <div class="metadata">Envoyé par {{ message.createur.username }}</div>
+        <div class="metadata">Envoyé à {{ message.destinataire.username }}</div>
+        <div class="content">
+            <p>message : {{ message.content }}</p>
+        </div>
+    </article>
+
+{% endblock %}

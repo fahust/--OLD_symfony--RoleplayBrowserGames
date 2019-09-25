@@ -5,6 +5,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ObjetSearch {
 
+
+    /**
+     * @var int|null
+     */
+    private $createdByMe;
+
+
+    /**
+     * @var string|null
+     */
+    private $language;
+
+
+    /**
+     * @var string|null
+     */
+    private $type;
+
     /**
      * @var int|null
      */
@@ -138,7 +156,7 @@ class ObjetSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return ObjetSearch
      */
     public function setNameAsc(bool $nameAsc): ObjetSearch
     {
@@ -147,7 +165,7 @@ class ObjetSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return ObjetSearch
      */
     public function setNameDesc(bool $nameDesc): ObjetSearch
     {
@@ -156,7 +174,7 @@ class ObjetSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return ObjetSearch
      */
     public function setLikeAsc(bool $likeAsc): ObjetSearch
     {
@@ -165,7 +183,7 @@ class ObjetSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return ObjetSearch
      */
     public function setLikeDesc(bool $likeDesc): ObjetSearch
     {
@@ -174,7 +192,7 @@ class ObjetSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return ObjetSearch
      */
     public function setDateAsc(bool $dateAsc): ObjetSearch
     {
@@ -183,7 +201,7 @@ class ObjetSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return ObjetSearch
      */
     public function setDateDesc(bool $dateDesc): ObjetSearch
     {
@@ -199,11 +217,65 @@ class ObjetSearch {
     }
     /**
      * @param integer|null $choiceNbrPerPage
-     * @return SkillSearch
+     * @return ObjetSearch
      */
     public function setChoiceNbrPerPage(int $choiceNbrPerPage): ObjetSearch
     {
         $this->choiceNbrPerPage = $choiceNbrPerPage;
+        return $this;
+    }
+
+    
+    /**
+     * @return integer|null
+     */
+    public function getCreatedByMe(): ?int
+    {
+        return $this->createdByMe;
+    }
+
+
+    /**
+     * @param integer|null $createdByMe
+     * @return ObjetSearch
+     */
+    public function setCreatedByMe(int $createdByMe): ObjetSearch
+    {
+        $this->createdByMe = $createdByMe;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage(): ?int
+    {
+        return $this->language;
+    }
+    /**
+     * @param string|null $language
+     * @return ObjetSearch
+     */
+    public function setLanguage(int $language): ObjetSearch
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+    /**
+     * @param string|null $type
+     * @return ObjetSearch
+     */
+    public function setType(int $type): ObjetSearch
+    {
+        $this->type = $type;
         return $this;
     }
     

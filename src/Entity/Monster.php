@@ -5,9 +5,9 @@ namespace App\Entity;
 use App\Entity\Skill;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -33,56 +33,56 @@ class Monster
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 10000)
      */
     private $hp;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
      */
     private $atk;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
      */
     private $dgt;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
      */
     private $esq;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=1,max = 100)
      */
     private $def;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(min=1,max = 100000)
      */
     private $maxhp;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(min=1,max = 100)
      */
     private $maxatk;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(min=1,max = 100)
      */
     private $maxesq;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(min=1,max = 100)
      */
     private $maxdef;
 
     /**
      * @ORM\Column(type="integer")
-     * @Assert\Range(min=1,max = 100)
      */
     private $maxdgt;
 
@@ -152,6 +152,22 @@ class Monster
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     *
+     * @var string
+     */
+    private $language;
+
+    
 
     
     public function __construct()
@@ -541,6 +557,30 @@ class Monster
     public function setNbrlike(int $nbrlike): self
     {
         $this->nbrlike = $nbrlike;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType( ?string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage( ?string $language): self
+    {
+        $this->language = $language;
 
         return $this;
     }

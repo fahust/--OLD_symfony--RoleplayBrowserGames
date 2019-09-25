@@ -64,6 +64,7 @@ class SecurityController extends AbstractController
             $userEntity->setPassword($hash);
             $userEntity->setTour(0);
             $userEntity->setAction(0);
+            $userEntity->setLocale('en');
             //$user->addGroup($groups);
             $manager->persist($userEntity);
             $manager->flush();
@@ -71,8 +72,25 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('user/account.html.twig',[
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId())
         ]);
+    }
+
+    /**
+     * @Route("/fr_FR/account", name="french")
+     */
+    public function french(UserInterface $user,Request $request, ObjectManager $manager)
+    {
+        return $this->redirectToRoute('account');
+    }
+
+    /**
+     * @Route("/account", name="english")
+     */
+    public function english(UserInterface $user,Request $request, ObjectManager $manager)
+    {
+        return $this->redirectToRoute('account');
     }
 
     /**

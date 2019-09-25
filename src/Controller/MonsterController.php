@@ -7,7 +7,8 @@ use App\Entity\Likes;
 use App\Entity\Monster;
 use App\Form\MonsterType;
 use App\Entity\MonsterSearch;
-use App\Form\MonsterSearchType;
+use App\Form\MonsterSearchTypeLeft;
+use App\Form\MonsterSearchTypeRight;
 use App\Repository\LikesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,16 +30,20 @@ class MonsterController extends AbstractController
     {
         
         $search = new MonsterSearch();
-        $form = $this->createForm(MonsterSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(MonsterSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(MonsterSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
+        $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('monster/index.html.twig', [
-            'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'user' => $user,
             'controller_name' => 'PlayerController',
-            'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search),
+            'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -48,16 +53,19 @@ class MonsterController extends AbstractController
     public function monsterunlogin( PaginatorInterface $paginator, Request $request)
     {
         $search = new MonsterSearch();
-        $form = $this->createForm(MonsterSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(MonsterSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(MonsterSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('monster/index.html.twig', [
             'user' => null,
             'controller_name' => 'PlayerController',
-            'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search),
+            'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -78,8 +86,8 @@ class MonsterController extends AbstractController
         $form = $this->createForm(MonsterType::class, $monster);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            if ($user->getConstructpnt() > 0 ) {
-                $user->setConstructpnt(($user->getConstructpnt())-1);
+            if ($user->getConstructpnt() > 0  || $id != 0) {
+                if ($id == 0){$user->setConstructpnt(($user->getConstructpnt()-1));}
                 $manager->persist($user);
                 $monster->setImage(1);
                 $monster->setMaxhp($monster->getHp());

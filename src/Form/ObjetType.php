@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ObjetType extends AbstractType
 {
@@ -21,14 +22,16 @@ class ObjetType extends AbstractType
     {
         $builder
             ->add('name', TextType::class , [
+                'label' => 'Object name',
                 'attr' => array('style' => 'width: 200px')
             ])
             //->add('image')
             ->add('description', TextType::class , [
-                'label' => 'Description de l\'objet',
+                'label' => 'Object description',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('imageFile', VichFileType::class, [
+                'label' => 'Object image',
                 'download_link'     => false,
                 'required'          => false,
                 'delete_label'          => false,
@@ -44,8 +47,30 @@ class ObjetType extends AbstractType
                     ])
                 ],
             ])
+            ->add('language', ChoiceType::class, [
+                'choices' => [
+                        '' => null,
+                        'French' => 'french',
+                        'English' => 'english',
+                        'Spanish' => 'spanish',
+                        'Italia' => 'italia',
+                        'Deutsch' => 'deutsch',
+                ],
+                    'required' => false,
+                ])
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                        '' => null,
+                        'Fantasy' => 'Fantasy',
+                        'Dark' => 'Dark',
+                        'Sf' => 'Sf',
+                        'Medieval' => 'Medieval',
+                        'Modern' => 'Modern',
+                ],
+                    'required' => false,
+                ])
             ->add('save', SubmitType::class, [
-                'label' => 'enregistrer'
+                'label' => 'save'
             ])
         ;
     }

@@ -155,11 +155,11 @@
               <div class="col-6 col-md">
                 <h5>Création</h5>
                 <ul class="list-unstyled text-small">
-                  <li><a class="text-muted" href="{{ path('quest_create', {id: 0}) }}" title="create-quest">Create a quest</a></li>
-                  <li><a class="text-muted" href="{{ path('player_create', {id: 0}) }}" title="create-player">Create a character</a></li>
-                  <li><a class="text-muted" href="{{ path('monster_create', {id: 0}) }}" title="create-monster">Create a monster</a></li>
-                  <li><a class="text-muted" href="{{ path('skill_create', {id: 0}) }}" title="create-skill">Create a skill</a></li>
-                  <li><a class="text-muted" href="{{ path('objet_create', {id: 0}) }}" title="create-object">Create an object</a></li>
+                  <li><a class="text-muted" href="{% if app.user %}{{ path('quest_create', {id: 0}) }}{% else %}#{% endif %}" title="create-quest">Create a quest</a></li>
+                  <li><a class="text-muted" href="{% if app.user %}{{ path('player_create', {id: 0}) }}{% else %}#{% endif %}" title="create-player">Create a character</a></li>
+                  <li><a class="text-muted" href="{% if app.user %}{{ path('monster_create', {id: 0}) }}{% else %}#{% endif %}" title="create-monster">Create a monster</a></li>
+                  <li><a class="text-muted" href="{% if app.user %}{{ path('skill_create', {id: 0}) }}{% else %}#{% endif %}" title="create-skill">Create a skill</a></li>
+                  <li><a class="text-muted" href="{% if app.user %}{{ path('objet_create', {id: 0}) }}{% else %}#{% endif %}" title="create-object">Create an object</a></li>
                 </ul>
               </div>
               <div class="col-6 col-md">
@@ -188,5 +188,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <script src="{{ asset('js/navbar.js') }}"></script>
         <script src="{{ asset('js/fadestart.js') }}"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         {% block javascripts %}{% endblock %}
       </html>
+

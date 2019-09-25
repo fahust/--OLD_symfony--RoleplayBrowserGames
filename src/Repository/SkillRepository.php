@@ -21,7 +21,7 @@ class SkillRepository extends ServiceEntityRepository
         parent::__construct($registry, Skill::class);
     }
 
-    public function findAllWithSearch(SkillSearch $search) : Query
+    public function findAllWithSearch(SkillSearch $search,$user) : Query
     {
          $query = $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
@@ -54,6 +54,20 @@ class SkillRepository extends ServiceEntityRepository
         }
         if ($search->getdateDesc() ) {
             $query = $query->addOrderBy('m.createdAt', 'DESC');
+        }
+        if ($search->getLanguage() ) {
+            $query = $query->andWhere('m.language = :language')
+                        ->setParameter('language', $search->getLanguage());
+        }
+        if ($search->getType() ) {
+            $query = $query->andWhere('m.type = :type')
+                        ->setParameter('type', $search->getType());
+        }
+        if ($user){
+            if ($search->getCreatedByMe() ) {
+                $query = $query->andWhere('m.createdByMe = :createdByMe')
+                            ->setParameter('createdByMe', $user->getId());
+            }
         }
         /*if ($search->getRegex() ) {
             $query = $query->andWhere('m.hp >= :minhp')

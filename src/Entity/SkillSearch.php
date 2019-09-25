@@ -5,6 +5,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class SkillSearch {
 
+
+    /**
+     * @var int|null
+     */
+    private $createdByMe;
+
+
+    /**
+     * @var string|null
+     */
+    private $language;
+
+
+    /**
+     * @var string|null
+     */
+    private $type;
+
     /**
      * @var int|null
      */
@@ -225,6 +243,60 @@ class SkillSearch {
     public function setDateDesc(bool $dateDesc): SkillSearch
     {
         $this->dateDesc = $dateDesc;
+        return $this;
+    }
+
+    
+    /**
+     * @return integer|null
+     */
+    public function getCreatedByMe(): ?int
+    {
+        return $this->createdByMe;
+    }
+
+
+    /**
+     * @param integer|null $createdByMe
+     * @return SkillSearch
+     */
+    public function setCreatedByMe(int $createdByMe): SkillSearch
+    {
+        $this->createdByMe = $createdByMe;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage(): ?int
+    {
+        return $this->language;
+    }
+    /**
+     * @param string|null $language
+     * @return SkillSearch
+     */
+    public function setLanguage(int $language): SkillSearch
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+    /**
+     * @param string|null $type
+     * @return SkillSearch
+     */
+    public function setType(int $type): SkillSearch
+    {
+        $this->type = $type;
         return $this;
     }
     

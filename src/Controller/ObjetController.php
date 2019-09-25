@@ -8,7 +8,8 @@ use App\Entity\Likes;
 use App\Entity\Objet;
 use App\Form\ObjetType;
 use App\Entity\ObjetSearch;
-use App\Form\ObjetSearchType;
+use App\Form\ObjetSearchTypeLeft;
+use App\Form\ObjetSearchTypeRight;
 use App\Repository\LikesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,16 +28,20 @@ class ObjetController extends AbstractController
     public function indexObjet(UserInterface $user, PaginatorInterface $paginator, Request $request)
     {
         $search = new ObjetSearch();
-        $form = $this->createForm(ObjetSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(ObjetSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(ObjetSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
+        $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('objet/index.html.twig', [
-            'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'user' => $user,
             'controller_name' => 'PlayerController',
-            'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search),
+            'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Objet::class)->findAll()
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -46,16 +51,19 @@ class ObjetController extends AbstractController
     public function objetunlogin(PaginatorInterface $paginator, Request $request)
     {
         $search = new ObjetSearch();
-        $form = $this->createForm(ObjetSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(ObjetSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(ObjetSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('objet/index.html.twig', [
             'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
-            'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search),
+            'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Objet::class)->findAll()
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -74,8 +82,8 @@ class ObjetController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            if ($user->getConstructpnt() > 0 ) {
-                $user->setConstructpnt(($user->getConstructpnt())-1);
+            if ($user->getConstructpnt() > 0  || $id != 0) {
+                if ($id == 0){$user->setConstructpnt(($user->getConstructpnt()-1));}
                 $manager->persist($user);
                 $objet->setCreateur($user->getId());
                 $objet->setImage(1);

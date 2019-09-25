@@ -93,7 +93,7 @@ class QuestVariableUtils extends AbstractController
                 $subplayeratk += ($skilluse->getAtksc());
                 $subplayerdef += ($skilluse->getDefsc());
                 $subplayeresq += ($skilluse->getEsqsc());
-                $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Réussite critique de " . $skilluse->getName(), $skilluse->getDialsc(), $cibleobj->getName() . " perd ". abs($subplayerhp) . " points de vie, il lui reste " . ($cibleobj->getHp()+$subplayerhp) , $attaquant->getName() . " attaque ". $cibleobj->getName() , $skilluse->getImage() , $cibleobj ];
+                $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Réussite critique de " . $skilluse->getName(), $skilluse->getDialsc(), $cibleobj->getName() . " perd ". abs($subplayerhp) . " points de vie, il lui reste " . ($cibleobj->getHp()+$subplayerhp) , $attaquant->getName() . " attaque ". $cibleobj->getName() , $skilluse , $cibleobj ];
             
             }elseif ($de < 10) {
                 if($attaquant->getCible() == 0 ){
@@ -102,14 +102,14 @@ class QuestVariableUtils extends AbstractController
                     $subplayeratk += ($skilluse->getAtkec());
                     $subplayerdef += ($skilluse->getDefec());
                     $subplayeresq += ($skilluse->getEsqec());
-                    $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Echec critique de " . $skilluse->getName(), $skilluse->getDialsc(),"" , "" , $skilluse->getImage() , $attaquant  ];
+                    $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Echec critique de " . $skilluse->getName(), $skilluse->getDialsc(),"" , "" , $skilluse , $attaquant  ];
                 }else{
                     $subattaquanthp -= ($skilluse->getAtkec())*(($attaquant->getAtk()));
                     $subplayerhp += ($skilluse->getHpec());
                     $subplayeratk += ($skilluse->getAtkec());
                     $subplayerdef += ($skilluse->getDefec());
                     $subplayeresq += ($skilluse->getEsqec());
-                    $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Echec critique de " . $skilluse->getName(), $skilluse->getDialsc(), $attaquant->getName() . " perd " . abs($subattaquanthp) . " points de vie , il lui reste " . ($attaquant->getHp()+$subattaquanthp) , $attaquant->getName() . " attaque ". $attaquant->getName() , $skilluse->getImage() , $attaquant  ];
+                    $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Echec critique de " . $skilluse->getName(), $skilluse->getDialsc(), $attaquant->getName() . " perd " . abs($subattaquanthp) . " points de vie , il lui reste " . ($attaquant->getHp()+$subattaquanthp) , $attaquant->getName() . " attaque ". $attaquant->getName() , $skilluse , $attaquant  ];
                 }
             }elseif ($de >= ($questvariable->getDedifficult())+$de2) {
                 $subplayerhp -= ($skilluse->getSkatk())*(($attaquant->getAtk()));
@@ -117,10 +117,10 @@ class QuestVariableUtils extends AbstractController
                 $subplayeratk += ($skilluse->getSkatk());
                 $subplayerdef += ($skilluse->getSkdef());
                 $subplayeresq += ($skilluse->getSkesq());
-                $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Réussite de " . $skilluse->getName(), $skilluse->getDialsc(), $cibleobj->getName() . " perd " . abs($subplayerhp) . " points de vie, il lui reste " . ($cibleobj->getHp()+$subplayerhp) , $attaquant->getName() . " attaque ". $cibleobj->getName() , $skilluse->getImage() , $cibleobj  ];
+                $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Réussite de " . $skilluse->getName(), $skilluse->getDialsc(), $cibleobj->getName() . " perd " . abs($subplayerhp) . " points de vie, il lui reste " . ($cibleobj->getHp()+$subplayerhp) , $attaquant->getName() . " attaque ". $cibleobj->getName() , $skilluse , $cibleobj  ];
             }elseif ($de <= ($questvariable->getDedifficult())+$de2) {
                 $subplayerhp = 0 ;
-                $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Echec de " . $skilluse->getName(), ".. La compétence échoue", "", ""  , $skilluse->getImage() , $cibleobj ];
+                $array = ["Le résultat des dé est de " . $de . " / " . (($questvariable->getDedifficult())+$de2) . " , Echec de " . $skilluse->getName(), ".. La compétence échoue", "", ""  , $skilluse , $cibleobj ];
             }
         
         }
@@ -185,6 +185,8 @@ class QuestVariableUtils extends AbstractController
             $monsteruser->setMaxdef($monstercollec->get($i)->getMaxdef());
             $monsteruser->setDescription($monstercollec->get($i)->getDescription());
             $monsteruser->setImage($monstercollec->get($i)->getImage());
+            $monsteruser->setImageFile($monstercollec->get($i)->getImageFile());
+            $monsteruser->setImageName($monstercollec->get($i)->getImageName());
 
 if($monstercollec->get($i)->getSkillbdd()->count() > 0) {
     if(is_null($monstercollec->get($i)->getSkillbdd()->count())){}else{

@@ -5,6 +5,24 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class QuestSearch {
 
+
+    /**
+     * @var int|null
+     */
+    private $createdByMe;
+
+
+    /**
+     * @var string|null
+     */
+    private $language;
+
+
+    /**
+     * @var string|null
+     */
+    private $type;
+
     /**
      * @var int|null
      */
@@ -138,7 +156,7 @@ class QuestSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return QuestSearch
      */
     public function setNameAsc(bool $nameAsc): QuestSearch
     {
@@ -147,7 +165,7 @@ class QuestSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return QuestSearch
      */
     public function setNameDesc(bool $nameDesc): QuestSearch
     {
@@ -156,7 +174,7 @@ class QuestSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return QuestSearch
      */
     public function setLikeAsc(bool $likeAsc): QuestSearch
     {
@@ -165,7 +183,7 @@ class QuestSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return QuestSearch
      */
     public function setLikeDesc(bool $likeDesc): QuestSearch
     {
@@ -174,7 +192,7 @@ class QuestSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return QuestSearch
      */
     public function setDateAsc(bool $dateAsc): QuestSearch
     {
@@ -183,7 +201,7 @@ class QuestSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return QuestSearch
      */
     public function setDateDesc(bool $dateDesc): QuestSearch
     {
@@ -199,11 +217,65 @@ class QuestSearch {
     }
     /**
      * @param integer|null $choiceNbrPerPage
-     * @return SkillSearch
+     * @return QuestSearch
      */
     public function setChoiceNbrPerPage(int $choiceNbrPerPage): QuestSearch
     {
         $this->choiceNbrPerPage = $choiceNbrPerPage;
+        return $this;
+    }
+
+    
+    /**
+     * @return integer|null
+     */
+    public function getCreatedByMe(): ?int
+    {
+        return $this->createdByMe;
+    }
+
+
+    /**
+     * @param integer|null $createdByMe
+     * @return QuestSearch
+     */
+    public function setCreatedByMe(int $createdByMe): QuestSearch
+    {
+        $this->createdByMe = $createdByMe;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage(): ?int
+    {
+        return $this->language;
+    }
+    /**
+     * @param string|null $language
+     * @return QuestSearch
+     */
+    public function setLanguage(int $language): QuestSearch
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+    /**
+     * @param string|null $type
+     * @return QuestSearch
+     */
+    public function setType(int $type): QuestSearch
+    {
+        $this->type = $type;
         return $this;
     }
     

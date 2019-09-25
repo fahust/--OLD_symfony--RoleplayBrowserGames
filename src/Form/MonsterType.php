@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MonsterType extends AbstractType
 {
@@ -27,15 +28,31 @@ class MonsterType extends AbstractType
         $builder
             ->add('name',TextType::class,  [
                 'attr' => array('style' => 'width: 200px')])
-            ->add('hp')
-            ->add('atk')
-            ->add('dgt')
-            ->add('esq')
-            ->add('def')
+            ->add('hp', IntegerType::class , [
+                'label' => 'Life monster',
+                //'attr' => array('style' => 'width: 250px')
+            ])
+            ->add('atk', IntegerType::class , [
+                'label' => 'Attack monster',
+                //'attr' => array('style' => 'width: 250px')
+            ])
+            ->add('dgt', IntegerType::class , [
+                'label' => 'Damage monster',
+                //'attr' => array('style' => 'width: 250px')
+            ])
+            ->add('esq', IntegerType::class , [
+                'label' => 'Dodge monster',
+                //'attr' => array('style' => 'width: 250px')
+            ])
+            ->add('def', IntegerType::class , [
+                'label' => 'Defence monster',
+                //'attr' => array('style' => 'width: 250px')
+            ])
             ->add('description',TextType::class,  [
+                'label' => 'Monster description',
                 'attr' => array('style' => 'height: 100px')])
-            ->add('image')
             ->add('imageFile', VichFileType::class, [
+                'label' => 'Monster image',
                 'download_link'     => false,
                 'required'          => false,
                 'delete_label'          => false,
@@ -52,6 +69,7 @@ class MonsterType extends AbstractType
                 ],
             ])
             ->add('skillbdd', EntityType::class, [
+                'label' => 'Monster skill',
                 'class' => Skill::class,
                 'multiple' => true,
                 'query_builder' => function (SkillRepository $er) {
@@ -61,12 +79,30 @@ class MonsterType extends AbstractType
                 'choice_label' => 'name',
                 
             ])
-            /*->add('skillbdd', EntityType::class, [
-                'class' => Skill::class,
-                'choice_label' => 'name'
-            ])*/
+            ->add('language', ChoiceType::class, [
+                'choices' => [
+                        '' => null,
+                        'French' => 'french',
+                        'English' => 'english',
+                        'Spanish' => 'spanish',
+                        'Italia' => 'italia',
+                        'Deutsch' => 'deutsch',
+                ],
+                    'required' => false,
+                ])
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                        '' => null,
+                        'Fantasy' => 'Fantasy',
+                        'Dark' => 'Dark',
+                        'Sf' => 'Sf',
+                        'Medieval' => 'Medieval',
+                        'Modern' => 'Modern',
+                ],
+                    'required' => false,
+                ])
             ->add('save', SubmitType::class, [
-                'label' => 'enregistrer'
+                'label' => 'save'
             ])
             
         ;

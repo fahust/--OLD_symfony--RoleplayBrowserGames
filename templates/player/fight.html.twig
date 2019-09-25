@@ -32,15 +32,15 @@
                     {{ form_row(formUser.email) }}
                     {{ form_row(formUser.password) }}
                 {{ form_end(formUser) }}
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
                         {% for players in user.playercreated %}
                             <div class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  >
                                 <div class="card" style="width: 18rem;">
-                                    <img class="card-img-top" src="{{ players.image }}" alt="player-image">
+                                    <img class="card-img-top" src="{{ vich_uploader_asset(players, 'imageFile') }}" alt="player-image">
                                     <div class="card-body">
-                                        <h5 class="card-title"> players </h5>
+                                        <h5 class="card-title"> {% trans %}players{% endtrans %} </h5>
                                         <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
                                     </div>
                                     <div class="card-body">
@@ -52,15 +52,16 @@
                 </div>
             {% elseif action == 1 %}
                 <!-- choix d action du joueur -->
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-4">
+                            {{ include('player/_player_fight.html.twig') }}
                         </div>
                         <div class="col-sm-4"  id="div3" style="display:none;">
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="{{ player.image }}" alt="choice-player-skill-image">
+                                <img class="card-img-top" src="{{ vich_uploader_asset(player, 'imageFile') }}" alt="choice-player-skill-image">
                                 <div class="card-body">
-                                    <h5 class="card-title">Player's turn {{ player.name }}</h5>
+                                    <h5 class="card-title">{% trans %}Player's turn{% endtrans %} {{ player.name }}</h5>
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">  {{ form_start(formPlayer, {'attr': {'placeholder': "Player\'s name" , 'class': 'hidden-row' , 'type':"hidden" }}) }}
@@ -68,42 +69,49 @@
                                         {{ form_row(formPlayer.skillnow) }}
                                         {{ form_end(formPlayer, {'attr': {'placeholder': "Player\'s name" , 'class': 'hidden-row' , 'type':"hidden" }}) }}  
                                     </li>
-                                    <li class="list-group-item">Number of monsters : {{ user.monsterUsers.count }}</li>
+                                    <li class="list-group-item">{% trans %}Number of monsters{% endtrans %} : {{ user.monsterUsers.count }}</li>
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
                                 <div class="card-body">
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            {{ include('player/_monster_user.html.twig') }}
+                        </div>
                     </div>
                 </div>
             {% elseif action == 2 %}
                 <!-- latence joueur -->
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-4">
+                            {{ include('player/_player_fight.html.twig') }}
                         </div>
                         <div class="col-sm-4"  id="div3" style="display:none;">
                             <div class="card" style="width: 18rem;" >
-                                <img class="card-img-top" src="{{ player.image }}" alt="player-skill-image">
+                                <img class="card-img-top" src="{{ vich_uploader_asset(player, 'imageFile') }}" alt="player-skill-image">
                                 <div class="card-body">
-                                    <h5 class="card-title">the player prepares to attack, rolls your dice ! </h5>
+                                    <h5 class="card-title">{% trans %}the player prepares to attack, rolls your dice{% endtrans %} ! </h5>
                                     <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">{% trans %}continue{% endtrans %}</a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-sm-4">
+                            {{ include('player/_monster_user.html.twig') }}
                         </div>
                     </div>
                 </div>
             {% elseif action == 3 %}
                 <!-- action des attaques -->
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div3" >
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="{{ player.image }}" alt="attack-skill-image">
+                                <img class="card-img-top" src="{{ vich_uploader_asset(player, 'imageFile') }}" alt="attack-skill-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ player.name }}</h5>
                                 </div>
@@ -113,7 +121,7 @@
                         </div>
                         <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div1" >
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ infobattle.4 }}{% endif %}" alt="attack-skill-image">
+                                <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ vich_uploader_asset(infobattle.4, 'imageFile') }}{#{ infobattle.4 }#}{% endif %}" alt="attack-skill-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{% if infobattle.3 is defined %}{{ infobattle.3 }}{% endif %}</h5>
                                     <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
@@ -130,13 +138,13 @@
                         {% set varimage = user.monsterUsers.get((tour-1)) %}
                         <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div2" >
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="attack-skill-image">
+                                <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ vich_uploader_asset(infobattle.5, 'imageFile') }}{#{ infobattle.5.image }#}{% endif %}" alt="attack-skill-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
-                                    <p class="card-text">number of remaining life points {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
+                                    <p class="card-text">{% trans %}number of remaining life points{% endtrans %} {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">{% trans %}continue{% endtrans %}</a>
                                 </div>
                             </div>
                         </div>
@@ -144,24 +152,28 @@
                 </div>
                 <!-- tour du monstre latence pour eviter bug avec form rien a calculer juste monstre pret a attaquer-->
             {% elseif action == 4 %}
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-4">
+                            {{ include('player/_player_fight.html.twig') }}
                         </div>
                         <div class="col-sm-4"  id="div3" style="display:none;">
                             {% if user.monsterUsers.get((tour-1)) is not null %}
-                                {% set varimage = user.monsterUsers.get((tour-1)).image %}
+                                {#% set varimage = user.monsterUsers.get((tour-1)).image %#}
                                 <div class="card" style="width: 18rem;">
-                                    <img class="card-img-top" src="{{ varimage }}" alt="monster-image">
+                                    <img class="card-img-top" src="{{ vich_uploader_asset(user.monsterUsers.get((tour-1)), 'imageFile') }}" alt="monster-image">
                                     <div class="card-body">
-                                        <h5 class="card-title">the monster {{ user.monsterUsers.get((tour-1)).name  }} is preparing to attack</h5>
+                                        <h5 class="card-title">the monster {{ user.monsterUsers.get((tour-1)).name  }} {% trans %}is preparing to attack{% endtrans %}</h5>
                                         <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
                                     </div>
                                     <div class="card-body">
-                                        <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
+                                        <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">{% trans %}continue{% endtrans %}</a>
                                     </div>
                                 </div>
                             {% endif %}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ include('player/_monster_user.html.twig') }}
                         </div>
                     </div>
                 </div>
@@ -169,11 +181,11 @@
             {% elseif action == 5 %}
                 <!-- choix d action du monstre -->
                 <!-- faire une cible et un choix de competence auto -->
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div3" >
                             <div class="card" style="width: 18rem;">{% set varimage = user.monsterUsers.get((tour-1)) %}
-                                <img class="card-img-top" src="{% if varimage is not null %}{{ varimage.image }}{% endif %}" alt="monster-image">
+                                <img class="card-img-top" src="{% if varimage is not null %}{{ vich_uploader_asset(user.monsterUsers.get((tour-1)), 'imageFile') }}{% endif %}" alt="monster-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{% if varimage is not null %}{{ varimage.name }}{% endif %}</h5>
                                 </div>
@@ -183,7 +195,7 @@
                         </div>
                         <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div1" >
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ infobattle.4 }}{% endif %}" alt="monster-image">
+                                <img class="card-img-top" src="{% if infobattle.4 is defined %}{{ vich_uploader_asset(infobattle.4, 'imageFile') }}{#{ infobattle.4 }#}{% endif %}" alt="monster-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{% if infobattle.3 is defined %}{{ infobattle.3 }}{% endif %}</h5>
                                     <p class="card-text">{% if infobattle.0 is defined %}{{ infobattle.0 }}{% endif %}</p>
@@ -198,22 +210,23 @@
                         </div>
                         <div style="display:none;" class="d-flex justify-content-center col-10 col-sm-10 col-md-4 col-lg-4 col-xl-4"  id="div2" >
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ infobattle.5.image }}{% endif %}" alt="monster-image">
+                                <img class="card-img-top" src="{% if infobattle.5 is defined %}{{ vich_uploader_asset(infobattle.5, 'imageFile') }}{#{ infobattle.5.image }#}{% endif %}" alt="monster-image">
                                 <div class="card-body">
                                     <h5 class="card-title">{% if infobattle.5 is defined %}{{ infobattle.5.name }}{% endif %}</h5>
-                                    <p class="card-text">Remaining life {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
+                                    <p class="card-text">{% trans %}Remaining life{% endtrans %} {% if infobattle.5 is defined %}{{ infobattle.5.hp }}{% endif %}</p>
                                 </div>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">{% trans %}continue{% endtrans %}</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             {% elseif action == 6 %}
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-4">
+                            {{ include('player/_player_fight.html.twig') }}
                         </div>
                         <div class="col-sm-4"  id="div3" style="display:none;">
                             <div class="card" style="width: 18rem;">
@@ -228,9 +241,12 @@
                                     <li class="list-group-item">Vestibulum at eros</li>
                                 </ul>
                                 <div class="card-body">
-                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">continue</a>
+                                    <a href="{{ path('player_fight', {id: user.id, action: '1', quest: questvariable.id, cible: '0', tour: '1'}) }}" class="btn btn-primary" title="continue-quest">{% trans %}continue{% endtrans %}</a>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-sm-4">
+                            {{ include('player/_monster_user.html.twig') }}
                         </div>
                     </div>
                 </div>

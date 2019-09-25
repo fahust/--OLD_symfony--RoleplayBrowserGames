@@ -19,6 +19,23 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    
+
+    public function findWithMonsterUserAndPlayerFighter($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.id = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->innerJoin('u.playerfight', 'uf')
+            ->addSelect('uf')
+            ->innerJoin('u.monsterUsers', 'umu')
+            ->addSelect('umu')
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
+
     public function findByIdWithObj($value)
     {
         

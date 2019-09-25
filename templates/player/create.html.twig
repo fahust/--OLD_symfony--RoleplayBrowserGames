@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Player creation page{% endblock %}
+{% block title %}RollCardPlay - {% trans %}Player creation page{% endtrans %}{% endblock %}
 
 {% form_theme formPlayer 'bootstrap_4_layout.html.twig' %}
 {% block stylesheets %}{% endblock %}  
-{% block description %}<meta name="description" content="This is the character creation page where you can create new character cards that can be used by you and others." />
+{% block description %}<meta name="description" content="{% trans %}This is the character creation page where you can create new character cards that can be used by you and others.{% endtrans %}" />
 {% endblock %}
 {% block body %}
         <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/wallpaper_magic_the_gathering_-_duels_of_the_planeswalkers_01_1920x1080-min.jpg') }}); background-size: cover;background-position: center;">
                 <div class="col-md-6 px-0" style="padding: 50px;">
-                        <h1 class="display-4 font-italic">Player creation page</h1>
+                        <h1 class="display-4 font-italic">{% trans %}Player creation page{% endtrans %}</h1>
                         <p class="lead my-3"></p>
                 </div>
         </div>

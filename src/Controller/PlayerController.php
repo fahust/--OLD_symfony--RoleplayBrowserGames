@@ -11,7 +11,8 @@ use App\Entity\Player;
 use App\Form\PlayerType;
 use App\Entity\PlayerSearch;
 use App\Entity\QuestVariable;
-use App\Form\PlayerSearchType;
+use App\Form\PlayerSearchTypeLeft;
+use App\Form\PlayerSearchTypeRight;
 use App\Repository\LikesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,10 @@ use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route as route2;
 
 class PlayerController extends AbstractController
 {
@@ -31,16 +36,20 @@ class PlayerController extends AbstractController
     public function index(UserInterface $user, PaginatorInterface $paginator, Request $request)
     {
         $search = new PlayerSearch();
-        $form = $this->createForm(PlayerSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(PlayerSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(PlayerSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
+        $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('player/index.html.twig', [
-            'user' => $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
+            'user' => $user,
             'controller_name' => 'PlayerController',
-            'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search),
+            'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
 
@@ -50,18 +59,22 @@ class PlayerController extends AbstractController
     public function playerunlogin(PaginatorInterface $paginator, Request $request)
     {
         $search = new PlayerSearch();
-        $form = $this->createForm(PlayerSearchType::class, $search);
-        $form->handleRequest($request);
+        $formLeft = $this->createForm(PlayerSearchTypeLeft::class, $search);
+        $formRight = $this->createForm(PlayerSearchTypeRight::class, $search);
+        $formLeft->handleRequest($request);
+        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('player/index.html.twig', [
             'user' => null,//$this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId()),
             'controller_name' => 'PlayerController',
-            'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search),
+            'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
-            'form' => $form->createView()
+            'formLeft' => $formLeft->createView(),
+            'formRight' => $formRight->createView()
         ]);
     }
+
 
     /**
      * @Route("/", name="home")
@@ -116,17 +129,17 @@ class PlayerController extends AbstractController
             $player->setImage(1);
             }
             $player->setUpdatedAt(new \DateTime());
-            if ($user->getConstructpnt() > 0 ) {
+            if ($user->getConstructpnt() > 0  || $id != 0) {
                 if($player->getSkillbdd()->count() < ($player->getSkillpnt())+1 ) {
-                    $user->setConstructpnt(($user->getConstructpnt())-1);
+                if ($id == 0){$user->setConstructpnt(($user->getConstructpnt()-1));}
                     $manager->persist($user);
                     $manager->persist($player);
                     $manager->flush();
                     //$player->setImageFile(null);
                     //$player->setImageName(null);
-                    //$user->addPlayercreated($player);
-                    //$manager->persist($user);
-                    //$manager->flush();
+                    $user->addPlayercreated($player);
+                    $manager->persist($user);
+                    $manager->flush();
                     $this->addFlash('succes', "player successfully edited/created" );
                 }else{
                     $this->addFlash('warning', "You have selected more skills than you have points, you have " . $player->getSkillpnt() . " points");

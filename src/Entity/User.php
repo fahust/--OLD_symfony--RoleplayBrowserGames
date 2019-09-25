@@ -111,7 +111,12 @@ class User implements UserInterface, Serializable
      */
     private $dislikessend;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $locale;
 
+    
     
 
     
@@ -505,6 +510,16 @@ public function unserialize($serialized)
         $this->password,
     ) = unserialize($serialized);
 }
+
+public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+    public function setLocale(string $locale): self
+    {
+        $this->locale = $locale;
+        return $this;
+    }
 
 
    

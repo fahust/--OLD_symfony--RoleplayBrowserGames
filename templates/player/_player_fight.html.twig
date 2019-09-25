@@ -1,0 +1,32 @@
+<div id="accordion">
+    {% for playerfight in user.playerfight %}
+        <div class="card">
+            <div class="card-header" id="heading{{ loop.index }}">
+                <h5 class="mb-0">
+                    <div class="media">
+                        <img class="align-self-start mr-3" src="{{ vich_uploader_asset(playerfight, 'imageFile') }}" alt="Generic placeholder image">
+                        <div class="media-body">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">{{ playerfight.name }}</button>
+                        </div>
+                    </div>
+                </h5>
+            </div>
+            <div id="collapse{{ loop.index }}" class="collapse show" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ playerfight.hp }}" aria-valuemin="0" aria-valuemax="{{ playerfight.maxhp }}">Life : {{ playerfight.hp }}</div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{ playerfight.dmg }}" aria-valuemin="0" aria-valuemax="{{ playerfight.maxdmg * 2 }}">Damage : {{ playerfight.dmg }}</div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="{{ playerfight.def }}" aria-valuemin="0" aria-valuemax="{{ playerfight.maxdef * 2 }}">Defence : {{ playerfight.def }}</div>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{ playerfight.esq }}" aria-valuemin="0" aria-valuemax="{{ playerfight.maxesq * 2 }}">Dodge : {{ playerfight.esq }}</div>
+                </div>
+                <div class="card-body">
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -21,7 +21,7 @@ class PlayerRepository extends ServiceEntityRepository
         parent::__construct($registry, Player::class);
     }
 
-    public function findAllWithSkill(PlayerSearch $search) : Query
+    public function findAllWithSkill(PlayerSearch $search,$user) : Query
     {
          $query = $this->createQueryBuilder('m')
             ->orderBy('m.id', 'ASC')
@@ -56,6 +56,20 @@ class PlayerRepository extends ServiceEntityRepository
         }
         if ($search->getdateDesc() ) {
             $query = $query->addOrderBy('m.createdAt', 'DESC');
+        }
+        if ($search->getLanguage() ) {
+            $query = $query->andWhere('m.language = :language')
+                        ->setParameter('language', $search->getLanguage());
+        }
+        if ($search->getType() ) {
+            $query = $query->andWhere('m.type = :type')
+                        ->setParameter('type', $search->getType());
+        }
+        if ($user){
+            if ($search->getCreatedByMe() ) {
+                $query = $query->andWhere('m.createdByMe = :createdByMe')
+                            ->setParameter('createdByMe', $user->getId());
+            }
         }
         /*if ($search->getRegex() ) {
             $query = $query->andWhere('m.hp >= :minhp')

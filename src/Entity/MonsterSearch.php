@@ -9,19 +9,19 @@ class MonsterSearch {
     /**
      * @var int|null
      */
-    private $name;
-
-
-    /**
-     * @var int|null
-     */
     private $createdByMe;
 
 
     /**
-     * @var int|null
+     * @var string|null
      */
     private $language;
+
+
+    /**
+     * @var string|null
+     */
+    private $type;
 
     /**
      * @var int|null
@@ -179,7 +179,7 @@ class MonsterSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return MonsterSearch
      */
     public function setNameAsc(bool $nameAsc): MonsterSearch
     {
@@ -188,7 +188,7 @@ class MonsterSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return MonsterSearch
      */
     public function setNameDesc(bool $nameDesc): MonsterSearch
     {
@@ -197,7 +197,7 @@ class MonsterSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return MonsterSearch
      */
     public function setLikeAsc(bool $likeAsc): MonsterSearch
     {
@@ -206,7 +206,7 @@ class MonsterSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return MonsterSearch
      */
     public function setLikeDesc(bool $likeDesc): MonsterSearch
     {
@@ -215,7 +215,7 @@ class MonsterSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return MonsterSearch
      */
     public function setDateAsc(bool $dateAsc): MonsterSearch
     {
@@ -224,7 +224,7 @@ class MonsterSearch {
     }
     /**
      * @param boolean|null $minHp
-     * @return SkillSearch
+     * @return MonsterSearch
      */
     public function setDateDesc(bool $dateDesc): MonsterSearch
     {
@@ -240,13 +240,67 @@ class MonsterSearch {
     }
     /**
      * @param integer|null $choiceNbrPerPage
-     * @return SkillSearch
+     * @return MonsterSearch
      */
     public function setChoiceNbrPerPage(int $choiceNbrPerPage): MonsterSearch
     {
         $this->choiceNbrPerPage = $choiceNbrPerPage;
         return $this;
     }
+
+    
+    /**
+     * @return integer|null
+     */
+    public function getCreatedByMe(): ?int
+    {
+        return $this->createdByMe;
+    }
+    /**
+     * @param integer|null $createdByMe
+     * @return MonsterSearch
+     */
+    public function setCreatedByMe(int $createdByMe): MonsterSearch
+    {
+        $this->createdByMe = $createdByMe;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getLanguage(): ?int
+    {
+        return $this->language;
+    }
+    /**
+     * @param string|null $language
+     * @return MonsterSearch
+     */
+    public function setLanguage(int $language): MonsterSearch
+    {
+        $this->language = $language;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?int
+    {
+        return $this->type;
+    }
+    /**
+     * @param string|null $type
+     * @return MonsterSearch
+     */
+    public function setType(int $type): MonsterSearch
+    {
+        $this->type = $type;
+        return $this;
+    }
+
+    
     
 
 

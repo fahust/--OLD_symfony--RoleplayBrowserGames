@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}RollCardPlay - Monster creation page{% endblock %}
-{% block description %}<meta name="description" content="This is the monster creation page where you can create new monster cards that can be used by you and others." />
+{% block title %}RollCardPlay - {% trans %}Monster creation page{% endtrans %}{% endblock %}
+{% block description %}<meta name="description" content="{% trans %}This is the monster creation page where you can create new monster cards that can be used by you and others.{% endtrans %}" />
 {% endblock %}
 {% form_theme formMonster 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
   <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark" style="background-image:url({{ asset('ressources/98b94bffc2ae72382a9ea0e2bd4ec9d4-min.jpg') }}); background-size: cover;background-position: center;">
     <div class="col-md-6 px-0" style="padding: 50px;">
-      <h1 class="display-4 font-italic">Monster creation page</h1>
+      <h1 class="display-4 font-italic">{% trans %}Monster creation page{% endtrans %}</h1>
       <p class="lead my-3"></p>
     </div>
   </div>
@@ -25,14 +25,14 @@
   <div class="row">
     <div class="card d-flex justify-content-center col-0 col-sm-2 col-md-1 col-lg-3 col-xl-3" style="opacity:0;" ></div>
     <div class="card d-flex justify-content-center col-12 col-sm-10 col-md-8 col-lg-6 col-xl-6" style="padding: 70px;" >
-    <p>Although there are virtually no limits, the most common monsters should be configured as follows :</p>
+    <p>{% trans %}Although there are virtually no limits, the most common monsters should be configured as follows{% endtrans %} :</p>
             <ul>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- a basic monster has between 50 and 200 life points, the boss they are in a range of 200 to 5000, beyond 5000 be aware that your monster will be unbeatable ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- a too high number of life points will certainly be too constraining to be put on a quest and far too long to kill to be appreciated ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the attack, dodge and defense statistics are around 5 to 20 for a normal monster and 20 to 50 for a boss ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the attack and magic damage will increase the monster's combat power ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the dodge will increase the monster's chance of avoiding an attack ;</li>
-                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- the defense will increase the monster's ability to resist an attack ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}a basic monster has between 50 and 200 life points, the boss they are in a range of 200 to 5000, beyond 5000 be aware that your monster will be unbeatable{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}a too high number of life points will certainly be too constraining to be put on a quest and far too long to kill to be appreciated{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}the attack, dodge and defense statistics are around 5 to 20 for a normal monster and 20 to 50 for a boss{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}the attack and magic damage will increase the monster's combat power{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}the dodge will increase the monster's chance of avoiding an attack{% endtrans %} ;</li>
+                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">- {% trans %}the defense will increase the monster's ability to resist an attack{% endtrans %} ;</li>
             </ul>
       {{ form_start(formMonster) }}
         <div class="card-body">
