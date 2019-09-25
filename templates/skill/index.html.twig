@@ -12,7 +12,7 @@
             {% endif %}
         </div>
     </div>
-    <div class="container" style="">
+    <div class="container-fluid" style="">
         {% for message in app.flashes('succes') %}
             <div class="alert alert-success">
             {{ message }}
@@ -23,87 +23,84 @@
             {{ message }}
             </div>
         {% endfor %}
-        {{ form_start(formLeft) }}
-        <div class="form-row">
-            <div class="col">
-            {{ form_row(formLeft.maxHp) }}
-            </div>
-            <div class="col">
-            {{ form_row(formLeft.minHp) }}
-            </div>
-            <div class="col">
-            <button class="btn btn-primary">{% trans %}search{% endtrans %}</button>
-            </div>
-        </div>
-        {{ form_end(formLeft) }}
-        <div class="container" style="">
+        <div class="container-fluid" style="">
             <p class="lead my-3">{% trans %}The monsters present are usable in the quest creation, All validated monsters can be used by all players. Of course monsters can only be deleted and edited by their <strong>creator</strong> or admins.{% endtrans %}</p>
         <div class="row" id="div3" style="display:none;">
             <div class="navigation col-12" style="display: inline-block;">
                 {{ knp_pagination_render(skill) }}
             </div>
-            {% for skills in skill %}
-                <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" style="padding: 30px;">
-                    <div class="card " style="width: 18rem;padding: 10px;">
-                        <img class="card-img-top rounded img-fluid img-thumbnail" align="middle" style="width: 17rem;height: auto;margin: auto auto;" src="{{ vich_uploader_asset(skills, 'imageFile') }}" alt="Card image cap">
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item list-group-item-action"><h5 class="card-title"> {{ skills.name }} </h5></li>
-                                <li class="list-group-item list-group-item-action  flex-column align-items-start">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <p class="card-text">{{ skills.description }}</p>
-                                        <small>{{ skills.createdAt|date("m/d/Y") }}</small>
-                                    </div>
-                                </li>
-                                <li class="list-group-item list-group-item-action">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="list-group" id="list-tab" role="tablist">
-                                                <a class="list-group-item list-group-item-action" id="list-profile-list{{ skills.id }}" data-toggle="list" href="#list-profile{{ skills.id }}" role="tab" aria-controls="profile{{ skills.id }}" title="life-skill">{% trans %}Damage{% endtrans %}</a>
-                                                <a class="list-group-item list-group-item-action" id="list-messages-list{{ skills.id }}" data-toggle="list" href="#list-messages{{ skills.id }}" role="tab" aria-controls="messages{{ skills.id }}" title="defence-skill">{% trans %}Defence{% endtrans %}</a>
-                                                <a class="list-group-item list-group-item-action" id="list-settings-list{{ skills.id }}" data-toggle="list" href="#list-settings{{ skills.id }}" role="tab" aria-controls="settings{{ skills.id }}" title="attack-skill">{% trans %}Attack{% endtrans %}</a>
+            <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" style="padding: 30px;">
+                {{ include('skill/_search_left_form.html.twig') }}
+            </div>
+            <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" style="padding: 30px;">
+                <div class="row">
+                    {% for skills in skill %}
+                        <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="padding: 30px;">
+                            <div class="card " style="width: 18rem;padding: 10px;">
+                                <img class="card-img-top rounded img-fluid img-thumbnail" align="middle" style="width: 17rem;height: auto;margin: auto auto;" src="{{ vich_uploader_asset(skills, 'imageFile') }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item list-group-item-action"><h5 class="card-title"> {{ skills.name }} </h5></li>
+                                        <li class="list-group-item list-group-item-action  flex-column align-items-start">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <p class="card-text">{{ skills.description }}</p>
+                                                <small>{{ skills.createdAt|date("m/d/Y") }}</small>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item list-group-item-action">
-                                    <div class="col-12">
-                                        <div class="tab-content" id="nav-tabContent">
-                                            <div class="tab-pane fade" id="list-profile{{ skills.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ skills.id }}">Damage of skill {{ skills.skatk }}
-                                            </div>
-                                            <div class="tab-pane fade" id="list-messages{{ skills.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ skills.id }}">Gain in defence of competence {{ skills.skdef }}
-                                            </div>
-                                            <div class="tab-pane fade" id="list-settings{{ skills.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ skills.id }}">Gain of damage to competence {{ skills.skdgt }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                {% if user %}
-                                    {% if skills.createur == user.id or user.hasGroup("superadmin") %}
-                                        <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">
-                                            <a href="{{ path('skill_edit', {id: skills.id}) }}" class="btn btn-primary" title="edit-skill">Edit</a> 
-                                            {{ include('skill/_delete_form.html.twig') }}
                                         </li>
-                                    {% endif %}
-                                    <!--SUPER LIKE -->
-                                    <a href="{{ path('post_like_skill', {'id': skills.id}) }}" class="btn btn-link js-like"  title="like-skill">
-                                        <div style="display: inline">
-                                            {% if app.user and skills.isLikedByUser(app.user) %}
-                                                <i class="fas fa-thumbs-up idelta"></i>
-                                            {% else %}
-                                                <i class="far fa-thumbs-up idelta"></i>
+                                        <li class="list-group-item list-group-item-action">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="list-group" id="list-tab" role="tablist">
+                                                        <a class="list-group-item list-group-item-action" id="list-profile-list{{ skills.id }}" data-toggle="list" href="#list-profile{{ skills.id }}" role="tab" aria-controls="profile{{ skills.id }}" title="life-skill">{% trans %}Damage{% endtrans %}</a>
+                                                        <a class="list-group-item list-group-item-action" id="list-messages-list{{ skills.id }}" data-toggle="list" href="#list-messages{{ skills.id }}" role="tab" aria-controls="messages{{ skills.id }}" title="defence-skill">{% trans %}Defence{% endtrans %}</a>
+                                                        <a class="list-group-item list-group-item-action" id="list-settings-list{{ skills.id }}" data-toggle="list" href="#list-settings{{ skills.id }}" role="tab" aria-controls="settings{{ skills.id }}" title="attack-skill">{% trans %}Attack{% endtrans %}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item list-group-item-action">
+                                            <div class="col-12">
+                                                <div class="tab-content" id="nav-tabContent">
+                                                    <div class="tab-pane fade" id="list-profile{{ skills.id }}" role="tabpanel" aria-labelledby="list-profile-list{{ skills.id }}">Damage of skill {{ skills.skatk }}
+                                                    </div>
+                                                    <div class="tab-pane fade" id="list-messages{{ skills.id }}" role="tabpanel" aria-labelledby="list-messages-list{{ skills.id }}">Gain in defence of competence {{ skills.skdef }}
+                                                    </div>
+                                                    <div class="tab-pane fade" id="list-settings{{ skills.id }}" role="tabpanel" aria-labelledby="list-settings-list{{ skills.id }}">Gain of damage to competence {{ skills.skdgt }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% if user %}
+                                            {% if skills.createur == user.id or user.hasGroup("superadmin") %}
+                                                <li class="list-group-item list-group-item-action  d-flex justify-content-between align-items-center">
+                                                    <a href="{{ path('skill_edit', {id: skills.id}) }}" class="btn btn-primary" title="edit-skill">Edit</a> 
+                                                    {{ include('skill/_delete_form.html.twig') }}
+                                                </li>
                                             {% endif %}
-                                            <span class="js-likes">{{ skills.likes | length }}</span>
-                                            <span class="js-label" >{% trans %}I like{% endtrans %}</span>
-                                            <p style="opacity:0;">{{ path('post_likereload_skill', {'id': skills.id}) }}</p>
-                                        </div>
-                                    </a>
-                                {% endif %}
-                            </ul>
+                                            <!--SUPER LIKE -->
+                                            <a href="{{ path('post_like_skill', {'id': skills.id}) }}" class="btn btn-link js-like"  title="like-skill">
+                                                <div style="display: inline">
+                                                    {% if app.user and skills.isLikedByUser(app.user) %}
+                                                        <i class="fas fa-thumbs-up idelta"></i>
+                                                    {% else %}
+                                                        <i class="far fa-thumbs-up idelta"></i>
+                                                    {% endif %}
+                                                    <span class="js-likes">{{ skills.likes | length }}</span>
+                                                    <span class="js-label" >{% trans %}I like{% endtrans %}</span>
+                                                    <p style="opacity:0;">{{ path('post_likereload_skill', {'id': skills.id}) }}</p>
+                                                </div>
+                                            </a>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
+            <div class="d-flex  justify-content-center col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" style="padding: 30px;">
+                {{ include('skill/_search_right_form.html.twig') }}
+            </div>
             <div class="navigation col-12" style="display: inline-block;">
                 {{ knp_pagination_render(skill) }}
             </div>

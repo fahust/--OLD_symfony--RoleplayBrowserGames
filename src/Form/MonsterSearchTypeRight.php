@@ -43,6 +43,7 @@ class MonsterSearchTypeRight extends AbstractType
         ->add('createdByMe', CheckboxType::class, [
             'label'    => '',
             'required' => false,
+            //'label_attr' => ['class' => 'checkbox-custom'],
         ])
         ;
     }
