@@ -5,7 +5,6 @@ namespace App\Form;
 use App\Entity\Skill;
 use App\Entity\Player;
 use Symfony\Component\Form\AbstractType;
-//use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -14,7 +13,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-//use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class PlayerType extends AbstractType
@@ -24,7 +22,7 @@ class PlayerType extends AbstractType
         $builder
         ->add('name', TextType::class , [
             'label' => 'Character name',
-            'attr' => array('style' => 'width: 200px')
+            'attr' => array('style' => 'width: 200px;font-size: 1.2em')
         ])
         ->add('skillbdd', EntityType::class, [
             'label' => 'Skill of character',
@@ -32,6 +30,7 @@ class PlayerType extends AbstractType
             //'choices' => $skill,
             'multiple' => true,
             'choice_label' => 'name',
+            'attr' => array('font-size: 1.2em')
         ])
         ->add('level', HiddenType::class)
         ->add('experience', HiddenType::class)
@@ -39,7 +38,8 @@ class PlayerType extends AbstractType
         ->add('hp', HiddenType::class)
         ->add('atk', HiddenType::class)
         ->add('image', HiddenType::class)
-        ->add('imageFile', VichFileType::class, [
+        ->add('imageFile', VichFileType::class,[
+            'attr' => array('style' => 'font-size: 1.2em'),
             'label' => 'Image character',
             'download_link'     => false,
             'required'          => false,
@@ -57,6 +57,7 @@ class PlayerType extends AbstractType
             ],
         ])
         ->add('language', ChoiceType::class, [
+            'attr' => array('style' => 'font-size: 1.2em'),
             'choices' => [
                     '' => null,
                     'French' => 'french',
@@ -68,6 +69,7 @@ class PlayerType extends AbstractType
                 'required' => false,
             ])
         ->add('type', ChoiceType::class, [
+            'attr' => array('style' => 'font-size: 1.2em'),
             'choices' => [
                     '' => null,
                     'Fantasy' => 'Fantasy',
@@ -79,6 +81,7 @@ class PlayerType extends AbstractType
                 'required' => false,
             ])
         ->add('save', SubmitType::class, [
+            'attr' => array('font-size: 1.2em'),
             'label' => 'save'
         ])
     ;

@@ -5,7 +5,6 @@ namespace App\Controller;
 use DateTime;
 use App\Entity\User;
 use App\Entity\Likes;
-use App\Entity\Skill;
 use App\Entity\Groups;
 use App\Entity\Player;
 use App\Form\PlayerType;
@@ -19,14 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Route as route2;
 
 class PlayerController extends AbstractController
 {
@@ -37,9 +30,7 @@ class PlayerController extends AbstractController
     {
         $search = new PlayerSearch();
         $formLeft = $this->createForm(PlayerSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(PlayerSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
@@ -49,20 +40,17 @@ class PlayerController extends AbstractController
             'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 
     /**
-     * @Route("/playerunlogin", name="playerunlogin")
+     * @Route("/unlogin/player", name="playerunlogin")
      */
     public function playerunlogin(PaginatorInterface $paginator, Request $request)
     {
         $search = new PlayerSearch();
         $formLeft = $this->createForm(PlayerSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(PlayerSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('player/index.html.twig', [
@@ -71,7 +59,6 @@ class PlayerController extends AbstractController
             'players' => $paginator->paginate($this->getDoctrine()->getRepository(Player::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Player::class)->findAllWithSkill()
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 

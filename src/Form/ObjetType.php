@@ -4,12 +4,8 @@ namespace App\Form;
 
 use App\Entity\Objet;
 use Symfony\Component\Form\AbstractType;
-//use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Vich\UploaderBundle\Form\Type\VichImageType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,15 +18,18 @@ class ObjetType extends AbstractType
     {
         $builder
             ->add('name', TextType::class , [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Object name',
                 'attr' => array('style' => 'width: 200px')
             ])
             //->add('image')
             ->add('description', TextType::class , [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Object description',
                 'attr' => array('style' => 'height: 100px')
             ])
             ->add('imageFile', VichFileType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Object image',
                 'download_link'     => false,
                 'required'          => false,
@@ -48,6 +47,7 @@ class ObjetType extends AbstractType
                 ],
             ])
             ->add('language', ChoiceType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'choices' => [
                         '' => null,
                         'French' => 'french',
@@ -59,6 +59,7 @@ class ObjetType extends AbstractType
                     'required' => false,
                 ])
             ->add('type', ChoiceType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'choices' => [
                         '' => null,
                         'Fantasy' => 'Fantasy',
@@ -70,6 +71,7 @@ class ObjetType extends AbstractType
                     'required' => false,
                 ])
             ->add('save', SubmitType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'save'
             ])
         ;

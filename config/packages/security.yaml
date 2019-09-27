@@ -37,12 +37,7 @@ security:
         #- { path: ^/connexion, roles: "not has_role('ROLE_USER')"  }
         # - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/monster, roles: ROLE_USER }
-         - { path: ^/quest, roles: ROLE_USER }
-         - { path: ^/skill, roles: ROLE_USER }
-         - { path: ^/objet, roles: ROLE_USER }
          - { path: ^/player, roles: ROLE_USER }
-         - { path: ^/monster, roles: ROLE_USER }
-         - { path: ^/quest, roles: ROLE_USER }
          - { path: ^/skill, roles: ROLE_USER }
-         - { path: ^/objet, roles: ROLE_USER }
-         - { path: ^/player, roles: ROLE_USER }
+         - { path: ^/quest, roles: ROLE_USER }
+         - { path: ^/object, roles: ROLE_USER }

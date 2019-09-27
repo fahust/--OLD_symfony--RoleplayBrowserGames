@@ -4,21 +4,16 @@ namespace App\Form;
 
 use App\Entity\Skill;
 use App\Entity\Monster;
-use App\Form\SkillType;
 use App\Repository\SkillRepository;
 use Symfony\Component\Form\AbstractType;
-//use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\PropertyAccess\PropertyPath;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-//use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class MonsterType extends AbstractType
@@ -27,31 +22,38 @@ class MonsterType extends AbstractType
     {
         $builder
             ->add('name',TextType::class,  [
-                'attr' => array('style' => 'width: 200px')])
+                'attr' => array('style' => 'width: 200px;font-size: 1.2em')])
             ->add('hp', IntegerType::class , [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Life monster',
                 //'attr' => array('style' => 'width: 250px')
             ])
             ->add('atk', IntegerType::class , [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Attack monster',
                 //'attr' => array('style' => 'width: 250px')
             ])
             ->add('dgt', IntegerType::class , [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Damage monster',
                 //'attr' => array('style' => 'width: 250px')
             ])
             ->add('esq', IntegerType::class , [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Dodge monster',
                 //'attr' => array('style' => 'width: 250px')
             ])
             ->add('def', IntegerType::class , [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Defence monster',
                 //'attr' => array('style' => 'width: 250px')
             ])
             ->add('description',TextType::class,  [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Monster description',
                 'attr' => array('style' => 'height: 100px')])
             ->add('imageFile', VichFileType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Monster image',
                 'download_link'     => false,
                 'required'          => false,
@@ -69,6 +71,7 @@ class MonsterType extends AbstractType
                 ],
             ])
             ->add('skillbdd', EntityType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'Monster skill',
                 'class' => Skill::class,
                 'multiple' => true,
@@ -80,6 +83,7 @@ class MonsterType extends AbstractType
                 
             ])
             ->add('language', ChoiceType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'choices' => [
                         '' => null,
                         'French' => 'french',
@@ -91,6 +95,7 @@ class MonsterType extends AbstractType
                     'required' => false,
                 ])
             ->add('type', ChoiceType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'choices' => [
                         '' => null,
                         'Fantasy' => 'Fantasy',
@@ -102,6 +107,7 @@ class MonsterType extends AbstractType
                     'required' => false,
                 ])
             ->add('save', SubmitType::class, [
+                'attr' => array('style' => 'font-size: 1.2em'),
                 'label' => 'save'
             ])
             

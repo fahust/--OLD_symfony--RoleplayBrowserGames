@@ -6,24 +6,25 @@
           {% block description %}<meta name="description" content="RollCardPlay is a browser game that all users can participate in by creating quests, characters, monsters and even skills" />
           {% endblock %}
           <link rel="icon" type="image/png" href="{{ asset('ressources/phoenix.png') }}"/>
-          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
           <meta name="keywords" content="RollCardPlay, roleplay, role, navigateur, carte, card, creation, medieval, fantasy, fantastique" />
-          <title>{% block title %}RollCardPlay - the role-playing game you created{% endblock %}</title>
+          <title>{% block title %}RollCardPlay - {% trans %} the role-playing game you created {% endtrans %}{% endblock %}</title>
           <link href="{{ asset('css/carroussel.css') }}" rel="stylesheet">
           <link href="{{ asset('css/cssimagezoom.css') }}" rel="stylesheet">
           <link href="{{ asset('css/navbar.css') }}" rel="stylesheet">
           <link href="{{ asset('css/scrollauto.css') }}" rel="stylesheet">
-          <link rel="stylesheet"href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
+          <link rel="stylesheet" href="https://bootswatch.com/4/sandstone/bootstrap.min.css" />
           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
           {% block stylesheets %}{% endblock %}
-          <link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Germania One">
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
+          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Germania%20One">
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
           <link rel="stylesheet" href="{{ asset('css/flippobj.css') }}" /> 
-          <style type="text/css">
+          <style>
+            /*html { font-size: 125%; }*/
             body {font-family: 'Germania One', serif;}
-            .container { margin-top: 2em; }
+            .container { margin-top: 2em;}
             h1 span {
               animation: flipper 3s ease-in 4s infinite;
               -moz-animation: flipper 3s ease-in 4s infinite;
@@ -60,28 +61,30 @@
             .offset4{
               margin-top:-500px;
             }
-            @media only screen and (max-width: 800px) {
             h1 {
             font-size: 4.5em;
             }
             h2 {
-            font-size: 4em;
-            }
-            h3 {
-            font-size: 3.5em;
-            }
-            h4 {
             font-size: 3em;
             }
-            h5 {
+            h3 {
             font-size: 2.5em;
             }
-            p {
+            h4 {
+            font-size: 2em;
+            }
+            h5 {
             font-size: 1.5em;
+            }
+            p {
+            font-size: 1.2em;
             }
             a {
-            font-size: 1.5em;
+            font-size: 1.2em;
             }
+            button{
+            font-size: 1.2em;
+            padding: 15px;
             }
           </style>
           <!-- fin de script de card return -->
@@ -98,44 +101,44 @@
                 <div class="menu">
                   <ul>
                       <li class="nav-item">
-                        <a href="{{ path('home') }}" title="index">Roleplay</a>
+                        <a href="{{ path('home') }}" title="index" style="font-size: 1.2em;">Roleplay</a>
                       </li>
                     {% if not app.user %}
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('monsterunlogin') }}" title="monster">Monster</a>
+                        <a class="nav-link" href="{{ path('monsterunlogin') }}" title="monster" style="font-size: 1.2em;">Monster</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('skillunlogin') }}" title="skill">Skill</a>
+                        <a class="nav-link" href="{{ path('skillunlogin') }}" title="skill" style="font-size: 1.2em;">Skill</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('questunlogin') }}" title="quest">Quest</a>
+                        <a class="nav-link" href="{{ path('questunlogin') }}" title="quest" style="font-size: 1.2em;">Quest</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('objetunlogin') }}" title="object">Object</a>
+                        <a class="nav-link" href="{{ path('objetunlogin') }}" title="object" style="font-size: 1.2em;">Object</a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ path('security_login') }}" class="nav-link" title="login">Login</a>
+                        <a href="{{ path('security_login') }}" class="nav-link" title="login" style="font-size: 1.2em;">Login</a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ path('security_registration') }}" class="nav-link" title="register">Registration</a>
+                        <a href="{{ path('security_registration') }}" class="nav-link" title="register" style="font-size: 1.2em;">Registration</a>
                       </li>
                     {% else %}
                       <li class="nav-item ">
-                        <a class="nav-link" href="{{ path('player') }}" title="player">Player <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ path('player') }}" title="player" style="font-size: 1.2em;">Player <span class="sr-only">(current)</span></a>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('monster') }}" title="monster">Monster</a>
+                        <a class="nav-link" href="{{ path('monster') }}" title="monster" style="font-size: 1.2em;">Monster</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('skill') }}" title="skill">Skill</a>
+                        <a class="nav-link" href="{{ path('skill') }}" title="skill" style="font-size: 1.2em;">Skill</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('quest') }}" title="quest">Quest</a>
+                        <a class="nav-link" href="{{ path('quest') }}" title="quest" style="font-size: 1.2em;">Quest</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{{ path('objet') }}" title="object">Object</a>
+                        <a class="nav-link" href="{{ path('objet') }}" title="object" style="font-size: 1.2em;">Object</a>
                       </li>
                       <li class="nav-item">
-                        <a href="{{ path('account') }}" class="nav-link" title="account">Profile</a>
+                        <a href="{{ path('account') }}" class="nav-link" title="account" style="font-size: 1.2em;">Profile</a>
                       </li>
                     {% endif %}
                   </ul>
@@ -149,7 +152,9 @@
           <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
               <div class="col-12 col-md">
-                <img class="mb-2" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="bootstrap-image" width="24" height="24">
+                <a href="{{ path('french') }}" class="change-locales" title="Français">
+                  <img class="mb-2" src="{{ asset('ressources/france-flag-icon-32.png') }}" alt="bootstrap-image" width="32" height="16">
+                </a>
                 <small class="d-block mb-3 text-muted">© 2017-2019</small>
               </div>
               <div class="col-6 col-md">

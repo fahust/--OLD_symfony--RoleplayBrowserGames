@@ -6,10 +6,9 @@ use App\Entity\MonsterSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class MonsterSearchTypeLeft extends AbstractType
 {
@@ -21,7 +20,8 @@ class MonsterSearchTypeLeft extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Life max.'
+                    'placeholder' => 'Life max.',
+                    'style' => 'font-size: 1.2em'
                 ]
             ])
             ->add('minHp', IntegerType::class, [
@@ -29,7 +29,8 @@ class MonsterSearchTypeLeft extends AbstractType
                 'required' => false,
                 'label' => false,
                 'attr' => [
-                    'placeholder' => 'Life min.'
+                    'placeholder' => 'Life min.',
+                    'style' => 'font-size: 1.2em'
                 ]
             ])
             ->add('language', ChoiceType::class, [
@@ -42,6 +43,9 @@ class MonsterSearchTypeLeft extends AbstractType
                         'Deutsch' => 'deutsch',
                 ],
                     'required' => false,
+                    'attr' => [
+                        'style' => 'font-size: 1.2em'
+                    ]
                 ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
@@ -53,6 +57,9 @@ class MonsterSearchTypeLeft extends AbstractType
                         'Modern' => 'Modern',
                 ],
                     'required' => false,
+                    'attr' => [
+                        'style' => 'font-size: 1.2em'
+                    ]
                 ])
             ->add('choiceNbrPerPage', ChoiceType::class, [
             'choices' => [
@@ -63,9 +70,61 @@ class MonsterSearchTypeLeft extends AbstractType
                     '12 par pages' => '12',
                     '15 par pages' => '15',
                     '18 par pages' => '18',
+            ],
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
+            ])
+            ->add('nameAsc', CheckboxType::class, [
+                'label'    => 'Ascending name',
+                'required' => false,
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
                 ]
             ])
-        ;
+            ->add('nameDesc', CheckboxType::class, [
+                'label'    => 'Descending name',
+                'required' => false,
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+            ])
+            ->add('likeAsc', CheckboxType::class, [
+                'label'    => 'Ascending like',
+                'required' => false,
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+            ])
+            ->add('likeDesc', CheckboxType::class, [
+                'label'    => 'Descending like',
+                'required' => false,
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+            ])
+            ->add('dateAsc', CheckboxType::class, [
+                'label'    => 'Ascending date',
+                'required' => false,
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+            ])
+            ->add('dateDesc', CheckboxType::class, [
+                'label' => 'Descending date',
+                'required' => false,
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+            ])
+            ->add('createdByMe', CheckboxType::class, [
+                'label' => 'Created By Me',
+                'required' => false,
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

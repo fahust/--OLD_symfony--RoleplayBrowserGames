@@ -5,14 +5,7 @@ namespace App\Form;
 use App\Entity\Player;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-//use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\PropertyAccess\PropertyPath;
-use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class PlayerTypeCreate extends AbstractType
 {

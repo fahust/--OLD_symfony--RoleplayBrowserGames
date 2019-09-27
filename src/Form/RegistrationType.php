@@ -7,16 +7,34 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('username')
-            ->add('password', PasswordType::class)
-            ->add('confirm_password', PasswordType::class)
+            ->add('email',EmailType::class,[
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+                ])
+            ->add('username',TextType::class,[
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+                ])
+            ->add('password', PasswordType::class,[
+                'attr' => [
+                    'style' => 'font-size: 1.2em'
+                ]
+                ])
+            ->add('confirm_password', PasswordType::class,[
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
+            ])
         ;
     }
 

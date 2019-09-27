@@ -78,19 +78,19 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/fr_FR/account", name="french")
+     * @Route("/fr_FR/index", name="french")
      */
-    public function french(UserInterface $user,Request $request, ObjectManager $manager)
+    public function french()
     {
-        return $this->redirectToRoute('account');
+        return $this->redirectToRoute('home');
     }
 
     /**
-     * @Route("/account", name="english")
+     * @Route("/index", name="english")
      */
-    public function english(UserInterface $user,Request $request, ObjectManager $manager)
+    public function english()
     {
-        return $this->redirectToRoute('account');
+        return $this->redirectToRoute('home');
     }
 
     /**

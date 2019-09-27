@@ -155,7 +155,16 @@ class QuestVariableUtils extends AbstractController
                     if($attaquant->getExperience() > ($attaquant->getLevel())*10 ){
                         $attaquant->setLevel(($attaquant->getLevel())+1);
                         $attaquant->setSkillpnt(($attaquant->getSkillpnt())+1);
-                        $attaquant->setAtk(($attaquant->getAtk())+1);
+                        $attaquant->setHp(($attaquant->getHp())+rand(10,30));
+                        $attaquant->setAtk(($attaquant->getAtk())+rand(1,3));
+                        $attaquant->setMana(($attaquant->getMana())+rand(1,3));
+                        $attaquant->setDef(($attaquant->getDef())+rand(1,3));
+                        $attaquant->setEsq(($attaquant->getEsq())+rand(1,3));
+                        $attaquant->setMaxHp($attaquant->getHp());
+                        $attaquant->setMaxatk($attaquant->getAtk());
+                        $attaquant->setMaxmana($attaquant->getMana());
+                        $attaquant->setMaxesq($attaquant->getEsq());
+                        $attaquant->setMaxdef($attaquant->getDef());
                         $attaquant->setExperience(1);
                         $thiss->addFlash('succes', 'Vous gagnez un niveau ! ');
                     }
@@ -187,6 +196,7 @@ class QuestVariableUtils extends AbstractController
             $monsteruser->setImage($monstercollec->get($i)->getImage());
             $monsteruser->setImageFile($monstercollec->get($i)->getImageFile());
             $monsteruser->setImageName($monstercollec->get($i)->getImageName());
+            $monsteruser->setUpdatedAt(new \DateTime());
 
 if($monstercollec->get($i)->getSkillbdd()->count() > 0) {
     if(is_null($monstercollec->get($i)->getSkillbdd()->count())){}else{

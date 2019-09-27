@@ -65,7 +65,7 @@ class ObjetRepository extends ServiceEntityRepository
         }
         if ($user){
             if ($search->getCreatedByMe() ) {
-                $query = $query->andWhere('m.createdByMe = :createdByMe')
+                $query = $query->andWhere('m.createur = :createdByMe')
                             ->setParameter('createdByMe', $user->getId());
             }
         }

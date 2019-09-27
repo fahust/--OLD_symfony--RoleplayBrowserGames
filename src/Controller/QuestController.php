@@ -36,9 +36,7 @@ class QuestController extends AbstractController
     {
         $search = new QuestSearch();
         $formLeft = $this->createForm(QuestSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(QuestSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
@@ -48,20 +46,17 @@ class QuestController extends AbstractController
             'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithMonster()
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 
     /**
-     * @Route("/questunlogin", name="questunlogin")
+     * @Route("/unlogin/quest", name="questunlogin")
      */
     public function questunlogin( PaginatorInterface $paginator, Request $request)
     {
         $search = new QuestSearch();
         $formLeft = $this->createForm(QuestSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(QuestSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('quest/index.html.twig', [
@@ -70,7 +65,6 @@ class QuestController extends AbstractController
             'quest' => $paginator->paginate($this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(QuestVariable::class)->findAllWithMonster()
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 

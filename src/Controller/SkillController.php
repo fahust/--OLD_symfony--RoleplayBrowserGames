@@ -16,10 +16,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class SkillController extends AbstractController
 {
@@ -31,9 +28,7 @@ class SkillController extends AbstractController
     {
         $search = new SkillSearch();
         $formLeft = $this->createForm(SkillSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(SkillSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
@@ -43,20 +38,17 @@ class SkillController extends AbstractController
             'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search,$user),
             $request->query->getInt('page',1),$maxByPage),
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 
     /**
-     * @Route("/skillunlogin", name="skillunlogin")
+     * @Route("/unlogin/skill", name="skillunlogin")
      */
     public function skillunlogin( PaginatorInterface $paginator, Request $request)
     {
         $search = new SkillSearch();
         $formLeft = $this->createForm(SkillSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(SkillSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('skill/index.html.twig', [
@@ -65,7 +57,6 @@ class SkillController extends AbstractController
             'skill' =>  $paginator->paginate($this->getDoctrine()->getRepository(Skill::class)->findAllWithSearch($search,null),
             $request->query->getInt('page',1),$maxByPage),
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 

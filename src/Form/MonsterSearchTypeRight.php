@@ -6,8 +6,6 @@ use App\Entity\MonsterSearch;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class MonsterSearchTypeRight extends AbstractType
@@ -17,33 +15,53 @@ class MonsterSearchTypeRight extends AbstractType
         $builder
             
         ->add('nameAsc', CheckboxType::class, [
-            'label'    => '',
+            'label'    => 'Ascending name',
             'required' => false,
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
         ])
         ->add('nameDesc', CheckboxType::class, [
-            'label'    => '',
+            'label'    => 'Descending name',
             'required' => false,
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
         ])
         ->add('likeAsc', CheckboxType::class, [
-            'label'    => '',
+            'label'    => 'Ascending like',
             'required' => false,
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
         ])
         ->add('likeDesc', CheckboxType::class, [
-            'label'    => '',
+            'label'    => 'Descending like',
             'required' => false,
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
         ])
         ->add('dateAsc', CheckboxType::class, [
-            'label'    => '',
+            'label'    => 'Ascending date',
             'required' => false,
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
         ])
         ->add('dateDesc', CheckboxType::class, [
-            'label'    => '',
+            'label' => 'Descending date',
             'required' => false,
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
         ])
         ->add('createdByMe', CheckboxType::class, [
-            'label'    => '',
+            'label' => 'Created By Me',
             'required' => false,
-            //'label_attr' => ['class' => 'checkbox-custom'],
+            'attr' => [
+                'style' => 'font-size: 1.2em'
+            ]
         ])
         ;
     }

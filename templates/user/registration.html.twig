@@ -26,7 +26,7 @@
       {{ form_row(form.email, {'label': 'Email address','attr': {'placeholder': 'User\'s email address ...'}}) }}
       {{ form_row(form.password, {'label': 'User password','attr': {'placeholder': 'Insert your password ...'}}) }}
       {{ form_row(form.confirm_password, {'label': 'Password confirmation','attr': {'placeholder': 'Repeat your password'}}) }}
-      <button type="submit" class="btn btn-success">{% trans %}Inscription !{% endtrans %}</button>
+      <button type="submit" class="btn btn-success" style="font-size: 1em;padding: 15px;">{% trans %}Inscription !{% endtrans %}</button>
     {{ form_end(form) }}
   </div>
 {% endblock %}

@@ -30,7 +30,7 @@ class ObjetSearch {
 
     /**
      * @var int|null
-     * @Assert\Range(min=10,max = 1000000)
+     * @Assert\Range(min=1,max = 1000000)
      */
     private $minHp;
     

@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class MonsterController extends AbstractController
 {
@@ -31,9 +30,7 @@ class MonsterController extends AbstractController
         
         $search = new MonsterSearch();
         $formLeft = $this->createForm(MonsterSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(MonsterSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
@@ -43,20 +40,17 @@ class MonsterController extends AbstractController
             'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 
     /**
-     * @Route("/monsterunlogin", name="monsterunlogin")
+     * @Route("/unlogin/monster", name="monsterunlogin")
      */
     public function monsterunlogin( PaginatorInterface $paginator, Request $request)
     {
         $search = new MonsterSearch();
         $formLeft = $this->createForm(MonsterSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(MonsterSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('monster/index.html.twig', [
@@ -65,7 +59,6 @@ class MonsterController extends AbstractController
             'monsters' => $paginator->paginate($this->getDoctrine()->getRepository(Monster::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 

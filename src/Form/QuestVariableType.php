@@ -8,9 +8,7 @@ use App\Entity\QuestVariable;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-//use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,64 +22,66 @@ class QuestVariableType extends AbstractType
         $builder
             ->add('title', TextType::class , [
                 'label' => 'Quest title',
-                'attr' => array('style' => 'width: 200px')
+                'attr' => array('style' => 'width: 200px','style' => 'font-size: 1.2em')
             ])
             ->add('titlezone', TextType::class , [
-                'label' => 'Name of the place'
+                'label' => 'Name of the place',
+                'attr' => array('style' => 'font-size: 1.2em')
             ])
             ->add('description', TextType::class , [
                 'label' => 'Quest Description',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             /*->add('image', TextType::class , [
                 'label' => 'Image de la quête'
             ])*/
             ->add('initiative', TextType::class , [
                 'label' => 'Dialog Initiative',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dedifficult', TextType::class , [
-                'label' => 'Quest Difficulty'
+                'label' => 'Quest Difficulty',
+                'attr' => array('style' => 'font-size: 1.2em')
             ])
             ->add('dialreussitenego', TextType::class , [
                 'label' => 'Dialog Negotiation Success',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguedereussitepersu', TextType::class , [
                 'label' => 'Dialog Persuasion Success',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguedereussitetaunt', TextType::class , [
                 'label' => 'Dialog Threat Success',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguedereussitenawak', TextType::class , [
                 'label' => 'Dialog Chance Success',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguededefaitenego', TextType::class , [
                 'label' => 'Dialog Negotiation Failure',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguededefaitepersu', TextType::class , [
                 'label' => 'Dialog Persuasion Failure',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguededefaitetaunt', TextType::class , [
                 'label' => 'Dialog of Threat Failure',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguededefaitenawak', TextType::class , [
                 'label' => 'Dialog of Chance Failed',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguedereussitefin', TextType::class , [
                 'label' => 'Dialogue de réussite de fin de quête',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('dialoguededefaitefin', TextType::class , [
                 'label' => 'Dialogue de défaite de fin de quête',
-                'attr' => array('style' => 'height: 100px')
+                'attr' => array('style' => 'height: 100px;font-size: 1.2em')
             ])
             ->add('questrequismany', EntityType::class ,[
                 'label' => 'Objet de quête requis pour lancer la quête',
@@ -89,6 +89,7 @@ class QuestVariableType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'nothing2',
                 'required'      => false,
+                'attr' => array('font-size: 1.2em')
                 //'choice_value' => 'nothing'
                 ])
             ->add('objetreussite', EntityType::class ,[
@@ -98,6 +99,7 @@ class QuestVariableType extends AbstractType
                     'multiple' => true,
                     'placeholder' => 'nothing2',
                     'required'      => false,
+                    'attr' => array('font-size: 1.2em')
                     //'choice_value' => 'nothing'
                     ])
             
@@ -106,6 +108,7 @@ class QuestVariableType extends AbstractType
                 'class' => Monster::class,
                 'multiple' => true,
                 'choice_label' => 'name',
+                'attr' => array('font-size: 1.2em')
                 ])
             ->add('imageFile', VichFileType::class, [
                 'download_link'     => false,
@@ -114,6 +117,7 @@ class QuestVariableType extends AbstractType
                 'allow_delete' => false,
                 'download_label' => false,
                 'download_uri' => false,
+                'attr' => array('font-size: 1.2em'),
                 //'image_uri' => false,
                 'constraints' => [
                     new Image([
@@ -132,6 +136,7 @@ class QuestVariableType extends AbstractType
                             'Deutsch' => 'deutsch',
                     ],
                         'required' => false,
+                        'attr' => array('font-size: 1.2em')
                     ])
                 ->add('type', ChoiceType::class, [
                     'choices' => [
@@ -143,10 +148,12 @@ class QuestVariableType extends AbstractType
                             'Modern' => 'Modern',
                     ],
                         'required' => false,
+                        'attr' => array('font-size: 1.2em')
                     ])
             
             ->add('save', SubmitType::class, [
-                'label' => 'save'
+                'label' => 'save',
+                'attr' => array('font-size: 1.2em')
             ])
             
         ;

@@ -3,8 +3,10 @@ vich_uploader:
 
     mappings:
         monster:
-            uri_prefix: /images/monster
-            upload_destination: '%kernel.project_dir%/public/images/monster/'
+            uri_prefix:         '%app.path.product_images%'
+            upload_destination: '%kernel.project_dir%%app.path.product_images%'
+            #uri_prefix: /public/images/monster
+            #upload_destination: '%kernel.project_dir%/public/images/monster/'
 
             inject_on_load: true
             delete_on_update: false

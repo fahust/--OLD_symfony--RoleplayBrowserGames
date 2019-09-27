@@ -2,7 +2,6 @@
 
 namespace App\Form;
 
-use App\Entity\Player;
 use App\Entity\Monster;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -14,7 +13,9 @@ class CibleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('cible', HiddenType::class)
+            ->add('cible', HiddenType::class, [
+            'attr' => array('style' => 'font-size: 1.2em')
+            ])
             
         ;
     }

@@ -22,12 +22,6 @@
       </div>
     {% endfor %}
     <span>
-      <a href="{{ path('english') }}" class="change-locales" title="English">
-        <img class="mb-2" src="{{ asset('ressources/united-kingdom-flag-icon-32.png') }}{{ asset('ressources/france-flag-icon-32.png') }}" alt="bootstrap-image" width="32" height="16">
-      </a>
-      <a href="{{ path('french') }}" class="change-locales" title="Français">
-        <img class="mb-2" src="{{ asset('ressources/france-flag-icon-32.png') }}" alt="bootstrap-image" width="32" height="16">
-      </a>
       <p> - Point de construction de carte : {{ user.constructpnt }}</p>
     </span>
     {{ form_start(form) }}
@@ -35,7 +29,7 @@
       {{ form_row(form.email, {'label': 'Email address','attr': {'placeholder': 'User\'s email address ...'}}) }}
       {{ form_row(form.password, {'label': 'User password','attr': {'placeholder': 'Insert your password ...'}}) }}
       {{ form_row(form.confirm_password, {'label': 'Password confirmation','attr': {'placeholder': 'Repeat your password'}}) }}
-      <button type="submit" class="btn btn-success">{% trans %}Editing{% endtrans %}</button>
+      <button type="submit" class="btn btn-success" style="font-size: 1em;padding: 15px;">{% trans %}Editing{% endtrans %}</button>
     {{ form_end(form) }}
     <br><br>
     <a href="{{ path('security_logout') }}" class="btn btn-danger" title="logout">{% trans %}Logout{% endtrans %}</a>

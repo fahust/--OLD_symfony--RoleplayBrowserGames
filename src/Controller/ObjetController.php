@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use DateTime;
 use App\Entity\User;
 use App\Entity\Likes;
 use App\Entity\Objet;
@@ -29,9 +28,7 @@ class ObjetController extends AbstractController
     {
         $search = new ObjetSearch();
         $formLeft = $this->createForm(ObjetSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(ObjetSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $user = $this->getDoctrine()->getRepository(User::class)->findByIdWithObjAndGroups($user->getId());
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
@@ -41,20 +38,17 @@ class ObjetController extends AbstractController
             'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search,$user),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Objet::class)->findAll()
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 
     /**
-     * @Route("/objectunlogin", name="objetunlogin")
+     * @Route("/unlogin/object", name="objetunlogin")
      */
     public function objetunlogin(PaginatorInterface $paginator, Request $request)
     {
         $search = new ObjetSearch();
         $formLeft = $this->createForm(ObjetSearchTypeLeft::class, $search);
-        $formRight = $this->createForm(ObjetSearchTypeRight::class, $search);
         $formLeft->handleRequest($request);
-        $formRight->handleRequest($request);
         $maxByPage = ($search->getChoiceNbrPerPage()) ? $search->getChoiceNbrPerPage() : 6;
 
         return $this->render('objet/index.html.twig', [
@@ -63,7 +57,6 @@ class ObjetController extends AbstractController
             'objet' => $paginator->paginate($this->getDoctrine()->getRepository(Objet::class)->findAllWithSkill($search,null),
             $request->query->getInt('page',1),$maxByPage),//$this->getDoctrine()->getRepository(Objet::class)->findAll()
             'formLeft' => $formLeft->createView(),
-            'formRight' => $formRight->createView()
         ]);
     }
 

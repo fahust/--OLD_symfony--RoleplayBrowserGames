@@ -1,28 +1,28 @@
-<div id="accordion">
+<div id="accordionm">
     {% for monsterUsers in user.monsterUsers %}
         <div class="card">
-            <div class="card-header" id="heading{{ loop.index }}">
+            <div class="card-header" id="headingm{{ loop.index + 4 }}">
                 <h5 class="mb-0">
                     <div class="media">
-                        <img class="align-self-start mr-3" src="{{ vich_uploader_asset(monsterUsers, 'imageFile') }}" alt="Generic placeholder image">
+                        <img class="align-self-start mr-3" src="{{ vich_uploader_asset(monsterUsers, 'imageFile') }}" alt="" width="36" height="36">
                         <div class="media-body">
-                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">{{ monsterUsers.name }}</button>
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ loop.index + 4 }}" aria-expanded="true" aria-controls="collapse{{ loop.index + 4 }}" style="font-size: 1em;padding: 15px;">{{ monsterUsers.name }}</button>
                         </div>
                     </div>
                 </h5>
             </div>
-            <div id="collapse{{ loop.index }}" class="collapse show" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
+            <div id="collapse{{ loop.index + 4 }}" class="collapse hide" aria-labelledby="headingm{{ loop.index + 4 }}" data-parent="#accordionm">
                 <div class="progress">
-                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="{{ monsterUsers.hp }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxhp }}">Life : {{ monsterUsers.hp }}</div>
+                    <div class="progress-bar bg-success" role="progressbar" style="width:{{ (monsterUsers.hp / monsterUsers.maxhp) * 100 }}%" aria-valuenow="{{ monsterUsers.hp }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxhp }}">Life : {{ monsterUsers.hp }}</div>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="{{ monsterUsers.dmg }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxdmg * 2 }}">Damage : {{ monsterUsers.dmg }}</div>
+                    <div class="progress-bar bg-danger" role="progressbar" style="width:{{ (monsterUsers.atk / monsterUsers.maxatk) * 100 }}%" aria-valuenow="{{ monsterUsers.atk }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxatk * 2 }}">Damage : {{ monsterUsers.atk }}</div>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="{{ monsterUsers.def }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxdef * 2 }}">Defence : {{ monsterUsers.def }}</div>
+                    <div class="progress-bar bg-info" role="progressbar" style="width:{{ (monsterUsers.def / monsterUsers.maxdef) * 100 }}%" aria-valuenow="{{ monsterUsers.def }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxdef * 2 }}">Defence : {{ monsterUsers.def }}</div>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{ monsterUsers.esq }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxesq * 2 }}">Dodge : {{ monsterUsers.esq }}</div>
+                    <div class="progress-bar bg-warning" role="progressbar" style="width:{{ (monsterUsers.esq / monsterUsers.maxesq) * 100 }}%" aria-valuenow="{{ monsterUsers.esq }}" aria-valuemin="0" aria-valuemax="{{ monsterUsers.maxesq * 2 }}">Dodge : {{ monsterUsers.esq }}</div>
                 </div>
                 <div class="card-body">
                 </div>
@@ -30,3 +30,10 @@
         </div>
     {% endfor %}
 </div>
+
+
+
+
+
+
+
